@@ -3,6 +3,8 @@ import './App.css';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import Paper  from '@material-ui/core/Paper';
+import {BrowserRouter} from 'react-router-dom';
+import Main from './Main'
 
 const useStyles = theme => ({
   root: {
@@ -52,39 +54,45 @@ class App extends Component {
   render(){
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        <Grid container spacing = {0}>
-        {/* paper_1 첫번째 칸 */}
-          <Grid item xs={2}>
-            <Paper className={classes.paper_1}>item0</Paper>
-            
-          </Grid>
+      <BrowserRouter>
+        <Main/>
+      </BrowserRouter>
 
-        {/* paper_2 두번째 칸 */}
-          <Grid container item xs={5}>
-            <Grid item xs={12}>
-              <Paper className={classes.paper_2}>item2-1</Paper>
-            </Grid>
-            <Grid item xs={12}>
-              <Paper className={classes.paper_2}>item2-2</Paper>
-            </Grid>
-          </Grid>
+
+      
+//       <div className={classes.root}>
+//         <Grid container spacing = {0}>
+//         {/* paper_1 첫번째 칸 */}
+//           <Grid item xs={2}>
+//             <Paper className={classes.paper_1}>item0</Paper>
+            
+//           </Grid>
+
+//         {/* paper_2 두번째 칸 */}
+//           <Grid container item xs={5}>
+//             <Grid item xs={12}>
+//               <Paper className={classes.paper_2}>item2-1</Paper>
+//             </Grid>
+//             <Grid item xs={12}>
+//               <Paper className={classes.paper_2}>item2-2</Paper>
+//             </Grid>
+//           </Grid>
           
-        {/* paper_3 세번째 칸 */}
-          <Grid container item xs={5}>
-        {/* paper_3_1 세번째의 첫번째 칸 */} 
-            <Grid item xs={12}>
-              <Paper className={classes.paper_3_1}>item2-1</Paper>
-            </Grid>
-        {/* paper_3_2 세번째의 두번째 칸 */} 
-            <Grid item xs={12}>
+//         {/* paper_3 세번째 칸 */}
+//           <Grid container item xs={5}>
+//         {/* paper_3_1 세번째의 첫번째 칸 */} 
+//             <Grid item xs={12}>
+//               <Paper className={classes.paper_3_1}>item2-1</Paper>
+//             </Grid>
+//         {/* paper_3_2 세번째의 두번째 칸 */} 
+//             <Grid item xs={12}>
               
-              <Paper className={classes.paper_3_2}>item2-2</Paper>
-            </Grid>
-          </Grid>
+//               <Paper className={classes.paper_3_2}>item2-2</Paper>
+//             </Grid>
+//           </Grid>
   
-        </Grid>
-      </div>
+//         </Grid>
+//       </div>
     );
   }
 }

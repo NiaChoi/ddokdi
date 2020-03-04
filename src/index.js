@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import './index.css';
-// import App from './App';
+import App from './App';
 // import LoginLayout from './LoginLayout';
-import EventScheduler from './tempfiles/EventScheduler'
-// import Medicine from './Medicine';
+// import EventScheduler from './tempfiles/EventScheduler'
+import Medicine from './Medicine';
 import * as serviceWorker from './serviceWorker';
 
 // ReactDOM.render(<LoginLayout />, document.getElementById('root'));
-// ReactDOM.render(<App />, document.querySelector('#root'));
-ReactDOM.render(<EventScheduler />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
+// ReactDOM.render(<EventScheduler />, document.getElementById('root'));
 
 // ReactDOM.render(<Medicine />, document.getElementById('root'));
 

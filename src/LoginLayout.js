@@ -5,6 +5,7 @@ import Grid  from '@material-ui/core/Grid';
 import Paper  from '@material-ui/core/Paper';
 import GridTextField from './tempfiles/GridButton';
 import Typography from '@material-ui/core/Typography';
+import { Button } from '@material-ui/core';
 
 const useStyles = theme => ({
   root: {
@@ -27,7 +28,14 @@ const useStyles = theme => ({
  });
 
 class LoginLayout extends Component {
-  
+
+  handleSubmit = event => {
+    event.preventDefault();
+    console.log(event);
+    
+    this.props.history.push("/tempfiles/EventScheduler");
+  } 
+
   render(){
      
     const { classes } = this.props;
@@ -61,6 +69,9 @@ class LoginLayout extends Component {
                     <Typography 
                     variant="body2" color="textSecondary"
                     >문의사항 연락처</Typography>
+                    <form noValidate onSubmit={this.handleSubmit}>
+                      <Button type = "submit">Button</Button>
+                    </form>
                   </Grid>
                     
                 </Grid>

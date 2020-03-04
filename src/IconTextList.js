@@ -10,6 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import FloatingActionButtons from './tempfiles/FloatingActionButtons'
+import { FixedSizeList } from 'react-window';
 
 const useStyles = theme => ({
   root: {
@@ -39,35 +40,53 @@ const useStyles = theme => ({
 
 
 class IconTextList extends Component{
+  renderRow(props) {
+    const { index, style } = props;
+    console.log(index);
+    
+    return (
+      <ListItem button style={style} key={index}>
+        <ListItemIcon><MailIcon /></ListItemIcon>
+        <ListItemIcon><InboxIcon /></ListItemIcon>
+        <ListItemText primary={`Item ${index + 1}`} />
+      </ListItem>
+    );
+  }
    render(){
     const { classes } = this.props;
 
       return (
+
         <div className={classes.root}>
-          <paper className={classes.paper}>
-            <CssBaseline/>
-            {/* 스크롤 되는 리스트*/}
-          <Grid container>
-            <Grid item xs={12}>
-            <List dense component="div" role="list">
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                </ListItem>))}
-                </List>
-                <Divider />
-            </Grid>
-            <Grid item xs={12}>
-            <FloatingActionButtons/>
-            <FloatingActionButtons/>
-            <FloatingActionButtons/>
-              </Grid>
-            </Grid>  
-          
-          </paper>
-          
+          <FixedSizeList height={400} width={500} itemSize={46} itemCount={5}>
+            {this.renderRow}
+          </FixedSizeList>
         </div>
+
+        // <div className={classes.root}>
+        //   <paper className={classes.paper}>
+        //     <CssBaseline/>
+        //     {/* 스크롤 되는 리스트*/}
+        //   <Grid container>
+        //     <Grid item xs={12}>
+        //     <List dense component="div" role="list">
+        //     {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        //       <ListItem button key={text}>
+        //         <ListItemText primary={text} />
+        //         <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+        //         </ListItem>))}
+        //         </List>
+        //         <Divider />
+        //     </Grid>
+        //     <Grid item xs={12}>
+            
+        //     <FloatingActionButtons/>
+        //       </Grid>
+        //     </Grid>  
+          
+        //   </paper>
+          
+        // </div>
       );
     }
  }

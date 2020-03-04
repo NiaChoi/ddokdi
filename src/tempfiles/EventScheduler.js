@@ -14,9 +14,15 @@ const useStyles = makeStyles(theme => ({
   root: {
     margin: 'auto',
   },
-  paper: {
+  paper_added: {
     width: 200,
-    height: 230,
+    height: 450,
+    overflow: 'auto',
+    maxHeight: '350px'
+  },
+  paper_new: {
+    width: 500,
+    height: 450,
     overflow: 'auto',
     maxHeight: '350px'
   },
@@ -67,7 +73,7 @@ export default function TransferList() {
     setChecked(not(checked, rightChecked));
   };
   const customList = items => (
-    <Paper className={classes.paper}>
+    <Paper className={classes.paper_added}>
       <List dense component="div" role="list">
         {items.map(value => {
           const labelId = `transfer-list-item-${value}-label`;
@@ -92,7 +98,7 @@ export default function TransferList() {
   );
 
   return (
-    <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
+    <Grid container spacing={2} alignItems="center" className={classes.root}>
       <Grid item>{customList(left)}
        <Button
             variant="outlined"
@@ -100,10 +106,7 @@ export default function TransferList() {
             className={classes.button}
             onClick={handleCheckedRight}
             disabled={leftChecked.length === 0}
-            aria-label="move selected right"
-          >
-            delete
-          </Button>
+            aria-label="move selected right">delete</Button>
           </Grid>    
       <Grid item>{customList(right)}
       <Button
