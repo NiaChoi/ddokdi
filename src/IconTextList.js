@@ -1,26 +1,26 @@
 import React, { Component } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
-import List from '@material-ui/core/List';
+import { Grid, Typography, Button } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import FloatingActionButtons from './tempfiles/FloatingActionButtons'
+import Brightness6Icon from '@material-ui/icons/Brightness6';
+import Brightness5Icon from '@material-ui/icons/Brightness5';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
 import { FixedSizeList } from 'react-window';
+import Checkbox from '@material-ui/core/Checkbox';
+import Box from '@material-ui/core/Box';
+import DeleteForeverSharpIcon from '@material-ui/icons/DeleteForeverSharp';
+import EditRoundedIcon from '@material-ui/icons/EditRounded';
 
 const useStyles = theme => ({
   root: {
     flexGrow: 1,
     width: '100%',
-    height:'500px',
-    '& > *': {
-      margin: theme.spacing(1),
+    height:'584px',
+    margin: theme.spacing(0),
     },
-  },
   extendedIcon: {
     marginRight: theme.spacing(1),
   },
@@ -43,12 +43,26 @@ class IconTextList extends Component{
   renderRow(props) {
     const { index, style } = props;
     console.log(index);
+    const [checked, setChecked] = React.useState(false);
+
+    const handleChange = event => {
+      setChecked(event.target.checked);
+    };
     
     return (
-      <ListItem button style={style} key={index}>
-        <ListItemIcon><MailIcon /></ListItemIcon>
-        <ListItemIcon><InboxIcon /></ListItemIcon>
+      ///List 변수 값 넣어보기
+      <ListItem button style={style} key={index} >
+        <Checkbox
+          checked={checked}
+          onChange={handleChange}
+          value="primary"
+          inputProps={{ 'aria-label': 'primary checkbox' }}/>
         <ListItemText primary={`Item ${index + 1}`} />
+        <ListItemIcon>
+          <Brightness6Icon style={{ fontSize: 40 }}/>
+          <Brightness5Icon style={{ fontSize: 40 }}/>
+          <Brightness4Icon style={{ fontSize: 40 }}/>
+          </ListItemIcon>
       </ListItem>
     );
   }
@@ -57,105 +71,33 @@ class IconTextList extends Component{
 
       return (
 
-        <div className={classes.root}>
-          <FixedSizeList height={400} width={500} itemSize={46} itemCount={5}>
+        <div >
+          <Grid container className={classes.root} item xs={12}>
+            <br/>
+          <Grid item xs={12}>
+            <Typography>
+              <Box fontSize={30} textAlign="center" fontWeight="fontWeightBold" m={1}>
+              약 복용설정
+              </Box>
+            </Typography>
+            <Divider/> 
+            <FixedSizeList height={300} width='90%' itemSize={60} itemCount={6}>
             {this.renderRow}
-          </FixedSizeList>
+            </FixedSizeList>
+            <Divider/>
+            </Grid>
+              <Grid  xs={3}/>
+              <Grid  xs={3}>
+               <Button><EditRoundedIcon/> 수정하기</Button>
+               </Grid>
+               <Grid  xs={3}>
+               <Button><DeleteForeverSharpIcon/>삭제하기</Button>
+              </Grid>
+              <Grid  xs={3}/>
+              </Grid>
         </div>
-
-        // <div className={classes.root}>
-        //   <paper className={classes.paper}>
-        //     <CssBaseline/>
-        //     {/* 스크롤 되는 리스트*/}
-        //   <Grid container>
-        //     <Grid item xs={12}>
-        //     <List dense component="div" role="list">
-        //     {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-        //       <ListItem button key={text}>
-        //         <ListItemText primary={text} />
-        //         <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-        //         </ListItem>))}
-        //         </List>
-        //         <Divider />
-        //     </Grid>
-        //     <Grid item xs={12}>
-            
-        //     <FloatingActionButtons/>
-        //       </Grid>
-        //     </Grid>  
-          
-        //   </paper>
-          
-        // </div>
       );
     }
  }
  
  export default  withStyles( useStyles )(IconTextList);
-
-
-// import CssBaseline from '@material-ui/core/CssBaseline';
-// import List from '@material-ui/core/List';
-// import Divider from '@material-ui/core/Divider';
-// import ListItem from '@material-ui/core/ListItem';
-// import ListItemIcon from '@material-ui/core/ListItemIcon';
-// import ListItemText from '@material-ui/core/ListItemText';
-// import InboxIcon from '@material-ui/icons/MoveToInbox';
-// import MailIcon from '@material-ui/icons/Mail';
-// import PropTypes from 'prop-types';
-// import { makeStyles, withStyles } from '@material-ui/core/styles';
-// import { FixedSizeList } from 'react-window';
-
-// const useStyles = makeStyles(theme => ({
-//     root: {
-//       width: '100%',
-//       height: 400,
-//       maxWidth: 300,
-//       backgroundColor: theme.palette.background.paper,
-//     },
-//   }));
-
-// function renderRow(props) {
-//   const { index, style } = props;
-
-//   return (
-//     <ListItem button style={style} key={index}>
-//       <ListItemText primary={`Item ${index + 1}`} />
-//     </ListItem>
-//   );
-// }
-
-// renderRow.propTypes = {
-//   index: PropTypes.number.isRequired,
-//   style: PropTypes.object.isRequired,
-// };
-
-// class IconTextList extends Component{
-    
-//     render(){
-//         const {classes} = this.props;
-
-//       return (
-//         <div className={classes.root}>
-//           <CssBaseline />
-//           <Divider />
-//           <FixedSizeList height={400} width={300} itemSize={46} itemCount={200}>
-//         {renderRow}
-//             <List>
-//               {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-//                 <ListItem button key={text}>
-//                   <ListItemText primary={text} />
-//                   <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-//                 </ListItem>
-//               ))}
-//             </List>
-//             </FixedSizeList>
-//             <Divider />
-//         </div>
-//       );
-//     }
-//  }
-// export default withStyles(useStyles)(IconTextList);  
-
-
-//button

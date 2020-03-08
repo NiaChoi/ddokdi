@@ -6,28 +6,38 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
-import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Fab } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import DeleteForeverSharpIcon from '@material-ui/icons/DeleteForeverSharp';
+import AddCircleSharpIcon from '@material-ui/icons/AddCircleSharp';
 
 const useStyles = makeStyles(theme => ({
   root: {
     margin: 'auto',
   },
   paper_added: {
-    width: 200,
-    height: 450,
+    width: 400,
+    height: 430,
     overflow: 'auto',
-    maxHeight: '350px'
+    maxHeight: '500px'
   },
   paper_new: {
-    width: 500,
-    height: 450,
-    overflow: 'auto',
-    maxHeight: '350px'
+    width: '100%',
+    height: '584px',
+    color: theme.palette.text.secondary
   },
   button: {
     margin: theme.spacing(0.5, 0),
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular,
   },
 }));
 
@@ -74,144 +84,99 @@ export default function TransferList() {
   };
   const customList = items => (
     <Paper className={classes.paper_added}>
-      <List dense component="div" role="list">
+       <List dense component="div" role="list">
         {items.map(value => {
           const labelId = `transfer-list-item-${value}-label`;
 
           return (
-            <ListItem key={value} role="listitem" button onClick={handleToggle(value)}>
+              <ExpansionPanel>
+              <ExpansionPanelSummary
+                expandIcon={<ExpandMoreIcon />}
+              >
+               <ListItem key={value} role="listitem" button onClick={handleToggle(value)}>
               <ListItemIcon>
                 <Checkbox
                   checked={checked.indexOf(value) !== -1}
-                  tabIndex={-1}
+                  tabIndex={-1} 
                   disableRipple
                   inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon>
               <ListItemText id={labelId} primary={`List item ${value + 1}`} />
             </ListItem>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                sit amet blandit leo lobortis eget.
+              </Typography>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
           );
         })}
         <ListItem />
       </List>
     </Paper>
+     
   );
 
   return (
-    <Grid container spacing={2} alignItems="center" className={classes.root}>
-      <Grid item>{customList(left)}
-       <Button
-            variant="outlined"
-            size="small"
-            className={classes.button}
-            onClick={handleCheckedRight}
-            disabled={leftChecked.length === 0}
-            aria-label="move selected right">delete</Button>
-          </Grid>    
-      <Grid item>{customList(right)}
-      <Button
-            variant="outlined"
-            size="small"
-            className={classes.button}
-            onClick={handleCheckedLeft}
-            disabled={rightChecked.length === 0}
-            aria-label="move selected left"
-          >
-            JOIN
-          </Button>
+    
+    
+      <Grid container spacing={2} alignContents="center" 
+      className={classes.root} xs={12} >
+        <Paper className={classes.paper_new}>
+              <Box fontSize={30} textAlign="center" fontWeight="fontWeightBold" m={1}>
+              행사 내용
+              </Box>
+      <Grid container alignItems="center" spacing={1} > 
+          <Grid item xs={6}>
+          <Grid container alignContems='center'justify="center">
+            <Grid item xs={12}>
+            <Box color="text.secondary" fontSize={20} textAlign="center" fontWeight="fontWeightBold"  >
+              등록된 행사
+              </Box>
+              {customList(left)}
+              </Grid>
+              <Grid item xs={4} >
+                <br/>
+              <Fab
+                    variant="outlined"
+                    size="small"
+                    className={classes.button}
+                    onClick={handleCheckedRight}
+                    disabled={leftChecked.length === 0}
+                    aria-label="move selected right"><DeleteForeverSharpIcon/>삭제하기 </Fab>
+                </Grid>
+             </Grid>
+        </Grid>
+
+      <Grid item xs={6}>
+        <Grid container alignItems='center'justify="center">
+          <Grid item xs={12}>
+          <Box color="text.secondary" fontSize={20} textAlign="center" fontWeight="fontWeightBold">
+              새로운 행사
+              </Box>
+           {customList(right)}
+            </Grid>
+            <Grid item xs={4} >
+            <br/>
+              <Fab
+                  variant="outlined"
+                  size="small"
+                  className={classes.button}
+                  onClick={handleCheckedLeft}
+                  disabled={rightChecked.length === 0}
+                  aria-label="move selected left"
+                ><AddCircleSharpIcon/>추가하기 </Fab>
+              </Grid>
+            </Grid>
+        </Grid>
+
           </Grid>
+    </Paper>
     </Grid>
+    
+    
   );
 }
-
-// //Extention Panel
-// import React from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
-// import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-// import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-// import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-// import Checkbox from '@material-ui/core/Checkbox';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Typography from '@material-ui/core/Typography';
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
-// const useStyles = makeStyles({
-//   root: {
-//     width: '100%',
-//   },
-// });
-
-// export default function ActionsInExpansionPanelSummary() {
-//   const classes = useStyles();
-
-//   return (
-//     <div className={classes.root}>
-//       <ExpansionPanel>
-//         <ExpansionPanelSummary
-//           expandIcon={<ExpandMoreIcon />}
-//           aria-label="Expand"
-//           aria-controls="additional-actions1-content"
-//           id="additional-actions1-header"
-//         >
-//           <FormControlLabel
-//             aria-label="Acknowledge"
-//             onClick={event => event.stopPropagation()}
-//             onFocus={event => event.stopPropagation()}
-//             control={<Checkbox />}
-//             label="I acknowledge that I should stop the click event propagation"
-//           />
-//         </ExpansionPanelSummary>
-//         <ExpansionPanelDetails>
-//           <Typography color="textSecondary">
-//             The click event of the nested action will propagate up and expand the panel unless you
-//             explicitly stop it.
-//           </Typography>
-//         </ExpansionPanelDetails>
-//       </ExpansionPanel>
-//       <ExpansionPanel>
-//         <ExpansionPanelSummary
-//           expandIcon={<ExpandMoreIcon />}
-//           aria-label="Expand"
-//           aria-controls="additional-actions2-content"
-//           id="additional-actions2-header"
-//         >
-//           <FormControlLabel
-//             aria-label="Acknowledge"
-//             onClick={event => event.stopPropagation()}
-//             onFocus={event => event.stopPropagation()}
-//             control={<Checkbox />}
-//             label="I acknowledge that I should stop the focus event propagation"
-//           />
-//         </ExpansionPanelSummary>
-//         <ExpansionPanelDetails>
-//           <Typography color="textSecondary">
-//             The focus event of the nested action will propagate up and also focus the expansion
-//             panel unless you explicitly stop it.
-//           </Typography>
-//         </ExpansionPanelDetails>
-//       </ExpansionPanel>
-//       <ExpansionPanel>
-//         <ExpansionPanelSummary
-//           expandIcon={<ExpandMoreIcon />}
-//           aria-label="Expand"
-//           aria-controls="additional-actions3-content"
-//           id="additional-actions3-header"
-//         >
-//           <FormControlLabel
-//             aria-label="Acknowledge"
-//             onClick={event => event.stopPropagation()}
-//             onFocus={event => event.stopPropagation()}
-//             control={<Checkbox />}
-//             label="I acknowledge that I should provide an aria-label on each action that I add"
-//           />
-//         </ExpansionPanelSummary>
-//         <ExpansionPanelDetails>
-//           <Typography color="textSecondary">
-//             If you forget to put an aria-label on the nested action, the label of the action will
-//             also be included in the label of the parent button that controls the panel expansion.
-//           </Typography>
-//         </ExpansionPanelDetails>
-//       </ExpansionPanel>
-//     </div>
-//   );
-// }

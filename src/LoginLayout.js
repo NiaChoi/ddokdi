@@ -5,11 +5,11 @@ import Grid  from '@material-ui/core/Grid';
 import Paper  from '@material-ui/core/Paper';
 import GridTextField from './tempfiles/GridButton';
 import Typography from '@material-ui/core/Typography';
-import { Button } from '@material-ui/core';
+import Fab from '@material-ui/core/Fab';
+import {ReactComponent as Logo} from './ddokdi_logo.svg';
 
 const useStyles = theme => ({
   root: {
-    flexGrow: 1,
     width: '100%'
   },
   form: {
@@ -19,10 +19,11 @@ const useStyles = theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+
   paper_1: {  //전체 크기 변환 height 변경
     padding: theme.spacing(0),
     textAlign: 'center',
-    height:'500px',       
+    height:'584px',     
     color: theme.palette.text.secondary,
   },
  });
@@ -33,7 +34,7 @@ class LoginLayout extends Component {
     event.preventDefault();
     console.log(event);
     
-    this.props.history.push("/tempfiles/EventScheduler");
+    this.props.history.push("/Dashboard");
   } 
 
   render(){
@@ -42,36 +43,35 @@ class LoginLayout extends Component {
     return (
       <div className={classes.root}>
         <Grid container spacing = {0}>
-        {/* paper_1 첫번째 칸 이미지 어케널지,,*/}
           <Grid item xs={6}>
-            <Paper 
-            className={classes.paper_1}
-            elevation={3}
-            >welcome image field</Paper>
-            
+             <Logo width={500} height={584} /> 
           </Grid>
-          {/* 로그인 영역 제목 위에 여유공간 어케넣음? */}
           <Grid item xs={6}>
             <Paper 
               className={classes.paper_1}
               elevation={0} >
-                <Grid container spacing={3}>
-
-                  <Grid item xs alignContent='center'>
+                <Grid container alignitems='center' spacing={3}>
+                  <Grid item xs={12}/>
+                  <Grid item xs={12} >
                     <Typography 
                     gutterBottom 
                     variant="h3"
-                    >똑디 로그인</Typography>
-
+                    ><br/>똑디 로그인</Typography>
+                  <Grid xs={12}>
                     <GridTextField/>
-
+                    </Grid>
+                  <Grid item xs={12}/>
                   <Grid item xs={12}>
                     <Typography 
                     variant="body2" color="textSecondary"
-                    >문의사항 연락처</Typography>
+                    ><br/> 문의사항 연락처 </Typography>
+
                     <form noValidate onSubmit={this.handleSubmit}>
-                      <Button type = "submit">Button</Button>
+                      <br/>
+                      <Fab type = "submit" color="inherit" variant="extended" size='large'>
+                       로그인 </Fab>
                     </form>
+
                   </Grid>
                     
                 </Grid>
@@ -88,6 +88,3 @@ class LoginLayout extends Component {
 }
 
 export default  withStyles( useStyles )(LoginLayout);
-
-    
-

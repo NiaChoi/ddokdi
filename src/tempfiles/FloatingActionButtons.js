@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
+import Grid  from '@material-ui/core/Grid';
 
 
 const useStyles = theme => ({
@@ -18,14 +19,21 @@ const useStyles = theme => ({
 
 class FloatingActionButtons extends Component{
    render(){
-    const { classes } = this.props;
-
+     const { classes } = this.props;
       return (
         <div className={classes.root}>
-        
-          <Fab color="inherit" variant="extended" size='small'>
-          Editting
-            </Fab>
+          <Grid container>
+          <Grid item xs={3}/>
+            <Grid item xs={3}>
+              <Fab color="inherit" variant="extended" size='large'>
+                EDIT </Fab>
+              </Grid>
+             <Grid item xs={3}>
+              <Fab color="inherit" variant="extended" size='large'>
+              DELETE </Fab>
+              </Grid>
+              <Grid item xs={3}/>
+              </Grid>
         </div>
       );
     }

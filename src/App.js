@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
-import Paper  from '@material-ui/core/Paper';
+// import { Grid } from '@material-ui/core';
+// import Paper  from '@material-ui/core/Paper';
 import {BrowserRouter} from 'react-router-dom';
 import Main from './Main'
 
@@ -13,31 +13,27 @@ const useStyles = theme => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(0),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
   paper_1: {  //전체 크기 변환 height 변경
-    padding: theme.spacing(0),
     textAlign: 'center',
     height:'500px',       
     color: theme.palette.text.secondary,
   },
   paper_2: {  //두번째 칸 건들일 필요 x
-    padding: theme.spacing(0),
     textAlign: 'center',
     height:'100%',
     color: theme.palette.text.secondary,
   },
   paper_3_1: {  //세번째 칸의 첫번째, 3_1과 3_2의 합산이 paper_1과 같아야함
-    padding: theme.spacing(0),
     textAlign: 'center',
     height:'300px',
     color: theme.palette.text.secondary,
   },
   paper_3_2: {  //세번째 칸의 두번째 
-    padding: theme.spacing(0),
     textAlign: 'center', 
     height:'200px',
     color: theme.palette.text.secondary,
@@ -52,7 +48,7 @@ class App extends Component {
     alert("fff");
   }
   render(){
-    const { classes } = this.props;
+    // const { classes } = this.props;
     return (
       <BrowserRouter>
         <Main/>

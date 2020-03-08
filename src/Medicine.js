@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import Paper  from '@material-ui/core/Paper';
 import IconTextList from './IconTextList';
+import ControlBoard from './tempfiles/ControlBoard';
 
 
 
@@ -14,40 +15,39 @@ const useStyles = theme => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(0),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
   paper_1: {  //전체 크기 변환 height 변경
-    padding: theme.spacing(1),
+    padding: theme.spacing(0),
     textAlign: 'center',
-    height:'500px',       
+    height:'584x',       
     color: theme.palette.text.secondary,
-  },
-  paper_2: {  //두번째 칸 건들일 필요 x
-    padding: theme.spacing(5),
-    textAlign: 'center',
-    height:'100%',
-    color: theme.palette.text.secondary,
   },
 });
 
 class Medicine extends Component {
- 
+  handleSubmit = event => {
+    event.preventDefault();
+    console.log(event);
+    
+    this.props.history.push("/EventAdder");
+  } 
   render(){
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <Grid container spacing = {0}>
+        <Grid container spacing = {0} container alignContent="center">
 
         {/* paper_1 첫번째 칸 */}
           <Grid item xs={2}>
-            <Paper  className={classes.paper_1}>item0</Paper>
+          <ControlBoard/>
           </Grid>
 
         {/* paper_2 두번째 칸 */}
-          <Grid item xs>
+          <Grid alignItems="center" xs={10}>
           <Paper className={classes.paper_1}>
             <IconTextList/>
             </Paper>
