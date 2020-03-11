@@ -34,7 +34,17 @@ class LoginLayout extends Component {
     event.preventDefault();
     console.log(event);
     
-    this.props.history.push("/Dashboard");
+    const tempRsp = {
+      "payload":{
+        "code":200,
+        "success":"Login sucessfull"
+      }
+    }
+
+    if(tempRsp.payload.code === 200){
+      alert(tempRsp.payload.success);
+      this.props.history.push("/Dashboard");
+    }
   } 
 
   render(){
