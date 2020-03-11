@@ -36,7 +36,7 @@ const useStyles = theme => ({
   button: {
     margin: theme.spacing(0.5, 0),
   },
-});
+  });
 
 
 class IconTextList extends Component{
@@ -44,6 +44,8 @@ class IconTextList extends Component{
     const { index, style } = props;
     console.log(index);
     const [checked, setChecked] = React.useState(false);
+    const med_name = ['혈압약', '감기약', '소화제', '비타민'];
+    const med_time = []
 
     const handleChange = event => {
       setChecked(event.target.checked);
@@ -57,7 +59,7 @@ class IconTextList extends Component{
           onChange={handleChange}
           value="primary"
           inputProps={{ 'aria-label': 'primary checkbox' }}/>
-        <ListItemText primary={`Item ${index + 1}`} />
+        <ListItemText primary={` ${index + 1}`} />
         <ListItemIcon>
           <Brightness6Icon style={{ fontSize: 40 }}/>
           <Brightness5Icon style={{ fontSize: 40 }}/>

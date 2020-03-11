@@ -44,7 +44,7 @@ class LoginLayout extends Component {
       <div className={classes.root}>
         <Grid container spacing = {0}>
           <Grid item xs={6}>
-             <Logo width={500} height={584} /> 
+             <Logo /> 
           </Grid>
           <Grid item xs={6}>
             <Paper 

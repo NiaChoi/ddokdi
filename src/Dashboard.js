@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import Paper  from '@material-ui/core/Paper';
-// import IconTextList from './IconTextList';
 import ControlBoard from './tempfiles/ControlBoard';
 import IconButton from '@material-ui/core/IconButton';
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
@@ -41,11 +40,13 @@ const useStyles = theme => ({
 });
 
 class Dashboard extends Component {
-  handleSubmit = event => {
+  handleMedSubmit = event => {
     event.preventDefault();
-    console.log(event);
-    
     this.props.history.push("/Medicine");
+    
+  } 
+  handleEventSubmit = event => {
+    event.preventDefault();
     this.props.history.push("/EventAdder");
     
   } 
@@ -56,7 +57,7 @@ class Dashboard extends Component {
         <Grid container alignContent="center" spacing = {0} >
 
           <Grid item xs={2}>
-           <ControlBoard/>
+           <ControlBoard history = {this.props.history}/>
           </Grid>
 
           <Grid item xs={5}>
@@ -66,10 +67,10 @@ class Dashboard extends Component {
               </Grid>
               <Grid item xs={12}>
                 <Paper className={classes.paper_2_1}>
-                <form noValidate onSubmit={this.handleSubmit}>
+                <form noValidate onSubmit={this.handleMedSubmit}>
                       <br/>
                       <IconButton type = "submit" color="primary"  size='small'aria-label="delete">
-                        <EditRoundedIcon style={{fontSize: 40 , }}/> 약 설정 페이지로//
+                        <EditRoundedIcon style={{fontSize: 40 }}/> 수정하기
                       </IconButton>
                     </form>
                 </Paper>
@@ -79,10 +80,10 @@ class Dashboard extends Component {
 
           <Grid item xs={5}>
           <Paper className={classes.paper_1}>
-          <form noValidate onSubmit={this.handleSubmit}>
+          <form noValidate onSubmit={this.handleEventSubmit}>
                       <br/>
-                      <IconButton type = "submit" color="primary"  size='small'aria-label="delete">
-                        <MenuRoundedIcon style={{fontSize: 50 , }}/>일정관리 페이지로//
+                      <IconButton type = "submit" color="primary" size='small'aria-label="delete">
+                        <MenuRoundedIcon style={{fontSize: 50 }}/>
                       </IconButton>
                     </form>
             
