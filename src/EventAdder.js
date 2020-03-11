@@ -40,7 +40,7 @@ class EventAdder extends Component {
         <Grid container spacing = {0}>
         {/* paper_1 첫번째 칸 */}
           <Grid item xs={2}>
-          <ControlBoard/>
+          <ControlBoard history = {this.props.history}/>
           </Grid>
 
         {/* paper_2 두번째 칸 */}

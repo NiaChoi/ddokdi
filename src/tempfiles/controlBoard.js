@@ -31,12 +31,23 @@ const useStyles = theme => ({
 });
 
 class ControlBoard extends Component {
-  handleSubmit = event => {
+  handleHomeSubmit = event => {
+    event.preventDefault();
+    this.props.history.push("/Dashboard");
+  } 
+  handleMediSubmit = event => {
+    event.preventDefault();
+    console.log(event);
+    
+    this.props.history.push("/Medicine");
+  } 
+  handleEventSubmit = event => {
     event.preventDefault();
     console.log(event);
     
     this.props.history.push("/EventAdder");
   } 
+
   render(){
     const { classes } = this.props;
     return (
@@ -45,30 +56,34 @@ class ControlBoard extends Component {
               <br/>
               <Grid container spacing={4} >
                 <Grid item xs={12}/>
+
                 <Grid item xs={12}>
-                <form noValidate onSubmit={this.handleSubmit} >
+                <form noValidate onSubmit={this.handleHomeSubmit} >
                     <Fab type = "submit" color="inherit" size='large'><HomeRoundedIcon style={{fontSize: 50}} /></Fab>
                   <Typography>
                     <Box fontSize={20} textAlign="center" fontWeight="fontWeightBold"><br/>처음으로 </Box>
                   </Typography>
                   </form>
                   </Grid>
+                  
                   <Grid item xs={12}> 
-                  <form noValidate onSubmit={this.handleSubmit} >
+                  <form noValidate onSubmit={this.handleMediSubmit} >
                     <Fab type = "submit" color="inherit" size='large'><LocalHospitalIcon style={{fontSize: 45}} /></Fab>
                     <Typography>
                     <Box fontSize={20} textAlign="center" fontWeight="fontWeightBold"><br/>약 설정 </Box>
                     </Typography>
                   </form>
                   </Grid>
+
                   <Grid item xs={12}> 
-                <form noValidate onSubmit={this.handleSubmit} >
+                  <form noValidate onSubmit={this.handleEventSubmit} >
                     <Fab type = "submit" color="inherit" size='large'><EventAvailableIcon style={{fontSize: 45}} /></Fab>
                     <Typography>
                     <Box fontSize={20} textAlign="center" fontWeight="fontWeightBold"><br/>행사 설정 </Box>
                     </Typography>
                   </form>
                   </Grid>
+
               </Grid>
               </Paper>
       </div>

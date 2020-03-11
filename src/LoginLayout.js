@@ -3,10 +3,11 @@ import './App.css';
 import { withStyles } from '@material-ui/core/styles';
 import Grid  from '@material-ui/core/Grid';
 import Paper  from '@material-ui/core/Paper';
-import GridTextField from './tempfiles/GridButton';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
+import TextField from "@material-ui/core/TextField";
 import {ReactComponent as Logo} from './ddokdi_logo.svg';
+import AccountCircle from "@material-ui/icons/AccountCircle";
 
 const useStyles = theme => ({
   root: {
@@ -68,7 +69,19 @@ class LoginLayout extends Component {
                     variant="h3"
                     ><br/>똑디 로그인</Typography>
                   <Grid xs={12}>
-                    <GridTextField/>
+                  <Grid container spacing={3} >
+                    <Grid item xs={12}>
+                      <AccountCircle style={{ fontSize: 50 }} />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField id="input-with-icon-grid" label="ID" 
+                      variant="outlined" />
+                      </Grid>
+                    <Grid item xs={12}>
+                      <TextField id="input-with-icon-grid" label="PW" 
+                      variant="outlined" />
+                    </Grid>
+                  </Grid>
                     </Grid>
                   <Grid item xs={12}/>
                   <Grid item xs={12}>

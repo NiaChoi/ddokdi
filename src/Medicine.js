@@ -29,12 +29,12 @@ const useStyles = theme => ({
 });
 
 class Medicine extends Component {
-  handleSubmit = event => {
-    event.preventDefault();
-    console.log(event);
+  // handleSubmit = event => {
+  //   event.preventDefault();
+  //   console.log(event);
     
-    this.props.history.push("/EventAdder");
-  } 
+  //   this.props.history.push("/EventAdder");
+  // } 
   render(){
     const { classes } = this.props;
     return (
@@ -43,7 +43,7 @@ class Medicine extends Component {
 
         {/* paper_1 첫번째 칸 */}
           <Grid item xs={2}>
-          <ControlBoard/>
+          <ControlBoard history = {this.props.history}/>
           </Grid>
 
         {/* paper_2 두번째 칸 */}

@@ -51,9 +51,8 @@ class IconTextList extends Component{
     const [checked, setChecked] = React.useState(false); 
     const med_name = ['혈압약', '감기약', '소화제', '비타민'];
     const med_time = ["hidden", "visible", "hidden", "visible"];
-    const mnRow = med_name.length;
-    // const med_time = [,];
-    console.log(mnRow);
+    // const mnRow = med_name.length;
+    // // const med_time = [,];
     const handleChange = event => {
       setChecked(event.target.checked);
     };
