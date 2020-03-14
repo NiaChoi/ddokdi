@@ -7,9 +7,9 @@ import IconButton from '@material-ui/core/IconButton';
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 import Badge from '@material-ui/core/Badge';
-// import ListItem from '@material-ui/core/ListItem';
-// import ListItemText from '@material-ui/core/ListItemText';
-// import { FixedSizeList } from 'react-window';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import { FixedSizeList } from 'react-window';
 
 import MsgProcessor from "./servepart/MsgProcessor"
 
@@ -62,7 +62,7 @@ class Dashboard extends Component {
         this.setState({
           c_n_event:result[1][0],
           l_j_event:result[2][0],
-          l_j_drug:result[3][0]
+          l_drug:result[3][0]
         })
       }
       else {
@@ -86,7 +86,9 @@ class Dashboard extends Component {
     
   } 
   render(){
-    const { classes } = this.props;
+    const {  classes } = this.props;
+    console.log(this.state.c_n_event[0]);
+    // const event_list=[ "a","b","c","d" ];
     // const { index, style } = this.props;
     // const event_list =[54,55,56,57];
     return (
@@ -118,14 +120,15 @@ class Dashboard extends Component {
           <Grid item xs={5}>
           <Paper className={classes.paper_1}>
           {/* <FixedSizeList height={541} width='90%' itemSize={60} itemCount={5}>
-            <ListItem button type = "submit" tabindex={event_list[index]} style={style} key={index} >
+            <ListItem button type = "submit" key={index} >
             <ListItemText primary= {event_list[index]} />
               </ListItem>
               </FixedSizeList> */}
+
             <form noValidate onSubmit={this.handleEventSubmit}>
               <br/>
               <IconButton type = "submit" color="primary" size='small'aria-label="delete">
-                <Badge color="secondary" badgeContent={3} >
+                <Badge color="secondary" badgeContent={this.state.c_n_event[0]} >
                 <MenuRoundedIcon style={{fontSize: 50 }}/>
                 </Badge>
               </IconButton>

@@ -63,11 +63,11 @@ attempMedicine(userId, cb) {
   }//.newEvent function
 
   //allEvent function
-  attemptAllEvent(userId, cb) {
+  attemptJoinEvent(userId, cb) {
     let payload = {"USERID":userId};
     let msg_sgi = {"payload":payload};
     this.reqMsgProcess(msg_sgi, "/a_event_list", (result)=> {
-      cb(this.allEventMsgResultProcess(result));
+      cb(this.joinEventMsgResultProcess(result));
     });
   }//.allEvent function
 
@@ -231,14 +231,14 @@ attempMedicine(userId, cb) {
   }//.newEvent Result process function
 
   //allEvent Result process function 
-  allEventMsgResultProcess(resMsg){
+  joinEventMsgResultProcess(resMsg){
     let msgPayload = resMsg.data;
     let unpackResult = null;
 
-    unpackResult = [0, msgPayload.l_a_event];
+    unpackResult = [0, msgPayload.l_j_event];
      
     return  unpackResult;
-  }//.allEvent Result process function
+  }//.joinEvent Result process function
 
   //checkEvent Result process function 
   checkEventMsgResultProcess(resMsg){

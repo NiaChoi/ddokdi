@@ -18,6 +18,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import ListSubheader from '@material-ui/core/ListSubheader';
 
 
+
 import MsgProcessor from "./servepart/MsgProcessor"
 
 
@@ -65,7 +66,7 @@ class EventAdder extends Component {
     componentDidMount(){
       let userId = localStorage.getItem("USN");
       let msgProc = new MsgProcessor();
-      msgProc.attemptAllEvent(userId, (result)=> { 
+      msgProc.attemptNewEvent(userId, (result)=> { 
         if (result[0] == 0) {
           console.log(result[1]);
           this.setState({

@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography, Button } from '@material-ui/core';
 import Paper  from '@material-ui/core/Paper';
 import IconTextList from './servepart/IconTextList';
 import ControlBoard from './servepart/ControlBoard';
 import Box from '@material-ui/core/Box';
+import DeleteForeverSharpIcon from '@material-ui/icons/DeleteForeverSharp';
+import EditRoundedIcon from '@material-ui/icons/EditRounded';
 
 
-import MsgProcessor from "./servepart/MsgProcessor"
 
 
 const useStyles = theme => ({
@@ -34,43 +35,65 @@ const useStyles = theme => ({
 class Medicine extends Component {
   constructor(props){
     super(props);
-    this.max_content_id = 3;//UI에 영향을 주지 않으므로 state X
-    this.state = {
-      nEventList: [],
-      listLength: 0,
-      dEventNo:0,
-      dEventList:[]
-      }
-    }
-    componentDidMount(){
-      let userId = localStorage.getItem("USN");
-      let msgProc = new MsgProcessor();
-      msgProc.attemptAllEvent(userId, (result)=> { 
-        if (result[0] == 0) {
-          console.log(result[1]);
-          this.setState({
-            nEventList:result[1],
-            listLength:result[1].length
-          })  
-        }
-      });
-
-    }
-  
-  handlejoinSubmit = event => {
-    event.preventDefault();
-      const tempRsp3 = {
+    const tempRsp2 = {
       "payload":{
-
-        "code": 200,
-        "sucess": "event_j sucess"
+        "code":200,
+        "l_j_drug": [
+          {
+            "drug_name": "1",
+            "time": "2"
+          },
+          {
+            "drug_name": "2",
+            "time": "1"
           }
+        ],
       }
-      if(tempRsp3.payload.code === 200){
-        alert(tempRsp3.payload.success);
+    }
+    this.state = {
+      tempRsp:tempRsp2
     }
   }
+  // componentDidMount(){
+  //   const tempRsp2 = {
+  //     "payload":{
+  //       "code":200,
+  //       "l_drug": [
+  //         {
+  //           "drug_name": "1",
+  //           "time": "2"
+  //         },
+  //         {
+  //           "drug_name": "2",
+  //           "time": "1"
+  //         }
+  //       ],
+  //     }
+  //   }
+  //   this.setState({
+  //     tempRsp : tempRsp2
+  //   })
+  // }
+  // handleSubmit = event => {
+  //   event.preventDefault();
+  //   console.log(event);
 
+  //   const tempRsp = {
+  //     "payload":{
+  //       "code":200,
+  //       "l_drug": [
+  //         {
+  //           "drug_name": "1",
+  //           "time": "2"
+  //         },
+  //         {
+  //           "drug_name": "2",
+  //           "time": "1"
+  //         }
+  //       ],
+  //     }
+  //   }
+  // } 
   render(){
     const { classes } = this.props;
     return (
@@ -84,13 +107,27 @@ class Medicine extends Component {
 
         {/* paper_2 두번째 칸 */}
           <Grid alignItems="center" xs={10}>
+          
           <Paper className={classes.paper_1}>
             <IconTextList tempRsp={this.state.tempRsp}/>
+            
+            <Grid alignItems="center" xs={12}>
+              <Grid container xs={12}>
+              <Grid  xs={3}/>
+                <Grid  xs={3}>
+              <Button><EditRoundedIcon/><Typography variant="h5" Align="center">수정하기</Typography></Button>
+              </Grid>
+              <Grid  xs={3}>
+              <Button><DeleteForeverSharpIcon/><Typography variant="h5" Align="center">삭제하기</Typography></Button>
+              </Grid>
+              <Grid  xs={3}/>
+              </Grid>
+            </Grid>
             </Paper>
-          </Grid>
-          
-          </Grid>
-      </div>
+            </Grid>
+            </Grid>
+
+        </div>
     );
   }
 }

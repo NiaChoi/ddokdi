@@ -11,8 +11,6 @@ import Brightness4Icon from '@material-ui/icons/Brightness4';
 import { FixedSizeList } from 'react-window';
 import Checkbox from '@material-ui/core/Checkbox';
 import Box from '@material-ui/core/Box';
-import DeleteForeverSharpIcon from '@material-ui/icons/DeleteForeverSharp';
-import EditRoundedIcon from '@material-ui/icons/EditRounded';
 
 
 import MsgProcessor from "./MsgProcessor"
@@ -21,7 +19,7 @@ const useStyles = theme => ({
   root: {
     flexGrow: 1,
     width: '100%',
-    height:'584px',
+    height:'540px',
     margin: theme.spacing(0),
     },
   extendedIcon: {
@@ -44,14 +42,44 @@ const useStyles = theme => ({
 
 class IconTextList extends Component{
   
+  
   constructor(props){
     super(props);
     this.state = {
-      rspMsg:props.tempRsp.payload.l_j_drug,
-      list_length:props.tempRsp.payload.l_j_drug.length
+      drugList:[],
+      list_length:0
     }
     
   }
+  componentDidMount(){
+    let userId = localStorage.getItem("USN");
+    let msgProc = new MsgProcessor();
+    msgProc.attempMedicine(userId, (result)=> { 
+      if (result[0] == 0) {
+        console.log(result[1]);
+        this.setState({
+          drugList:result[1],
+          list_length:result[1].length
+        })  
+      }
+    });
+  }
+
+  med_time(index){
+  switch(this.state.drugList.time[index]){
+    case "0":
+      return (<Brightness6Icon style={{ fontSize: 40 }}/>);//아침
+    case "1":
+      return (<Brightness5Icon style={{ fontSize: 40 }}/>); //점심
+    case "2":
+      return (<Brightness4Icon style={{ fontSize: 40 }}/>);//저녁
+    case "3":
+      return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 저녁
+    default:
+      return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 점심,저녁
+    }
+  }
+  
   renderRow(props) {
     const { index, style } = props;
     console.log(props);
@@ -63,7 +91,7 @@ class IconTextList extends Component{
     const handleChange = event => {
       setChecked(event.target.checked);
     };
-    //const selected_med = med_name[this.state.rspMsg[index].drug_name]
+    const selected_med = med_name[this.state.rspMsg[index].drug_name]
     return (
       ///List 변수 값 넣어보기
       <ListItem button style={style} key={index} >
@@ -72,11 +100,9 @@ class IconTextList extends Component{
           onChange={handleChange}
           value="primary"
           inputProps={{ 'aria-label': 'primary checkbox' }}/>
-        <ListItemText primary= {med_name[index]} />
+        <ListItemText primary= {selected_med} />
         <ListItemIcon >
-          <Brightness6Icon style={{ fontSize: 40 }}/>
-          <Brightness5Icon style={{ fontSize: 40 }}/>
-          <Brightness4Icon style={{ fontSize: 40 }}/>
+          {this.med_time()}
           </ListItemIcon>
       </ListItem>
     );
@@ -91,26 +117,32 @@ class IconTextList extends Component{
           <Grid container className={classes.root} item xs={12}>
             <br/>
           <Grid item xs={12}>
-            <Typography variant="h5">
+            <Typography variant="h4">
               <Box textAlign="center" fontWeight="fontWeightBold" m={1}>
               약 복용설정
               </Box>
             </Typography>
             <Divider/> 
-            <FixedSizeList height={300} width='90%' itemSize={60} itemCount={this.state.list_length}>
-            {this.renderRow}
+          <Grid item xs={12}>
+          <Grid container>
+            <Grid item xs={2}>
+            <Typography variant="h5" Align="center">선택</Typography>
+            </Grid>
+            <Grid item xs={5}>
+            <Typography variant="h5" Align="center">약 이름</Typography>
+            </Grid>
+            <Grid item xs={5}>
+            <Typography variant="h5" Align="center">복용시간</Typography>
+            </Grid>
+          </Grid>
+            </Grid>
+            <Divider/> 
+            <FixedSizeList height={400} width='90%' itemSize={60} itemCount={this.state.list_length}>
+            {this.renderRow.bind(this, this.state)}
             </FixedSizeList>
             <Divider/>
             </Grid>
-              <Grid  xs={3}/>
-              <Grid  xs={3}>
-               <Button><EditRoundedIcon/> 수정하기</Button>
-               </Grid>
-               <Grid  xs={3}>
-               <Button><DeleteForeverSharpIcon/>삭제하기</Button>
-              </Grid>
-              <Grid  xs={3}/>
-              </Grid>
+            </Grid>
         </div>
       );
     }
