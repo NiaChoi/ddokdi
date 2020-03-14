@@ -6,6 +6,10 @@ import ControlBoard from './tempfiles/ControlBoard';
 import IconButton from '@material-ui/core/IconButton';
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
+import Badge from '@material-ui/core/Badge';
+// import ListItem from '@material-ui/core/ListItem';
+// import ListItemText from '@material-ui/core/ListItemText';
+// import { FixedSizeList } from 'react-window';
 
 
 
@@ -40,6 +44,37 @@ const useStyles = theme => ({
 });
 
 class Dashboard extends Component {
+  handleSubmit = event => {
+    event.preventDefault();
+    console.log(event);
+    
+    const tempRsp = {
+      "payload":{
+        "code":200,
+        "c_n_event": [
+          {
+            "COUNT(event_no)": 3 //새로운 이벤트
+          }
+        ],
+        "l_j_event": [
+          {
+            "event_no": 55,
+            "event_name": "하하하 웃음교실!"
+          }
+        ],
+        "l_j_drug": [
+          {
+            "drug_name": "1",
+            "time": "2"
+          },
+          {
+            "drug_name": "2",
+            "time": "1"
+          }
+        ],
+      }
+    }
+  } 
   handleMedSubmit = event => {
     event.preventDefault();
     this.props.history.push("/Medicine");
@@ -52,14 +87,16 @@ class Dashboard extends Component {
   } 
   render(){
     const { classes } = this.props;
+    // const { index, style } = this.props;
+    // const event_list =[54,55,56,57];
     return (
       <div className={classes.root}>
         <Grid container alignContent="center" spacing = {0} >
-
+{/* 첫번쨰 구역 */}
           <Grid item xs={2}>
            <ControlBoard history = {this.props.history}/>
           </Grid>
-
+{/* 두번쨰 구역 */}
           <Grid item xs={5}>
               <Grid alignItems="center" container spacing = {0}>
               <Grid item xs={12}>
@@ -77,15 +114,22 @@ class Dashboard extends Component {
               </Grid>
              </Grid>
           </Grid>
-
+{/* 세번째구역 */}
           <Grid item xs={5}>
           <Paper className={classes.paper_1}>
-          <form noValidate onSubmit={this.handleEventSubmit}>
-                      <br/>
-                      <IconButton type = "submit" color="primary" size='small'aria-label="delete">
-                        <MenuRoundedIcon style={{fontSize: 50 }}/>
-                      </IconButton>
-                    </form>
+          {/* <FixedSizeList height={541} width='90%' itemSize={60} itemCount={5}>
+            <ListItem button type = "submit" tabindex={event_list[index]} style={style} key={index} >
+            <ListItemText primary= {event_list[index]} />
+              </ListItem>
+              </FixedSizeList> */}
+            <form noValidate onSubmit={this.handleEventSubmit}>
+              <br/>
+              <IconButton type = "submit" color="primary" size='small'aria-label="delete">
+                <Badge color="secondary" badgeContent={3} >
+                <MenuRoundedIcon style={{fontSize: 50 }}/>
+                </Badge>
+              </IconButton>
+            </form>
             
             </Paper>
           </Grid>

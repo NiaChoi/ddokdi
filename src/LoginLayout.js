@@ -44,7 +44,7 @@ class LoginLayout extends Component {
 
     if(tempRsp.payload.code === 200){
       alert(tempRsp.payload.success);
-      this.props.history.push("/Dashboard");
+      this.props.history.push("/Greeting");
     }
   } 
 

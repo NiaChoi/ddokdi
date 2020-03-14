@@ -41,13 +41,17 @@ const useStyles = theme => ({
 
 class IconTextList extends Component{
   
-  list_length =  4;
   constructor(props){
     super(props);
+    this.state = {
+      rspMsg:props.tempRsp.payload.l_j_drug,
+      list_length:props.tempRsp.payload.l_j_drug.length
+    }
+    
   }
   renderRow(props) {
     const { index, style } = props;
-    console.log(index);
+    console.log(props);
     const [checked, setChecked] = React.useState(false); 
     const med_name = ['혈압약', '감기약', '소화제', '비타민'];
     const med_time = ["hidden", "visible", "hidden", "visible"];
@@ -56,7 +60,7 @@ class IconTextList extends Component{
     const handleChange = event => {
       setChecked(event.target.checked);
     };
-    
+    //const selected_med = med_name[this.state.rspMsg[index].drug_name]
     return (
       ///List 변수 값 넣어보기
       <ListItem button style={style} key={index} >
@@ -90,7 +94,7 @@ class IconTextList extends Component{
               </Box>
             </Typography>
             <Divider/> 
-            <FixedSizeList height={300} width='90%' itemSize={60} itemCount={this.list_length}>
+            <FixedSizeList height={300} width='90%' itemSize={60} itemCount={this.state.list_length}>
             {this.renderRow}
             </FixedSizeList>
             <Divider/>

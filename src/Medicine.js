@@ -5,6 +5,7 @@ import { Grid } from '@material-ui/core';
 import Paper  from '@material-ui/core/Paper';
 import IconTextList from './IconTextList';
 import ControlBoard from './tempfiles/ControlBoard';
+import Box from '@material-ui/core/Box';
 
 
 
@@ -29,11 +30,66 @@ const useStyles = theme => ({
 });
 
 class Medicine extends Component {
+  constructor(props){
+    super(props);
+    const tempRsp2 = {
+      "payload":{
+        "code":200,
+        "l_j_drug": [
+          {
+            "drug_name": "1",
+            "time": "2"
+          },
+          {
+            "drug_name": "2",
+            "time": "1"
+          }
+        ],
+      }
+    }
+    this.state = {
+      tempRsp:tempRsp2
+    }
+  }
+  // componentDidMount(){
+  //   const tempRsp2 = {
+  //     "payload":{
+  //       "code":200,
+  //       "l_j_drug": [
+  //         {
+  //           "drug_name": "1",
+  //           "time": "2"
+  //         },
+  //         {
+  //           "drug_name": "2",
+  //           "time": "1"
+  //         }
+  //       ],
+  //     }
+  //   }
+  //   this.setState({
+  //     tempRsp : tempRsp2
+  //   })
+  // }
   // handleSubmit = event => {
   //   event.preventDefault();
   //   console.log(event);
-    
-  //   this.props.history.push("/EventAdder");
+
+  //   const tempRsp = {
+  //     "payload":{
+  //       "code":200,
+  //       "l_j_drug": [
+  //         {
+  //           "drug_name": "1",
+  //           "time": "2"
+  //         },
+  //         {
+  //           "drug_name": "2",
+  //           "time": "1"
+  //         }
+  //       ],
+  //     }
+  //   }
   // } 
   render(){
     const { classes } = this.props;
@@ -49,7 +105,7 @@ class Medicine extends Component {
         {/* paper_2 두번째 칸 */}
           <Grid alignItems="center" xs={10}>
           <Paper className={classes.paper_1}>
-            <IconTextList/>
+            <IconTextList tempRsp={this.state.tempRsp}/>
             </Paper>
           </Grid>
           

@@ -6,7 +6,8 @@ import LoginLayout from './LoginLayout';
 import Medicine from './Medicine';
 import Dashboard from './Dashboard';
 import EventAdder from './EventAdder';
-import UserGreeting from './tempfiles/UserGreeting';
+// import UserGreeting from './tempfiles/UserGreeting';
+import Greeting from './Greeting';
 
 
 const useStyles = theme => ({
@@ -25,7 +26,7 @@ class Login extends Component {
                     <Route path ="/Dashboard" component = {Dashboard}/>
                     <Route path ="/Medicine" component = {Medicine}/>
                     <Route path ="/EventAdder" component = {EventAdder}/>
-                    <Route path ="/UserGreeting" component = {UserGreeting}/>
+                    <Route path ="/Greeting" component = {Greeting}/>
 
                 </Switch>
             </div>
