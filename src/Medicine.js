@@ -3,8 +3,8 @@ import './App.css';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import Paper  from '@material-ui/core/Paper';
-import IconTextList from './IconTextList';
-import ControlBoard from './tempfiles/ControlBoard';
+import IconTextList from './servepart/IconTextList';
+import ControlBoard from './servepart/ControlBoard';
 import Box from '@material-ui/core/Box';
 
 
@@ -51,46 +51,7 @@ class Medicine extends Component {
       tempRsp:tempRsp2
     }
   }
-  // componentDidMount(){
-  //   const tempRsp2 = {
-  //     "payload":{
-  //       "code":200,
-  //       "l_j_drug": [
-  //         {
-  //           "drug_name": "1",
-  //           "time": "2"
-  //         },
-  //         {
-  //           "drug_name": "2",
-  //           "time": "1"
-  //         }
-  //       ],
-  //     }
-  //   }
-  //   this.setState({
-  //     tempRsp : tempRsp2
-  //   })
-  // }
-  // handleSubmit = event => {
-  //   event.preventDefault();
-  //   console.log(event);
 
-  //   const tempRsp = {
-  //     "payload":{
-  //       "code":200,
-  //       "l_j_drug": [
-  //         {
-  //           "drug_name": "1",
-  //           "time": "2"
-  //         },
-  //         {
-  //           "drug_name": "2",
-  //           "time": "1"
-  //         }
-  //       ],
-  //     }
-  //   }
-  // } 
   render(){
     const { classes } = this.props;
     return (

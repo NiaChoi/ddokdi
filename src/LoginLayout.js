@@ -9,6 +9,8 @@ import TextField from "@material-ui/core/TextField";
 import {ReactComponent as Logo} from './ddokdi_logo.svg';
 import AccountCircle from "@material-ui/icons/AccountCircle";
 
+import MsgProcessor from "./servepart/MsgProcessor"
+
 const useStyles = theme => ({
   root: {
     width: '100%'
@@ -30,23 +32,44 @@ const useStyles = theme => ({
  });
 
 class LoginLayout extends Component {
+  constructor(props) {
+    super(props);
+    localStorage.clear();
+    this.state = {
+      id: "",
+      pw: ""
+    };
+  }
+  handleChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
 
   handleSubmit = event => {
     event.preventDefault();
     console.log(event);
-    
-    const tempRsp = {
-      "payload":{
-        "code":200,
-        "success":"Login sucessfull"
-      }
-    }
 
-    if(tempRsp.payload.code === 200){
-      alert(tempRsp.payload.success);
-      this.props.history.push("/Greeting");
+    let msgProc = new MsgProcessor();
+    if(!this.state.id == "" && !this.state.pw == ""){
+      msgProc.attemptSignIn(this.state.id,this.state.pw, (result)=> { 
+        if (result[0] == 0) {
+          alert("로그인 성공!");
+          localStorage.setItem("USN", result[1][0].USERID);
+          console.log(result[1][0].USERID);
+          this.props.history.push("/Greeting");
+        }
+        else {
+          alert(result[1]);
+          this.props.history.push("/Greeting");
+        }
+      });
+    }else{
+      alert("입력 해주세요");
     }
-  } 
+  }
+  
 
   render(){
      
@@ -74,12 +97,23 @@ class LoginLayout extends Component {
                       <AccountCircle style={{ fontSize: 50 }} />
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField id="input-with-icon-grid" label="ID" 
-                      variant="outlined" />
+                      <TextField 
+                        id="id" 
+                        label="ID" 
+                        type="email" 
+                        autoFocus
+                        variant="outlined"
+                        value={this.state.id}
+                        onChange={this.handleChange}/>
                       </Grid>
                     <Grid item xs={12}>
-                      <TextField id="input-with-icon-grid" label="PW" 
-                      variant="outlined" />
+                      <TextField 
+                        id="pw" 
+                        label="PW" 
+                        type="password" 
+                        variant="outlined"
+                        value={this.state.pw}
+                        onChange={this.handleChange}/>
                     </Grid>
                   </Grid>
                     </Grid>

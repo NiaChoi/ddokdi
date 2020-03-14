@@ -3,7 +3,7 @@ import './App.css';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import Paper  from '@material-ui/core/Paper';
-import ControlBoard from './tempfiles/ControlBoard';
+import ControlBoard from './servepart/ControlBoard';
 import { FixedSizeList } from 'react-window';
 import Checkbox from '@material-ui/core/Checkbox';
 import ListItem from '@material-ui/core/ListItem';
@@ -15,6 +15,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+
+import MsgProcessor from "./servepart/MsgProcessor"
+
 
 
 const useStyles = theme => ({
@@ -50,113 +53,87 @@ class EventAdder extends Component {
     super(props);
     this.max_content_id = 3;//UI에 영향을 주지 않으므로 state X
     this.state = {
-      tempRsp1:{
-        "payload":{
-          "l_j_event": [
-            {
-              "event_no": 54,
-              "event_name": "만들기!"
-            },
-            {
-              "event_no": 55,
-              "event_name": "하하하 웃음교실!"
-            },
-            {
-              "event_no": 56,
-              "event_name": "교육"
-            },
-            {
-              "event_no": 57,
-              "event_name": "푸하하하!"
-            }
-          ],
-        }
-      },
+      nEventList: [],
+      listLength: 0,
+      dEventNo:0,
+      dEventList:[]
       }
+    }
+  
+    componentDidMount(){
+      let userId = localStorage.getItem("USN");
+      let msgProc = new MsgProcessor();
+      msgProc.attemptAllEvent(userId, (result)=> { 
+        if (result[0] == 0) {
+          console.log(result[1]);
+          this.setState({
+            nEventList:result[1],
+            listLength:result[1].length
+          })  
+        }
+      });
+
     }
   
   handlejoinSubmit = event => {
     event.preventDefault();
-    ///load join event Req
-    // const tempRsp = {
-    //   "payload":{
+    const tempRsp3 = {
+    "payload":{
 
-    //     "l_j_event": [
-    //       {
-    //         "event_no": 54,
-    //         "event_name": "만들기!"
-    //       },
-    //       {
-    //         "event_no": 55,
-    //         "event_name": "하하하 웃음교실!"
-    //       },
-    //       {
-    //         "event_no": 56,
-    //         "event_name": "교육"
-    //       },
-    //       {
-    //         "event_no": 57,
-    //         "event_name": "푸하하하!"
-    //       }
-    //     ],
-    //   }
-    // }
-  }
-  ///
-  handlejoinSubmit = event => {
-    event.preventDefault();
-      const tempRsp3 = {
-      "payload":{
-
-        "code": 200,
-        "sucess": "event_j sucess"
-          }
-      }
-      if(tempRsp3.payload.code === 200){
-        alert(tempRsp3.payload.success);
-    }
-  }
-//세부 내용 불러오기
-  handledetailSubmit = event => {
-    event.preventDefault();
-      const tempRsp2 = {
-        "payload":{
-          "d_event": [
-            {
-              "event_name": "교육",
-              "date": "2020-03-18T08:00:00.000Z!",
-              "qualificaion": "누구나!",
-              "body": "배움의 즐거움을 느껴요!",
-              "location": "대구광역시!",
-              "beneficial": "배움 가득",
-              "ect": "없음!",
-              "heads": 30,
-            },
-          ],
+      "code": 200,
+      "sucess": "event_j sucess"
         }
-      }
+    }
+    if(tempRsp3.payload.code === 200){
+      alert(tempRsp3.payload.success);
   }
-
-
-    
-
-
-  list_length =  4;
-  renderRow(props) {
+}
+handleListItemClick = event => {
+  let selectedEvent = event.target.innerText;
+  let eventList = this.state.nEventList;
+  let eventNo = 0;
+  eventList.forEach(element => {
+    if(element.event_name === selectedEvent){
+      eventNo = element.event_no;
+    }
+  });
+  
+  this.setState({
+    dEventNo:eventNo
+  })  
+  let msgProc = new MsgProcessor();
+  msgProc.attemptDetailEvent(eventNo, (result)=> { 
+    if (result[0] == 0) {
+      console.log(result[1][0]);
+      this.setState({
+        dEventList:result[1][0]
+      })  
+    }
+  });
+}
+  renderRow(mState, handleListItemClick ,props) {
     const { index, style } = props;
-    console.log(index);
+    console.log(mState.nEventList);
     const [checked, setChecked] = React.useState(false); 
-    const event_list =[54,55,56,57];
+
+    let event_list =[];
+    mState.nEventList.forEach(element => {
+      event_list.push(element.event_name);
+    });
+
+    console.log(handleListItemClick);
     // const mnRow = med_name.length;
     // // const med_time = [,];
     const handleChange = event => {
       setChecked(event.target.checked);
     };
-    
+    const handleOnClick = event =>{
+      console.log(event.target.innerText);
+    }
     return (
       ///List 항목 누르면 handledetailSubmit이 동작하게
       // <form onSubmit={this.handledetailSubmit}>
-        <ListItem button type = "submit" tabindex={event_list[index]} style={style} key={index} >
+        <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
           <Checkbox
             checked={checked}
             onChange={handleChange}
@@ -166,7 +143,6 @@ class EventAdder extends Component {
         </ListItem>
     //  </form>
     );
-    
   }
   
   
@@ -186,11 +162,11 @@ class EventAdder extends Component {
         {/* paper_2 두번째 칸 */}
           <Grid item xs={5} >
           <Paper className={classes.paper_1}>
-          <Box color="text.secondary" fontSize={20} textAlign="center" fontWeight="fontWeightBold">
+          <Box color="text.secondary" fontSize={30} textAlign="left" fontWeight="fontWeightBold">
               새로운 행사
               </Box>
-              <FixedSizeList height={541} width='90%' itemSize={60} itemCount={this.list_length}>
-              {this.renderRow}
+              <FixedSizeList height={528} width='90%' itemSize={60} itemCount={this.state.listLength}>
+              {this.renderRow.bind(this, this.state, this.handleListItemClick)}
               </FixedSizeList>
               </Paper>
             </Grid>
@@ -199,8 +175,8 @@ class EventAdder extends Component {
               <Paper className={classes.paper_1}>
                 <Card className={classes.card_d}>
                   <CardHeader
-                    title="{this.tempRsp2.event_name}"
-                    subheader="{this.tempRsp2.date}"
+                    title={this.state.dEventList.event_name}
+                    subheader={this.state.dEventList.date}
                   />
                   {/* <CardMedia
                     className={classes.media}
@@ -209,13 +185,17 @@ class EventAdder extends Component {
                   /> */}
                   <CardContent>
                     {/* ///여기에 tempRsp2의 내용을 띄움 */}
-                    <Typography variant="body2" color="textSecondary" component="p">
-                      {/* 대상: {this.tempRsp2.qualificaion}<br/>
-                      내용: {this.tempRsp2.body}<br/>
-                      장소: {this.tempRsp2.location}<br/>
-                      특이사항: {this.tempRsp2.beneficial}<br/>
-                      기타사항: {this.tempRsp2.ect}<br/> */}
-                    </Typography>
+                   <Typography align="left" variant="h5" color="textSecondary" component="p" >
+                      
+                    <Box color="text.secondary" fontSize={30} textAlign="left" fontWeight="fontWeightBold">
+                      [대상] <br/>{this.state.dEventList.qualificaion}<br/>
+                    </Box>
+                      
+                      [내용] <br/>{this.state.dEventList.body}<br/>
+                      [장소] <br/>{this.state.dEventList.location}<br/>
+                      [특이사항] <br/>{this.state.dEventList.beneficial}<br/>
+                      [기타사항] <br/>{this.state.dEventList.ect}<br/><br/><br/><br/><br/><br/><br/>hi
+                    </Typography> : <Typography variant="body2" color="textSecondary" component="p"/>}
                     <form noValidate onSubmit={this.handlejoinSubmit}>
                       <Button size="small" color="primary">
                         <AddCircleIcon/>참가하기
