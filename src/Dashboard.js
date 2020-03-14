@@ -11,6 +11,7 @@ import Badge from '@material-ui/core/Badge';
 // import ListItemText from '@material-ui/core/ListItemText';
 // import { FixedSizeList } from 'react-window';
 
+import MsgProcessor from "./servepart/MsgProcessor"
 
 
 const useStyles = theme => ({
@@ -44,36 +45,35 @@ const useStyles = theme => ({
 });
 
 class Dashboard extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      c_n_event:"",
+      l_j_event:[],
+      l_j_drug:[]
+    }
+  }
+  componentDidMount(){
+    let userId = localStorage.getItem("USN");
+    let msgProc = new MsgProcessor();
+    msgProc.attemptDashboard(userId, (result)=> { 
+      if (result[0] == 0) {
+        console.log(result[1]);
+        this.setState({
+          c_n_event:result[1][0],
+          l_j_event:result[2][0],
+          l_j_drug:result[3][0]
+        })
+      }
+      else {
+        alert(result[1]);
+      }
+    });
+  } 
   handleSubmit = event => {
     event.preventDefault();
     console.log(event);
     
-    const tempRsp = {
-      "payload":{
-        "code":200,
-        "c_n_event": [
-          {
-            "COUNT(event_no)": 3 //새로운 이벤트
-          }
-        ],
-        "l_j_event": [
-          {
-            "event_no": 55,
-            "event_name": "하하하 웃음교실!"
-          }
-        ],
-        "l_j_drug": [
-          {
-            "drug_name": "1",
-            "time": "2"
-          },
-          {
-            "drug_name": "2",
-            "time": "1"
-          }
-        ],
-      }
-    }
   } 
   handleMedSubmit = event => {
     event.preventDefault();

@@ -41,6 +41,18 @@ class MsgProcessor{
     });
   }//.Dashboard function
 
+
+//Medicine function
+attempMedicine(userId, cb) {
+  let payload = {"USERID":userId};
+  let msg_sgi = {"payload":payload};
+  this.reqMsgProcess(msg_sgi, "/drug_list", (result)=> {
+    cb(this.medicineMsgResultProcess(result));
+  });
+}//.Medicine function
+
+
+
   //newEvent function
   attemptNewEvent(userId, cb) {
     let payload = {"USERID":userId};
@@ -135,36 +147,36 @@ class MsgProcessor{
 
   //Greeting Result process function 
   dashboardMsgResultProcess(resMsg){
-    resMsg.data = 
-    {"code":200,
-        "c_n_event": [
-          {
-            "COUNT(event_no)": 3 //새로운 이벤트
-          }
-        ],
-        "l_j_event": [
-          {
-            "event_no": 55,
-            "event_name": "하하하 웃음교실!"
-          }
-        ],
-        "l_j_drug": [
-          {
-            "drug_name": "1",
-            "time": "2"
-          },
-          {
-            "drug_name": "2",
-            "time": "1"
-          }
-        ],
-      };
+    // resMsg.data = 
+    // {"code":200,
+    //     "c_n_event": [
+    //       {
+    //         "COUNT(event_no)": 3 //새로운 이벤트
+    //       }
+    //     ],
+    //     "l_j_event": [
+    //       {
+    //         "event_no": 55,
+    //         "event_name": "하하하 웃음교실!"
+    //       }
+    //     ],
+    //     "l_j_drug": [
+    //       {
+    //         "drug_name": "1",
+    //         "time": "2"
+    //       },
+    //       {
+    //         "drug_name": "2",
+    //         "time": "1"
+    //       }
+    //     ],
+    //   };
     let msgPayload = resMsg.data;
     let unpackResult = null;
 
     switch(msgPayload.code){
       case 200:
-        unpackResult = [0,msgPayload.c_n_event, msgPayload.l_j_event, msgPayload.l_j_drug];
+        unpackResult = [0, msgPayload.c_n_event, msgPayload.l_j_event, msgPayload.l_drug];
         break;
       default:
         unpackResult = [1,"Unknown error"];
@@ -173,6 +185,23 @@ class MsgProcessor{
     
     return  unpackResult;
   }//.Greeting Result process function 
+
+  //druglist Result process function 
+  medicineMsgResultProcess(resMsg){
+    let msgPayload = resMsg.data;
+    let unpackResult = null;
+    
+    switch(msgPayload.code){
+      case 200:
+        unpackResult = [0,msgPayload.l_drug];
+        break;
+      default:
+        unpackResult = [1,"Unknown error"];
+        break;
+    }
+
+    return  unpackResult;
+  }//.allEvent Result process function
 
   //newEvent Result process function 
   newEventMsgResultProcess(resMsg){

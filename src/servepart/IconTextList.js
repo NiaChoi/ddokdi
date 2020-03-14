@@ -14,6 +14,9 @@ import Box from '@material-ui/core/Box';
 import DeleteForeverSharpIcon from '@material-ui/icons/DeleteForeverSharp';
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
 
+
+import MsgProcessor from "./MsgProcessor"
+
 const useStyles = theme => ({
   root: {
     flexGrow: 1,
@@ -71,7 +74,7 @@ class IconTextList extends Component{
           inputProps={{ 'aria-label': 'primary checkbox' }}/>
         <ListItemText primary= {med_name[index]} />
         <ListItemIcon >
-          <Brightness6Icon visibility={med_time[index]? "hidden" : "visible"} style={{ fontSize: 40 }}/>
+          <Brightness6Icon style={{ fontSize: 40 }}/>
           <Brightness5Icon style={{ fontSize: 40 }}/>
           <Brightness4Icon style={{ fontSize: 40 }}/>
           </ListItemIcon>
@@ -88,8 +91,8 @@ class IconTextList extends Component{
           <Grid container className={classes.root} item xs={12}>
             <br/>
           <Grid item xs={12}>
-            <Typography>
-              <Box fontSize={30} textAlign="center" fontWeight="fontWeightBold" m={1}>
+            <Typography variant="h5">
+              <Box textAlign="center" fontWeight="fontWeightBold" m={1}>
               약 복용설정
               </Box>
             </Typography>

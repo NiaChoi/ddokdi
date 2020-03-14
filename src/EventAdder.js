@@ -15,6 +15,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import ListSubheader from '@material-ui/core/ListSubheader';
+
 
 import MsgProcessor from "./servepart/MsgProcessor"
 
@@ -132,7 +134,7 @@ handleListItemClick = event => {
     }
     return (
       ///List 항목 누르면 handledetailSubmit이 동작하게
-      // <form onSubmit={this.handledetailSubmit}>
+      <form onSubmit={this.handledetailSubmit}>
         <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
           <Checkbox
             checked={checked}
@@ -141,7 +143,7 @@ handleListItemClick = event => {
             inputProps={{ 'aria-label': 'primary checkbox' }}/>
           <ListItemText primary= {event_list[index]} />
         </ListItem>
-    //  </form>
+        </form>
     );
   }
   
@@ -162,9 +164,10 @@ handleListItemClick = event => {
         {/* paper_2 두번째 칸 */}
           <Grid item xs={5} >
           <Paper className={classes.paper_1}>
-          <Box color="text.secondary" fontSize={30} textAlign="left" fontWeight="fontWeightBold">
+          <ListSubheader>새로운 행사</ListSubheader>
+          {/* <Box color="text.secondary" fontSize={30} textAlign="left" fontWeight="fontWeightBold">
               새로운 행사
-              </Box>
+              </Box> */}
               <FixedSizeList height={528} width='90%' itemSize={60} itemCount={this.state.listLength}>
               {this.renderRow.bind(this, this.state, this.handleListItemClick)}
               </FixedSizeList>
@@ -185,7 +188,7 @@ handleListItemClick = event => {
                   /> */}
                   <CardContent>
                     {/* ///여기에 tempRsp2의 내용을 띄움 */}
-                   <Typography align="left" variant="h5" color="textSecondary" component="p" >
+                    {this.state.dEventNo !== 0 ?<Typography align="left" variant="h5" color="textSecondary" component="p" >
                       
                     <Box color="text.secondary" fontSize={30} textAlign="left" fontWeight="fontWeightBold">
                       [대상] <br/>{this.state.dEventList.qualificaion}<br/>
@@ -194,7 +197,7 @@ handleListItemClick = event => {
                       [내용] <br/>{this.state.dEventList.body}<br/>
                       [장소] <br/>{this.state.dEventList.location}<br/>
                       [특이사항] <br/>{this.state.dEventList.beneficial}<br/>
-                      [기타사항] <br/>{this.state.dEventList.ect}<br/><br/><br/><br/><br/><br/><br/>hi
+                      [기타사항] <br/>{this.state.dEventList.ect}
                     </Typography> : <Typography variant="body2" color="textSecondary" component="p"/>}
                     <form noValidate onSubmit={this.handlejoinSubmit}>
                       <Button size="small" color="primary">

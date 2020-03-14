@@ -62,7 +62,6 @@ class LoginLayout extends Component {
         }
         else {
           alert(result[1]);
-          this.props.history.push("/Greeting");
         }
       });
     }else{

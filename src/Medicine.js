@@ -8,6 +8,8 @@ import ControlBoard from './servepart/ControlBoard';
 import Box from '@material-ui/core/Box';
 
 
+import MsgProcessor from "./servepart/MsgProcessor"
+
 
 const useStyles = theme => ({
   root: {
@@ -32,23 +34,40 @@ const useStyles = theme => ({
 class Medicine extends Component {
   constructor(props){
     super(props);
-    const tempRsp2 = {
-      "payload":{
-        "code":200,
-        "l_j_drug": [
-          {
-            "drug_name": "1",
-            "time": "2"
-          },
-          {
-            "drug_name": "2",
-            "time": "1"
-          }
-        ],
+    this.max_content_id = 3;//UI에 영향을 주지 않으므로 state X
+    this.state = {
+      nEventList: [],
+      listLength: 0,
+      dEventNo:0,
+      dEventList:[]
       }
     }
-    this.state = {
-      tempRsp:tempRsp2
+    componentDidMount(){
+      let userId = localStorage.getItem("USN");
+      let msgProc = new MsgProcessor();
+      msgProc.attemptAllEvent(userId, (result)=> { 
+        if (result[0] == 0) {
+          console.log(result[1]);
+          this.setState({
+            nEventList:result[1],
+            listLength:result[1].length
+          })  
+        }
+      });
+
+    }
+  
+  handlejoinSubmit = event => {
+    event.preventDefault();
+      const tempRsp3 = {
+      "payload":{
+
+        "code": 200,
+        "sucess": "event_j sucess"
+          }
+      }
+      if(tempRsp3.payload.code === 200){
+        alert(tempRsp3.payload.success);
     }
   }
 
