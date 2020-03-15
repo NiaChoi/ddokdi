@@ -5,7 +5,6 @@ import { Grid } from '@material-ui/core';
 import Paper  from '@material-ui/core/Paper';
 import ControlBoard from './servepart/ControlBoard';
 import { FixedSizeList } from 'react-window';
-import Checkbox from '@material-ui/core/Checkbox';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Box from '@material-ui/core/Box';
@@ -57,9 +56,11 @@ class EventAdder extends Component {
     this.max_content_id = 3;//UI에 영향을 주지 않으므로 state X
     this.state = {
       nEventList: [],
-      listLength: 0,
+      nlistLength: 0,
       dEventNo:0,
-      dEventList:[]
+      dEventList: [],
+      jEventList: [],
+      jlistLength:0,
       }
     }
   
@@ -71,11 +72,19 @@ class EventAdder extends Component {
           console.log(result[1]);
           this.setState({
             nEventList:result[1],
-            listLength:result[1].length
+            nlistLength:result[1].length
+          })  
+        }
+      });msgProc.attemptJoinEvent(userId, (result)=> { 
+        if (result[0] == 0) {
+          console.log(result[1]);
+          this.setState({
+            jEventList:result[1],
+            jlistLength:result[1].length
           })  
         }
       });
-
+     
     }
   
   handlejoinSubmit = event => {
@@ -114,13 +123,41 @@ handleListItemClick = event => {
     }
   });
 }
-  renderRow(mState, handleListItemClick ,props) {
+  renderNewRow(mState, handleListItemClick ,props) {
     const { index, style } = props;
     console.log(mState.nEventList);
     const [checked, setChecked] = React.useState(false); 
 
     let event_list =[];
     mState.nEventList.forEach(element => {
+      event_list.push(element.event_name);
+    });
+
+    console.log(handleListItemClick);
+    // const mnRow = med_name.length;
+    // // const med_time = [,];
+    const handleChange = event => {
+      setChecked(event.target.checked);
+    };
+    const handleOnClick = event =>{
+      console.log(event.target.innerText);
+    }
+    return (
+      ///List 항목 누르면 handledetailSubmit이 동작하게
+      <form onSubmit={this.handledetailSubmit}>
+        <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
+          <ListItemText primary= {event_list[index]} />
+        </ListItem>
+        </form>
+    );
+  }
+  renderJoinRow(mState, handleListItemClick ,props) {
+    const { index, style } = props;
+    console.log(mState.jEventList);
+    const [checked, setChecked] = React.useState(false); 
+
+    let event_list =[];
+    mState.jEventList.forEach(element => {
       event_list.push(element.event_name);
     });
 
@@ -160,12 +197,18 @@ handleListItemClick = event => {
         {/* paper_2 두번째 칸 */}
           <Grid item xs={5} >
           <Paper className={classes.paper_1}>
-          <Box color="text.secondary" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
+          {this.state.nlistLength !== 0 ?<Box color="text.secondary" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
               새로운 행사
-              </Box>
-              <FixedSizeList height={528} width='90%' itemSize={60} itemCount={this.state.listLength}>
-              {this.renderRow.bind(this, this.state, this.handleListItemClick)}
-              </FixedSizeList>
+              </Box>:
+              <Box color="text.secondary" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
+              참가 행사</Box>}
+              
+              {this.state.nlistLength !== 0 ?<FixedSizeList height={542} width='90%' itemSize={60} itemCount={this.state.nlistLength}>
+              {this.renderNewRow.bind(this, this.state, this.handleListItemClick)}
+              </FixedSizeList>:
+              <FixedSizeList height={542} width='90%' itemSize={60} itemCount={this.state.jlistLength}>
+              {this.renderJoinRow.bind(this, this.state, this.handleListItemClick)}
+              </FixedSizeList>}
               </Paper>
             </Grid>
 
@@ -174,17 +217,9 @@ handleListItemClick = event => {
                 <Card className={classes.card_d}>
                   <CardHeader
                     title={this.state.dEventList.event_name}
-                    subheader={this.state.dEventList.date}
-                  />
-                  {/* <CardMedia
-                    className={classes.media}
-                    image="/static/images/cards/paella.jpg"
-                    title="Paella dish"
-                  /> */}
+                    subheader={this.state.dEventList.date}/>
                   <CardContent>
-                    {/* ///여기에 tempRsp2의 내용을 띄움 */}
                     {this.state.dEventNo !== 0 ?<Typography align="left" variant="h5" color="textSecondary" component="p" >
-                      
                     <Box color="text.secondary" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
                       [대상] <br/>{this.state.dEventList.qualificaion}<br/>
                       [내용] <br/>{this.state.dEventList.body}<br/>
@@ -192,14 +227,19 @@ handleListItemClick = event => {
                       [특이사항] <br/>{this.state.dEventList.beneficial}<br/>
                       [기타사항] <br/>{this.state.dEventList.ect}
                     </Box>
-                      
-                      
+                       
+                         <Grid container xs={12}>
+                           <Grid xs={4}/>
+                           <Grid xs={4}>
+                              <form noValidate onSubmit={this.handlejoinSubmit}>
+                             <br/><Button size="small" color="primary">
+                                <AddCircleIcon/>참가하기
+                              </Button>
+                            </form>
+                           </Grid>
+                            <Grid xs={4}/>
+                         </Grid>                     
                     </Typography> : <Typography variant="body2" color="textSecondary" component="p"/>}
-                    <form noValidate onSubmit={this.handlejoinSubmit}>
-                      <Button size="small" color="primary">
-                        <AddCircleIcon/>참가하기
-                      </Button>
-                    </form>
                   </CardContent>
                 </Card>              
               </Paper>

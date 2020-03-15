@@ -50,22 +50,8 @@ class Greeting extends Component {
   
   today = new Date();
   todayStr = this.today.getFullYear() + "년 " +(this.today.getMonth()+1) +"월 "+ this.today.getDate() + "일";
-  handleSubmit = event => {
-    event.preventDefault();
-    console.log(event);
-    
-    const tempRsp = {
-      "payload":{
-        "code":200,
-        "success":"mood resistered sucessfull"
-      }
-    }
+  
 
-    if(tempRsp.payload.code === 200){
-      alert(tempRsp.payload.success);
-      this.props.history.push("/Dashboard");
-    }
-  } 
   handleOnClick = (index,event) => {
     event.preventDefault();
     console.log(index);
@@ -81,7 +67,6 @@ class Greeting extends Component {
        
       }
     });
-
   }
 
   render(){
@@ -98,7 +83,9 @@ class Greeting extends Component {
                     <Typography 
                     gutterBottom 
                     variant="h3">
-                      <br/>오늘은 {this.todayStr} 입니다.<br/>지금의 기분을 표현해 주세요!</Typography>
+                      <br/>오늘은 {this.todayStr} 입니다.
+                      <br/>지금의 기분을 표현해 주세요!
+                      </Typography>
                   <Grid xs={12}>
                     <Divider/>
                     <br/>

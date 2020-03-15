@@ -66,7 +66,7 @@ attempMedicine(userId, cb) {
   attemptJoinEvent(userId, cb) {
     let payload = {"USERID":userId};
     let msg_sgi = {"payload":payload};
-    this.reqMsgProcess(msg_sgi, "/a_event_list", (result)=> {
+    this.reqMsgProcess(msg_sgi, "/j_event_list", (result)=> {
       cb(this.joinEventMsgResultProcess(result));
     });
   }//.allEvent function
@@ -117,7 +117,7 @@ attempMedicine(userId, cb) {
 
     switch(msgPayload.code){
       case 200:
-        unpackResult = [0,msgPayload.USERID];
+        unpackResult = [0, msgPayload.USERID];
         break;
       case 204:
         unpackResult = [1,msgPayload.success];

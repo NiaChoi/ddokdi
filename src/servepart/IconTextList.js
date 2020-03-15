@@ -65,45 +65,55 @@ class IconTextList extends Component{
     });
   }
 
-  med_time(index){
-  switch(this.state.drugList.time[index]){
-    case "0":
-      return (<Brightness6Icon style={{ fontSize: 40 }}/>);//아침
-    case "1":
-      return (<Brightness5Icon style={{ fontSize: 40 }}/>); //점심
-    case "2":
-      return (<Brightness4Icon style={{ fontSize: 40 }}/>);//저녁
-    case "3":
-      return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 저녁
-    default:
-      return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 점심,저녁
-    }
-  }
+  // med_time(index){
+  // switch(this.state.drugList.time[index]){
+  //   case "0":
+  //     return (<Brightness6Icon style={{ fontSize: 40 }}/>);//아침
+  //   case "1":
+  //     return (<Brightness5Icon style={{ fontSize: 40 }}/>); //점심
+  //   case "2":
+  //     return (<Brightness4Icon style={{ fontSize: 40 }}/>);//저녁
+  //   case "3":
+  //     return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 저녁
+  //   default:
+  //     return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 점심,저녁
+  //   }
+  // }
   
   renderRow(props) {
     const { index, style } = props;
-    console.log(props);
+    console.log(props.drugList[index]);
     const [checked, setChecked] = React.useState(false); 
-    const med_name = ['혈압약', '감기약', '소화제', '비타민'];
+    let med_index = props.drugList[index];
+    const med_name = ['혈압약', '감기약', '소화제', '비타민','관절약'];
     const med_time = ["hidden", "visible", "hidden", "visible"];
     // const mnRow = med_name.length;
     // // const med_time = [,];
     const handleChange = event => {
       setChecked(event.target.checked);
     };
-    const selected_med = med_name[this.state.rspMsg[index].drug_name]
+    // const selected_med = med_name[this.state.rspMsg[index].drug_name]
     return (
       ///List 변수 값 넣어보기
       <ListItem button style={style} key={index} >
-        <Checkbox
+        <Grid container  alignContent="center"  xs={12}>
+          <Grid item xs={2}>
+            <Checkbox
           checked={checked}
           onChange={handleChange}
           value="primary"
           inputProps={{ 'aria-label': 'primary checkbox' }}/>
-        <ListItemText primary= {selected_med} />
-        <ListItemIcon >
-          {this.med_time()}
+          </Grid>
+          <Grid item xs={5}>
+            <ListItemText primary= {med_name[med_index]} />
+          </Grid>
+          <Grid item xs={5}>
+            <ListItemIcon >
+          {this.med_time}
           </ListItemIcon>
+          </Grid>
+        </Grid>
+        
       </ListItem>
     );
     
@@ -137,7 +147,7 @@ class IconTextList extends Component{
           </Grid>
             </Grid>
             <Divider/> 
-            <FixedSizeList height={400} width='90%' itemSize={60} itemCount={this.state.list_length}>
+            <FixedSizeList height={400} width='100%' itemSize={60} itemCount={this.state.list_length}>
             {this.renderRow.bind(this, this.state)}
             </FixedSizeList>
             <Divider/>

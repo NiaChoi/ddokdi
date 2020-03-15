@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 import Badge from '@material-ui/core/Badge';
+import Typography from '@material-ui/core/Typography';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { FixedSizeList } from 'react-window';
@@ -45,16 +46,23 @@ const useStyles = theme => ({
 });
 
 class Dashboard extends Component {
+
+  today = new Date();
+  todayStr = this.today.getFullYear() + "년 " +(this.today.getMonth()+1) +"월 "+ this.today.getDate() + "일";
+
+  const "userName" = localStorage.getItem("name");
   constructor(props){
     super(props);
     this.state = {
       c_n_event:"",
       l_j_event:[],
-      l_j_drug:[]
+      l_drug:[]
     }
   }
+
   componentDidMount(){
     let userId = localStorage.getItem("USN");
+    
     let msgProc = new MsgProcessor();
     msgProc.attemptDashboard(userId, (result)=> { 
       if (result[0] == 0) {
@@ -86,8 +94,9 @@ class Dashboard extends Component {
     
   } 
   render(){
-    const {  classes } = this.props;
-    console.log(this.state.c_n_event[0]);
+    const { classes } = this.props;
+    console.log(this.state.c_n_event);
+    
     // const event_list=[ "a","b","c","d" ];
     // const { index, style } = this.props;
     // const event_list =[54,55,56,57];
@@ -102,8 +111,18 @@ class Dashboard extends Component {
           <Grid item xs={5}>
               <Grid alignItems="center" container spacing = {0}>
               <Grid item xs={12}>
-                <Paper className={classes.paper_2_1}></Paper>
+                <Paper className={classes.paper_2_1}>
+                <Typography 
+                    gutterBottom 
+                    variant="h6">
+                      <br/>안녕하세요! {this.userName} 입니다.
+                      <br/>오늘은 {this.todayStr} 입니다.
+                      </Typography>
+
+                </Paper>
               </Grid>
+
+
               <Grid item xs={12}>
                 <Paper className={classes.paper_2_1}>
                 <form noValidate onSubmit={this.handleMedSubmit}>

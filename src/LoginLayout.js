@@ -37,7 +37,8 @@ class LoginLayout extends Component {
     localStorage.clear();
     this.state = {
       id: "",
-      pw: ""
+      pw: "",
+      
     };
   }
   handleChange = event => {
@@ -58,6 +59,8 @@ class LoginLayout extends Component {
           alert("로그인 성공!");
           localStorage.setItem("USN", result[1][0].USERID);
           console.log(result[1][0].USERID);
+          localStorage.setItem("USNAME", result[1][0].name);
+          console.log(result[1][0].name);
           this.props.history.push("/Greeting");
         }
         else {
