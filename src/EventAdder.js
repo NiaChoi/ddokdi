@@ -137,11 +137,6 @@ handleListItemClick = event => {
       ///List 항목 누르면 handledetailSubmit이 동작하게
       <form onSubmit={this.handledetailSubmit}>
         <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
-          <Checkbox
-            checked={checked}
-            onChange={handleChange}
-            value="primary"
-            inputProps={{ 'aria-label': 'primary checkbox' }}/>
           <ListItemText primary= {event_list[index]} />
         </ListItem>
         </form>
@@ -165,10 +160,9 @@ handleListItemClick = event => {
         {/* paper_2 두번째 칸 */}
           <Grid item xs={5} >
           <Paper className={classes.paper_1}>
-          <ListSubheader>새로운 행사</ListSubheader>
-          {/* <Box color="text.secondary" fontSize={30} textAlign="left" fontWeight="fontWeightBold">
+          <Box color="text.secondary" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
               새로운 행사
-              </Box> */}
+              </Box>
               <FixedSizeList height={528} width='90%' itemSize={60} itemCount={this.state.listLength}>
               {this.renderRow.bind(this, this.state, this.handleListItemClick)}
               </FixedSizeList>
@@ -191,14 +185,15 @@ handleListItemClick = event => {
                     {/* ///여기에 tempRsp2의 내용을 띄움 */}
                     {this.state.dEventNo !== 0 ?<Typography align="left" variant="h5" color="textSecondary" component="p" >
                       
-                    <Box color="text.secondary" fontSize={30} textAlign="left" fontWeight="fontWeightBold">
+                    <Box color="text.secondary" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
                       [대상] <br/>{this.state.dEventList.qualificaion}<br/>
-                    </Box>
-                      
                       [내용] <br/>{this.state.dEventList.body}<br/>
                       [장소] <br/>{this.state.dEventList.location}<br/>
                       [특이사항] <br/>{this.state.dEventList.beneficial}<br/>
                       [기타사항] <br/>{this.state.dEventList.ect}
+                    </Box>
+                      
+                      
                     </Typography> : <Typography variant="body2" color="textSecondary" component="p"/>}
                     <form noValidate onSubmit={this.handlejoinSubmit}>
                       <Button size="small" color="primary">
