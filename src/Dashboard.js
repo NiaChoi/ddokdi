@@ -93,11 +93,6 @@ class Dashboard extends Component {
     });
   } 
 
-  handleSubmit = event => {
-    event.preventDefault();
-    console.log(event);
-    
-  } 
   handleMedSubmit = event => {
     event.preventDefault();
     this.props.history.push("/Medicine");
@@ -111,53 +106,80 @@ class Dashboard extends Component {
 
   
   
-  renderMedRow(mState, props) {
+  renderMedRow(mState, handleMedSubmit, props) {
     
-
     const { index, style } = props;
     // console.log(mState.l_drug);
     const med_name = ['혈압약', '감기약', '소화제', '비타민','관절약'];
-    
-    
     let _drugName=[];
     mState.l_drug.forEach(element => {
       _drugName.push(element.drug_name);
     });
+
+    console.log(mState.l_drug[index].time);
+
+    const med_time = index => {
+      switch(mState.l_drug[index].time){
+        case "0":
+          return (<Brightness6Icon style={{ fontSize: 40 }}/>);//아침
+        case "1":
+          return (<Brightness5Icon style={{ fontSize: 40 }}/>); //점심
+        case "2":
+          return (<Brightness4Icon style={{ fontSize: 40 }}/>);//저녁
+        case "3":
+          return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 저녁
+        case "4":
+          return (<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//점심, 저녁
+        default:
+          return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 점심, 저녁
+      }
+    }
+
+
+
     return (
       ///List 변수 값 넣어보기
-      <ListItem button style={style} key={index} >
+      
+    <form onSubmit={this.handleMedSubmit}> 
+    
+      <ListItem button onClick={handleMedSubmit} style={style} key={index} >
+        <Box width="100%" borderBottom={0.5} borderColor="grey">
         <Grid container  alignContent="center"  xs={12}>
           <Grid item xs={8}>
             <ListItemText primary={<Typography variant="h4" Align="center">{med_name[_drugName[index]]}</Typography>}/>
           </Grid>
           <Grid alignItems="center"item xs={4}>
             <ListItemIcon >
-            <Brightness6Icon style={{ fontSize: 40 }}/>
-            <Brightness5Icon style={{ fontSize: 40 }}/>
-            <Brightness4Icon style={{ fontSize: 40 }}/>
+            {med_time(index)}
           </ListItemIcon>
           </Grid>
         </Grid>
+      </Box>
       </ListItem>
+      </form>
     );
   }
+
   rendereventRow(mState, props) {
     const { index, style } = props;
 
-    // console.log(this.state.l_j_event);
     let join_event=[];
     mState.l_j_event.forEach(element => {
       join_event.push(element.event_name);
     });
     return (
       ///List 변수 값 넣어보기
+      
       <ListItem button style={style} key={index} >
-        <Grid container  alignContent="center"  xs={12}>
+        
+          <Grid container  alignContent="center"  xs={12}>
           <Grid item xs={12}>
             <ListItemText primary={<Typography variant="h4" Align="center">{join_event[index]}</Typography>}/>
           </Grid>
         </Grid>
+        
       </ListItem>
+      
     );
   }
   render(){
@@ -179,52 +201,47 @@ class Dashboard extends Component {
               <Grid alignItems="center" container spacing = {0}>
               <Grid item xs={12}>
                 <Paper className={classes.paper_2_1}>
-                <Box color="text.secondary" fontSize={35} textAlign="center" fontWeight="fontWeightBold">
-                  <br/>안녕하세요 {this.userName} 님!
-              </Box>
-
-              <Box color="text.secondary" fontSize={45} textAlign="center" fontWeight="fontWeightBold">
-                 {this.todayStr}<br/>{this.todayname_week} 
-              </Box>
-              
+                <Box height={288} color="primary.main" border= {2}borderColor="primary.main" borderRadius="borderRadius">
+                <Box color="primary.contrastText" bgcolor="primary.main" fontSize={30} textAlign="center" fontWeight="fontWeightBold" p={1}>
+                  {this.todayStr}{this.todayname_week} 
+                </Box>
+                <Box color="text.primary" fontSize={35} textAlign="center" fontWeight="fontWeightMedium">
+                  <br/>안녕하세요. {this.userName} 님!
+                 </Box>  
+                 </Box> 
                 </Paper>
               </Grid>
 
               <Grid item xs={12}>
               <Paper className={classes.paper_2_1}>
-              <Box color="text.secondary" fontSize={30} textAlign="center" fontWeight="fontWeightBold">
+              <Box height={288} color="primary.main" border= {2}borderColor="primary.main" borderRadius="borderRadius">
+              <Box color="primary.contrastText" bgcolor="primary.main" fontSize={30} textAlign="center" fontWeight="fontWeightBold" p={1}>
               약 목록
-              </Box>
-              <Divider/> 
-              <FixedSizeList height={200} width='100%' itemSize={60} itemCount={this.state.druglength}>
-              {this.renderMedRow.bind(this, this.state)}
+              </Box> 
+              <Box color="text.primary" height={236}  borderRadius="borderRadius" >
+                <FixedSizeList height={240} width="100%"  itemSize={55} itemCount={this.state.druglength}>
+                {this.renderMedRow.bind(this, this.state, this.handleMedSubmit)}
               </FixedSizeList>
-              <Divider/>
-                <form noValidate onSubmit={this.handleMedSubmit}>
-                      <IconButton type = "submit" color="primary"  size='small'aria-label="delete">
-                        <EditRoundedIcon style={{fontSize: 40 }}/> 수정하기
-                      </IconButton>
-                    </form>
-                </Paper>
+              </Box>
+              </Box>
+              </Paper>
               </Grid>
              </Grid>
           </Grid>
 {/* 세번째구역 */}
+
           <Grid item xs={5}>
           <Paper className={classes.paper_1}>
-
-          <Box color="text.secondary" fontSize={40} textAlign="center" fontWeight="fontWeightBold">
-              참석 목록
-              </Box>
-              <Divider/> 
-              <FixedSizeList height={450} width='100%' itemSize={80} itemCount={this.state.l_j_count}>
-              {this.rendereventRow.bind(this, this.state)}
+          <Box height={580} color="primary.main" border= {2}borderColor="primary.main" borderRadius="borderRadius">
+            <Box color="primary.contrastText" bgcolor="primary.main" fontSize={30} textAlign="center" fontWeight="fontWeightBold" p={1}>
+              행사 참석 목록
+              </Box> 
+              <Box color="text.primary" height={520}  borderRadius="borderRadius" >
+                <FixedSizeList height={450} width="100%"  itemSize={70} itemCount={this.state.druglength}>
+                {this.rendereventRow.bind(this, this.state)}
               </FixedSizeList>
-              <Divider/>
-
-            <form noValidate onSubmit={this.handleEventSubmit}>
+              <form noValidate onSubmit={this.handleEventSubmit}>
               <br/>
-              
               <IconButton type = "submit" color="primary" size='small'aria-label="delete">
                 {/*왜 this.state.c_n_event가 안들어가지 */}
                 <Badge color="secondary" badgeContent={this.state.count[event_count]} >
@@ -232,10 +249,13 @@ class Dashboard extends Component {
                 </Badge>
               </IconButton>
             </form>
+
+              </Box>
+
             
+            </Box>
             </Paper>
           </Grid>
-          
           </Grid>
       </div>
     );

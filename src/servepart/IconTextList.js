@@ -104,8 +104,10 @@ class IconTextList extends Component{
           return (<Brightness4Icon style={{ fontSize: 40 }}/>);//저녁
         case "3":
           return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 저녁
+        case "4":
+          return (<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//점심, 저녁
         default:
-          return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 점심,저녁
+          return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 점심, 저녁
       }
     }
 
@@ -152,15 +154,13 @@ class IconTextList extends Component{
             <Divider/> 
           <Grid item xs={12}>
           <Grid container>
-            <Grid item xs={2}>
-            <Typography variant="h5" Align="center">선택</Typography>
-            </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={4}>
             <Typography variant="h5" Align="center">약 이름</Typography>
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={4}>
             <Typography variant="h5" Align="center">복용시간</Typography>
             </Grid>
+            <Grid item xs={4}/>
           </Grid>
             </Grid>
             <Divider/> 

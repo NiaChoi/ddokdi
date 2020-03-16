@@ -61,7 +61,7 @@ class ControlBoard extends Component {
                 <form noValidate onSubmit={this.handleHomeSubmit} >
                     <Fab type = "submit" color="inherit" size='large'><HomeRoundedIcon style={{fontSize: 50}} /></Fab>
                   <Typography>
-                    <Box fontSize={20} textAlign="center" fontWeight="fontWeightBold"><br/>처음으로 </Box>
+                    <Box fontSize={20} color="text.primary" textAlign="center" fontWeight="fontWeightBold"><br/>처음으로 </Box>
                   </Typography>
                   </form>
                   </Grid>
@@ -70,7 +70,7 @@ class ControlBoard extends Component {
                   <form noValidate onSubmit={this.handleMediSubmit} >
                     <Fab type = "submit" color="inherit" size='large'><LocalHospitalIcon style={{fontSize: 45}} /></Fab>
                     <Typography>
-                    <Box fontSize={20} textAlign="center" fontWeight="fontWeightBold"><br/>약 설정 </Box>
+                    <Box fontSize={20} color="text.primary" textAlign="center" fontWeight="fontWeightBold"><br/>약 설정 </Box>
                     </Typography>
                   </form>
                   </Grid>
@@ -79,7 +79,7 @@ class ControlBoard extends Component {
                   <form noValidate onSubmit={this.handleEventSubmit} >
                     <Fab type = "submit" color="inherit" size='large'><EventAvailableIcon style={{fontSize: 45}} /></Fab>
                     <Typography>
-                    <Box fontSize={20} textAlign="center" fontWeight="fontWeightBold"><br/>행사 보기 </Box>
+                    <Box fontSize={20} color="text.primary" textAlign="center" fontWeight="fontWeightBold"><br/>행사 보기 </Box>
                     </Typography>
                   </form>
                   </Grid>
