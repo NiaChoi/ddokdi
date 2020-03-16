@@ -14,6 +14,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Brightness6Icon from '@material-ui/icons/Brightness6';
 import Brightness5Icon from '@material-ui/icons/Brightness5';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
+import Divider from '@material-ui/core/Divider';
 import { FixedSizeList } from 'react-window';
 import Box from '@material-ui/core/Box';
 
@@ -57,7 +58,8 @@ class Dashboard extends Component {
   todayname = this.today.getDay();
 
   week = new Array('일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일');
-  todayStr = this.today.getFullYear() + "년 " +(this.today.getMonth()+1) +"월 "+ this.today.getDate() + "일"+(this.week[this.todayname]);
+  todayStr = this.today.getFullYear() + "년 " +(this.today.getMonth()+1) +"월 "+ this.today.getDate() + "일 ";
+  todayname_week = (this.week[this.todayname]);
 
   userName = localStorage.getItem("USNAME");
 
@@ -66,6 +68,7 @@ class Dashboard extends Component {
     this.state = {
       count:0,
       l_j_event:[],
+      l_j_count:0,
       l_drug:[],
       druglength:0
     }
@@ -76,13 +79,10 @@ class Dashboard extends Component {
     let msgProc = new MsgProcessor();
     msgProc.attemptDashboard(userId, (result)=> { 
       if (result[0] == 0) {
-        console.log(result[1][0]);
-        console.log(result[2]);
-        console.log(result[3]);
-        console.log(result[3].length);
         this.setState({
           count:result[1][0],
           l_j_event:result[2],
+          l_j_count:result[2].length,
           l_drug:result[3],
           druglength:result[3].length
         })
@@ -117,18 +117,18 @@ class Dashboard extends Component {
     const { index, style } = props;
     // console.log(mState.l_drug);
     const med_name = ['혈압약', '감기약', '소화제', '비타민','관절약'];
-
-    // let drug_list=[];
-    // mState.l_drug.forEach(element => {
-    //   drug_list.push(element.drug_name);
-    // });
-
+    
+    
+    let _drugName=[];
+    mState.l_drug.forEach(element => {
+      _drugName.push(element.drug_name);
+    });
     return (
       ///List 변수 값 넣어보기
       <ListItem button style={style} key={index} >
         <Grid container  alignContent="center"  xs={12}>
           <Grid item xs={8}>
-            <ListItemText primary={<Typography variant="h7" Align="center">{med_name[index]}</Typography>}/>
+            <ListItemText primary={<Typography variant="h4" Align="center">{med_name[_drugName[index]]}</Typography>}/>
           </Grid>
           <Grid alignItems="center"item xs={4}>
             <ListItemIcon >
@@ -141,40 +141,32 @@ class Dashboard extends Component {
       </ListItem>
     );
   }
-  // renderMedRow(props) {
-    
+  rendereventRow(mState, props) {
+    const { index, style } = props;
 
-  //   const { index, style } = props;
-  //   // console.log(mState.l_drug);
-  //   const med_name = ['혈압약', '감기약', '소화제', '비타민','관절약'];
-
-  //   // let drug_list=[];
-  //   // mState.l_drug.forEach(element => {
-  //   //   drug_list.push(element.drug_name);
-  //   // });
-
-  //   return (
-  //     ///List 변수 값 넣어보기
-  //     <ListItem button style={style} key={index} >
-  //       <Grid container  alignContent="center"  xs={12}>
-  //         <Grid item xs={8}>
-  //           <ListItemText primary={<Typography variant="h7" Align="center">{med_name[index]}</Typography>}/>
-  //         </Grid>
-  //         <Grid alignItems="center"item xs={4}>
-  //           <ListItemIcon >
-  //           <Brightness6Icon style={{ fontSize: 40 }}/>
-  //           <Brightness5Icon style={{ fontSize: 40 }}/>
-  //           <Brightness4Icon style={{ fontSize: 40 }}/>
-  //         </ListItemIcon>
-  //         </Grid>
-  //       </Grid>
-  //     </ListItem>
-  //   );
-  // }
+    // console.log(this.state.l_j_event);
+    let join_event=[];
+    mState.l_j_event.forEach(element => {
+      join_event.push(element.event_name);
+    });
+    return (
+      ///List 변수 값 넣어보기
+      <ListItem button style={style} key={index} >
+        <Grid container  alignContent="center"  xs={12}>
+          <Grid item xs={12}>
+            <ListItemText primary={<Typography variant="h4" Align="center">{join_event[index]}</Typography>}/>
+          </Grid>
+        </Grid>
+      </ListItem>
+    );
+  }
   render(){
     const { classes } = this.props;
-    // console.log(this.state.);
-    
+    var count_num = this.state.count;
+    for( var event_count in count_num ) {
+      console.log( count_num[event_count] );
+    }
+   
     return (
       <div className={classes.root}>
         <Grid container alignContent="center" spacing = {0} >
@@ -188,21 +180,26 @@ class Dashboard extends Component {
               <Grid item xs={12}>
                 <Paper className={classes.paper_2_1}>
                 <Box color="text.secondary" fontSize={35} textAlign="center" fontWeight="fontWeightBold">
-                  <br/>안녕하세요! {this.userName} 님!
-                  <br/>오늘은 {this.todayStr} 입니다.
+                  <br/>안녕하세요 {this.userName} 님!
               </Box>
+
+              <Box color="text.secondary" fontSize={45} textAlign="center" fontWeight="fontWeightBold">
+                 {this.todayStr}<br/>{this.todayname_week} 
+              </Box>
+              
                 </Paper>
               </Grid>
 
               <Grid item xs={12}>
               <Paper className={classes.paper_2_1}>
-              <Box color="text.secondary" fontSize={20} textAlign="center" fontWeight="fontWeightBold">
+              <Box color="text.secondary" fontSize={30} textAlign="center" fontWeight="fontWeightBold">
               약 목록
               </Box>
+              <Divider/> 
               <FixedSizeList height={200} width='100%' itemSize={60} itemCount={this.state.druglength}>
-              {this.renderMedRow.bind(this.state)}
+              {this.renderMedRow.bind(this, this.state)}
               </FixedSizeList>
-                
+              <Divider/>
                 <form noValidate onSubmit={this.handleMedSubmit}>
                       <IconButton type = "submit" color="primary"  size='small'aria-label="delete">
                         <EditRoundedIcon style={{fontSize: 40 }}/> 수정하기
@@ -215,16 +212,22 @@ class Dashboard extends Component {
 {/* 세번째구역 */}
           <Grid item xs={5}>
           <Paper className={classes.paper_1}>
-          {/* <FixedSizeList height={541} width='90%' itemSize={60} itemCount={5}> 
-            <ListItemText primary= {this.state.l_j_event[index]} />
-            </FixedSizeList> */}
+
+          <Box color="text.secondary" fontSize={40} textAlign="center" fontWeight="fontWeightBold">
+              참석 목록
+              </Box>
+              <Divider/> 
+              <FixedSizeList height={450} width='100%' itemSize={80} itemCount={this.state.l_j_count}>
+              {this.rendereventRow.bind(this, this.state)}
+              </FixedSizeList>
+              <Divider/>
 
             <form noValidate onSubmit={this.handleEventSubmit}>
               <br/>
               
               <IconButton type = "submit" color="primary" size='small'aria-label="delete">
                 {/*왜 this.state.c_n_event가 안들어가지 */}
-                <Badge color="secondary" badgeContent={this.state.count_event} >
+                <Badge color="secondary" badgeContent={this.state.count[event_count]} >
                 <MenuRoundedIcon style={{fontSize: 50 }}/>
                 </Badge>
               </IconButton>

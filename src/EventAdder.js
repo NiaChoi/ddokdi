@@ -147,7 +147,7 @@ class EventAdder extends Component {
       renderNewRow(mState, handleListItemClick ,props) {
         const { index, style } = props;
         console.log(mState.nEventList);
-
+        debugger;
         let event_list =[];
         mState.nEventList.forEach(element => {
           event_list.push(element.event_name);
