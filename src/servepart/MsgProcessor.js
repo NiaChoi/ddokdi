@@ -248,7 +248,7 @@ attempMedicine(userId, cb) {
     return  unpackResult;
   }//.joinEvent Result process function
 
-  joinEventMsgResultProcess(resMsg){
+    joinEventMsgResultProcess(resMsg){
     let msgPayload = resMsg.data;
     let unpackResult = null;
 

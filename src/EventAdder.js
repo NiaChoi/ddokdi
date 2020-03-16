@@ -55,7 +55,7 @@ class EventAdder extends Component {
     super(props);
     this.max_content_id = 3;//UI에 영향을 주지 않으므로 state X
     this.state = {
-      nEventList: [],
+      nEventList: [{"event_name":"","date":""}],
       nlistLength: 0,
       dEventNo:0,
       dEventList: [],
@@ -95,6 +95,7 @@ class EventAdder extends Component {
       let msgProc = new MsgProcessor();
         let selectedEvent = event.target.innerText;
         let eventList = this.state.nEventList;
+        eventList = eventList.concat(this.state.jEventList);
         let eventNo = 0;
         eventList.forEach(element => {
           if(element.event_name === selectedEvent){
@@ -106,7 +107,8 @@ class EventAdder extends Component {
         dEventNo:eventNo
         
       }) 
-       debugger;
+      
+
       msgProc.attemptDetailEvent(eventNo, (result)=> { 
         if (result[0] == 0) {
           console.log(result[1][0]);
@@ -127,14 +129,14 @@ class EventAdder extends Component {
 
     ///////////////////////////////////////////Join Submit동작X////////////////////////
       handleJoinSubmit = event => {
-        event.preventDefault();
+        // event.preventDefault();
         console.log(event);
         let userId = localStorage.getItem("USN");
         let msgProc = new MsgProcessor();
         let eventNo = this.state.dEventNo; 
           msgProc.attemptJoinEvent(userId, eventNo, (result)=> { 
             if (result[0] == 0) {
-              alert("참가신청 되었습니다.");
+              // alert("참가신청 되었습니다.");
               console.log(result[1]);
             }
             else {
@@ -147,7 +149,6 @@ class EventAdder extends Component {
       renderNewRow(mState, handleListItemClick ,props) {
         const { index, style } = props;
         console.log(mState.nEventList);
-        debugger;
         let event_list =[];
         mState.nEventList.forEach(element => {
           event_list.push(element.event_name);
@@ -211,7 +212,7 @@ class EventAdder extends Component {
         {/* paper_2 두번째 칸 */}
           <Grid item xs={5} >
           <Paper className={classes.paper_1}>
-          {this.state.jlistLength !== 0 ? 
+          {this.state.nlistLength !== 0 ? 
            <Box color="text.secondary" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
               새로운 행사
               </Box>
@@ -220,7 +221,7 @@ class EventAdder extends Component {
               참가 행사</Box>
               }
               
-              {this.state.listLength !== 0 ?
+              {this.state.nlistLength !== 0 ?
               <FixedSizeList height={542} width='90%' itemSize={60} itemCount={this.state.nlistLength}>
               {this.renderNewRow.bind(this, this.state, this.handleListItemClick)}
               </FixedSizeList>
@@ -252,7 +253,8 @@ class EventAdder extends Component {
                            <Grid xs={4}/>
                            <Grid xs={4}>
                               <form noValidate onSubmit={this.handleJoinSubmit}>
-                             <br/><Button size="small" color="primary">
+                             <br/><Button 
+                             type = "submit" size="small" color="primary">
                                 <AddCircleIcon/><Typography variant="h4" Align="center">참가하기</Typography>
                               </Button>
                             </form>

@@ -65,20 +65,7 @@ class IconTextList extends Component{
     });
   }
 
-  // med_time(index){
-  // switch(this.state.drugList.time[index]){
-  //   case "0":
-  //     return (<Brightness6Icon style={{ fontSize: 40 }}/>);//아침
-  //   case "1":
-  //     return (<Brightness5Icon style={{ fontSize: 40 }}/>); //점심
-  //   case "2":
-  //     return (<Brightness4Icon style={{ fontSize: 40 }}/>);//저녁
-  //   case "3":
-  //     return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 저녁
-  //   default:
-  //     return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 점심,저녁
-  //   }
-  // }
+  
     
   renderRow(mState, props) {
     const { index, style } = props;
@@ -107,20 +94,21 @@ class IconTextList extends Component{
       setChecked(event.target.checked);
     };
     
-    // if (drugTime[index] == "1"){
-    //   time_result = [<Brightness6Icon style={{ fontSize: 40 }}/>]
-    // }
-    // else if(drugTime[index] == "2"){
-    //   time_result = [<Brightness4Icon style={{ fontSize: 40 }}/>]
-    // }
-    // else{
-    //   time_result = [
-    //   <Brightness6Icon style={{ fontSize: 40 }}/>,
-    //   <Brightness5Icon style={{ fontSize: 40 }}/>,
-    //   <Brightness4Icon style={{ fontSize: 40 }}/>,]
-    // };
-    // const selected_med = med_name[this.state.rspMsg[index].drug_name]
-   
+    const med_time = index => {
+      switch(mState.drugList[index].time){
+        case "0":
+          return (<Brightness6Icon style={{ fontSize: 40 }}/>);//아침
+        case "1":
+          return (<Brightness5Icon style={{ fontSize: 40 }}/>); //점심
+        case "2":
+          return (<Brightness4Icon style={{ fontSize: 40 }}/>);//저녁
+        case "3":
+          return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 저녁
+        default:
+          return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 점심,저녁
+      }
+    }
+
     return (
       ///List 변수 값 넣어보기
       <ListItem button style={style} key={index} >
@@ -138,9 +126,7 @@ class IconTextList extends Component{
           <Grid alignItems="center"item xs={2}/>
           <Grid alignItems="center"item xs={3}>
             <ListItemIcon >
-            <Brightness6Icon style={{ fontSize: 40 }}/>
-            <Brightness5Icon style={{ fontSize: 40 }}/>
-            <Brightness4Icon style={{ fontSize: 40 }}/>
+            {med_time(index)}
           </ListItemIcon>
           </Grid>
         </Grid>
@@ -167,7 +153,7 @@ class IconTextList extends Component{
           <Grid item xs={12}>
           <Grid container>
             <Grid item xs={2}>
-            <Typography variant="h5" Align="left">선택</Typography>
+            <Typography variant="h5" Align="center">선택</Typography>
             </Grid>
             <Grid item xs={5}>
             <Typography variant="h5" Align="center">약 이름</Typography>
