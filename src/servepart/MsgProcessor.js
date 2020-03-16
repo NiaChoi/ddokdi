@@ -63,20 +63,28 @@ attempMedicine(userId, cb) {
   }//.newEvent function
 
   //allEvent function
-  attemptJoinEvent(userId, cb) {
+  attemptJoinedEvent(userId, cb) {
     let payload = {"USERID":userId};
     let msg_sgi = {"payload":payload};
     this.reqMsgProcess(msg_sgi, "/j_event_list", (result)=> {
-      cb(this.joinEventMsgResultProcess(result));
+      cb(this.joinedEventMsgResultProcess(result));
     });
   }//.allEvent function
 
   //allEvent function
-  attemptCheckEvent(userId, cb) {
-    let payload = {"USERID":userId};
+  attemptCheckEvent(userId, eventNo, cb) {
+    let payload = {"USERID":userId, "event_no":eventNo};
     let msg_sgi = {"payload":payload};
     this.reqMsgProcess(msg_sgi, "/c_event", (result)=> {
       cb(this.checkEventMsgResultProcess(result));
+    });
+  }//.allEvent function
+
+  attemptJoinEvent(userId, eventNo, cb) {
+    let payload = {"USERID":userId, "event_no":eventNo};
+    let msg_sgi = {"payload":payload};
+    this.reqMsgProcess(msg_sgi, "/j_event", (result)=> {
+      cb(this.joinEventMsgResultProcess(result));
     });
   }//.allEvent function
     
@@ -231,7 +239,7 @@ attempMedicine(userId, cb) {
   }//.newEvent Result process function
 
   //allEvent Result process function 
-  joinEventMsgResultProcess(resMsg){
+    joinedEventMsgResultProcess(resMsg){
     let msgPayload = resMsg.data;
     let unpackResult = null;
 
@@ -239,6 +247,22 @@ attempMedicine(userId, cb) {
      
     return  unpackResult;
   }//.joinEvent Result process function
+
+  joinEventMsgResultProcess(resMsg){
+    let msgPayload = resMsg.data;
+    let unpackResult = null;
+
+    switch(msgPayload.code){
+      case 200:
+        unpackResult = [0,msgPayload.sucess];
+        break;
+      default:
+        unpackResult = [1,"Unknown error"];
+        break;
+    }
+
+    return  unpackResult;
+  }//.checkEvent Result process function
 
   //checkEvent Result process function 
   checkEventMsgResultProcess(resMsg){
@@ -262,7 +286,7 @@ attempMedicine(userId, cb) {
     let msgPayload = resMsg.data;
     let unpackResult = null;
 
-    unpackResult = [0,msgPayload.d_event];
+    unpackResult = [0, msgPayload.d_event];
 
     return  unpackResult;
   }//.detailEvent Result process function

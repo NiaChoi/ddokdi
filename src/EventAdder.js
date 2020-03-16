@@ -75,7 +75,8 @@ class EventAdder extends Component {
             nlistLength:result[1].length
           })  
         }
-      });msgProc.attemptJoinEvent(userId, (result)=> { 
+      });
+      msgProc.attemptJoinedEvent(userId, (result)=> { 
         if (result[0] == 0) {
           console.log(result[1]);
           this.setState({
@@ -87,99 +88,112 @@ class EventAdder extends Component {
      
     }
   
-  handlejoinSubmit = event => {
-    event.preventDefault();
-    const tempRsp3 = {
-    "payload":{
-
-      "code": 200,
-      "sucess": "event_j sucess"
-        }
-    }
-    if(tempRsp3.payload.code === 200){
-      alert(tempRsp3.payload.success);
-  }
-}
-handleListItemClick = event => {
-  let selectedEvent = event.target.innerText;
-  let eventList = this.state.nEventList;
-  let eventNo = 0;
-  eventList.forEach(element => {
-    if(element.event_name === selectedEvent){
-      eventNo = element.event_no;
-    }
-  });
-  
-  this.setState({
-    dEventNo:eventNo
-  })  
-  let msgProc = new MsgProcessor();
-  msgProc.attemptDetailEvent(eventNo, (result)=> { 
-    if (result[0] == 0) {
-      console.log(result[1][0]);
+    handleListItemClick = event => {
+      event.preventDefault();
+      console.log(event);
+      let userId = localStorage.getItem("USN");
+      let msgProc = new MsgProcessor();
+        let selectedEvent = event.target.innerText;
+        let eventList = this.state.nEventList;
+        let eventNo = 0;
+        eventList.forEach(element => {
+          if(element.event_name === selectedEvent){
+            eventNo = element.event_no;
+          }
+        });
+    
       this.setState({
-        dEventList:result[1][0]
-      })  
+        dEventNo:eventNo
+        
+      }) 
+       debugger;
+      msgProc.attemptDetailEvent(eventNo, (result)=> { 
+        if (result[0] == 0) {
+          console.log(result[1][0]);
+          this.setState({
+            dEventList:result[1][0]
+          })  
+        }
+      });
+      msgProc.attemptCheckEvent(userId, eventNo, (result)=> { 
+        if (result[0] == 0) {
+          console.log(result[1]);
+        }
+        else {
+          alert(result[1]);
+        }
+      });
     }
-  });
-}
-  renderNewRow(mState, handleListItemClick ,props) {
-    const { index, style } = props;
-    console.log(mState.nEventList);
-    const [checked, setChecked] = React.useState(false); 
 
-    let event_list =[];
-    mState.nEventList.forEach(element => {
-      event_list.push(element.event_name);
-    });
+    ///////////////////////////////////////////Join Submit동작X////////////////////////
+      handleJoinSubmit = event => {
+        event.preventDefault();
+        console.log(event);
+        let userId = localStorage.getItem("USN");
+        let msgProc = new MsgProcessor();
+        let eventNo = this.state.dEventNo; 
+          msgProc.attemptJoinEvent(userId, eventNo, (result)=> { 
+            if (result[0] == 0) {
+              alert("참가신청 되었습니다.");
+              console.log(result[1]);
+            }
+            else {
+              alert(result[1]);
+            }
+          });
+        } 
+      
 
-    console.log(handleListItemClick);
-    // const mnRow = med_name.length;
-    // // const med_time = [,];
-    const handleChange = event => {
-      setChecked(event.target.checked);
-    };
-    const handleOnClick = event =>{
-      console.log(event.target.innerText);
-    }
-    return (
-      ///List 항목 누르면 handledetailSubmit이 동작하게
-      <form onSubmit={this.handledetailSubmit}>
-        <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
-          <ListItemText primary= {event_list[index]} />
-        </ListItem>
-        </form>
-    );
-  }
-  renderJoinRow(mState, handleListItemClick ,props) {
-    const { index, style } = props;
-    console.log(mState.jEventList);
-    const [checked, setChecked] = React.useState(false); 
+      renderNewRow(mState, handleListItemClick ,props) {
+        const { index, style } = props;
+        console.log(mState.nEventList);
 
-    let event_list =[];
-    mState.jEventList.forEach(element => {
-      event_list.push(element.event_name);
-    });
+        let event_list =[];
+        mState.nEventList.forEach(element => {
+          event_list.push(element.event_name);
+        });
 
-    console.log(handleListItemClick);
-    // const mnRow = med_name.length;
-    // // const med_time = [,];
-    const handleChange = event => {
-      setChecked(event.target.checked);
-    };
-    const handleOnClick = event =>{
-      console.log(event.target.innerText);
-    }
-    return (
-      ///List 항목 누르면 handledetailSubmit이 동작하게
-      <form onSubmit={this.handledetailSubmit}>
-        <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
-          <ListItemText primary= {event_list[index]} />
-        </ListItem>
-        </form>
-    );
-  }
-  
+        console.log(handleListItemClick);
+        // const mnRow = med_name.length;
+        // // const med_time = [,];
+        return (
+          ///List 항목 누르면 handledetailSubmit이 동작하게
+          <form onSubmit={this.handleListItemClick}>
+            <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
+              <ListItemText primary= {<Typography variant="h5" Align="left">{event_list[index]} </Typography>}/>
+            </ListItem>
+            </form>
+        );
+      }
+      renderJoinRow(mState, handleListItemClick ,props) {
+        const { index, style } = props;
+        console.log(mState.jEventList);
+        const [checked, setChecked] = React.useState(false); 
+
+        let event_list =[];
+        mState.jEventList.forEach(element => {
+          event_list.push(element.event_name);
+        });
+
+        console.log(handleListItemClick);
+        // const mnRow = med_name.length;
+        // // const med_time = [,];
+        const handleChange = event => {
+          setChecked(event.target.checked);
+        };
+        const handleOnClick = event =>{
+          console.log(event.target.innerText);
+        }
+        return (
+          ///List 항목 누르면 handledetailSubmit이 동작하게
+          <form onSubmit={this.handleListItemClick}>
+            <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
+              <ListItemText primary={<Typography variant="h5" Align="left">{event_list[index]} </Typography>}/>
+            </ListItem>
+            </form>
+        );
+      }
+      
   
   // titleselect();
   // if()
@@ -197,18 +211,24 @@ handleListItemClick = event => {
         {/* paper_2 두번째 칸 */}
           <Grid item xs={5} >
           <Paper className={classes.paper_1}>
-          {this.state.nlistLength !== 0 ?<Box color="text.secondary" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
+          {this.state.jlistLength !== 0 ? 
+           <Box color="text.secondary" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
               새로운 행사
-              </Box>:
+              </Box>
+              :
               <Box color="text.secondary" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
-              참가 행사</Box>}
+              참가 행사</Box>
+              }
               
-              {this.state.nlistLength !== 0 ?<FixedSizeList height={542} width='90%' itemSize={60} itemCount={this.state.nlistLength}>
+              {this.state.listLength !== 0 ?
+              <FixedSizeList height={542} width='90%' itemSize={60} itemCount={this.state.nlistLength}>
               {this.renderNewRow.bind(this, this.state, this.handleListItemClick)}
-              </FixedSizeList>:
+              </FixedSizeList>
+              :
               <FixedSizeList height={542} width='90%' itemSize={60} itemCount={this.state.jlistLength}>
               {this.renderJoinRow.bind(this, this.state, this.handleListItemClick)}
-              </FixedSizeList>}
+              </FixedSizeList>
+              }
               </Paper>
             </Grid>
 
@@ -231,9 +251,9 @@ handleListItemClick = event => {
                          <Grid container xs={12}>
                            <Grid xs={4}/>
                            <Grid xs={4}>
-                              <form noValidate onSubmit={this.handlejoinSubmit}>
+                              <form noValidate onSubmit={this.handleJoinSubmit}>
                              <br/><Button size="small" color="primary">
-                                <AddCircleIcon/>참가하기
+                                <AddCircleIcon/><Typography variant="h4" Align="center">참가하기</Typography>
                               </Button>
                             </form>
                            </Grid>

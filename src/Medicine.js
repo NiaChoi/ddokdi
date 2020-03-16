@@ -9,8 +9,7 @@ import Box from '@material-ui/core/Box';
 import DeleteForeverSharpIcon from '@material-ui/icons/DeleteForeverSharp';
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
 
-
-
+// import MsgProcessor from "./servepart/MsgProcessor"
 
 const useStyles = theme => ({
   root: {
@@ -33,27 +32,27 @@ const useStyles = theme => ({
 });
 
 class Medicine extends Component {
-  constructor(props){
-    super(props);
-    const tempRsp2 = {
-      "payload":{
-        "code":200,
-        "l_j_drug": [
-          {
-            "drug_name": "1",
-            "time": "2"
-          },
-          {
-            "drug_name": "2",
-            "time": "1"
-          }
-        ],
-      }
-    }
-    this.state = {
-      tempRsp:tempRsp2
-    }
-  }
+  // constructor(props){
+  //   super(props);
+  //   this.state = {
+  //     drugList:[],
+  //     list_length:0
+  //   }
+  // }
+  // componentDidMount(){
+  //   let userId = localStorage.getItem("USN");
+  //   let msgProc = new MsgProcessor();
+  //   msgProc.attempMedicine(userId, (result)=> { 
+  //     if (result[0] == 0) {
+  //       console.log(result[1]);
+  //       this.setState({
+  //         drugList:result[1],
+  //         list_length:result[1].length
+  //       })  
+  //     }
+  //   });
+  // }
+
   // componentDidMount(){
   //   const tempRsp2 = {
   //     "payload":{
@@ -109,7 +108,7 @@ class Medicine extends Component {
           <Grid alignItems="center" xs={10}>
           
           <Paper className={classes.paper_1}>
-            <IconTextList tempRsp={this.state.tempRsp}/>
+            <IconTextList />
             
             <Grid alignItems="center" xs={12}>
               <Grid container xs={12}>

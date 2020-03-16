@@ -79,20 +79,48 @@ class IconTextList extends Component{
   //     return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 점심,저녁
   //   }
   // }
-  
-  renderRow(props) {
+    
+  renderRow(mState, props) {
     const { index, style } = props;
-    console.log(props.drugList[index]);
     const [checked, setChecked] = React.useState(false); 
-    let med_index = props.drugList[index];
+    // let med_index = [this.drugList[index]];
     const med_name = ['혈압약', '감기약', '소화제', '비타민','관절약'];
-    const med_time = ["hidden", "visible", "hidden", "visible"];
+    // const med_time = ["hidden", "visible", "hidden", "hidden","visible"];
     // const mnRow = med_name.length;
     // // const med_time = [,];
+
+    let drugName =[];
+    mState.drugList.forEach(element => {
+      drugName.push(element.drug_name);
+      
+    });  
+    console.log(drugName);
+
+    let drugTime =[];
+    mState.drugList.forEach(element => {
+    drugTime.push(element.time);
+    
+    });  
+    console.log(drugTime);
+
     const handleChange = event => {
       setChecked(event.target.checked);
     };
+    
+    // if (drugTime[index] == "1"){
+    //   time_result = [<Brightness6Icon style={{ fontSize: 40 }}/>]
+    // }
+    // else if(drugTime[index] == "2"){
+    //   time_result = [<Brightness4Icon style={{ fontSize: 40 }}/>]
+    // }
+    // else{
+    //   time_result = [
+    //   <Brightness6Icon style={{ fontSize: 40 }}/>,
+    //   <Brightness5Icon style={{ fontSize: 40 }}/>,
+    //   <Brightness4Icon style={{ fontSize: 40 }}/>,]
+    // };
     // const selected_med = med_name[this.state.rspMsg[index].drug_name]
+   
     return (
       ///List 변수 값 넣어보기
       <ListItem button style={style} key={index} >
@@ -105,19 +133,22 @@ class IconTextList extends Component{
           inputProps={{ 'aria-label': 'primary checkbox' }}/>
           </Grid>
           <Grid item xs={5}>
-            <ListItemText primary= {med_name[med_index]} />
+            <ListItemText primary={<Typography variant="h5" Align="center">{med_name[drugName[index]]}</Typography>}/>
           </Grid>
-          <Grid item xs={5}>
+          <Grid alignItems="center"item xs={2}/>
+          <Grid alignItems="center"item xs={3}>
             <ListItemIcon >
-          {this.med_time}
+            <Brightness6Icon style={{ fontSize: 40 }}/>
+            <Brightness5Icon style={{ fontSize: 40 }}/>
+            <Brightness4Icon style={{ fontSize: 40 }}/>
           </ListItemIcon>
           </Grid>
         </Grid>
         
       </ListItem>
     );
-    
   }
+
    render(){
     const { classes } = this.props;
 
@@ -136,7 +167,7 @@ class IconTextList extends Component{
           <Grid item xs={12}>
           <Grid container>
             <Grid item xs={2}>
-            <Typography variant="h5" Align="center">선택</Typography>
+            <Typography variant="h5" Align="left">선택</Typography>
             </Grid>
             <Grid item xs={5}>
             <Typography variant="h5" Align="center">약 이름</Typography>
