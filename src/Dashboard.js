@@ -49,6 +49,26 @@ const useStyles = theme => ({
     color: theme.palette.text.secondary,
     
   },
+  palette: {
+    primary: {
+      main: '#ff4400',
+      // dark: will be calculated from palette.primary.main,
+      // contrastText: will be calculated to contrast with palette.primary.main
+  },
+  secondary: {
+    light: '#0066ff',
+    main: '#0044ff',
+    // dark: will be calculated from palette.secondary.main,
+    contrastText: '#ffcc00',
+  },
+  // Used by `getContrastText()` to maximize the contrast between
+  // the background and the text.
+  contrastThreshold: 3,
+  // Used by the functions below to shift a color's luminance by approximately
+  // two indexes within its tonal palette.
+  // E.g., shift from Red 500 to Red 300 or Red 700.
+  tonalOffset: 0.2,
+},
 });
 
 class Dashboard extends Component {
@@ -143,7 +163,8 @@ class Dashboard extends Component {
     <form onSubmit={this.handleMedSubmit}> 
     
       <ListItem button onClick={handleMedSubmit} style={style} key={index} >
-        <Box width="100%" borderBottom={0.5} borderColor="grey">
+        <Box width="100%" borderBottom={0.5} borderColor="
+palette.primary.light">
         <Grid container  alignContent="center"  xs={12}>
           <Grid item xs={8}>
             <ListItemText primary={<Typography variant="h4" Align="center">{med_name[_drugName[index]]}</Typography>}/>
@@ -201,8 +222,8 @@ class Dashboard extends Component {
               <Grid alignItems="center" container spacing = {0}>
               <Grid item xs={12}>
                 <Paper className={classes.paper_2_1}>
-                <Box height={288} color="primary.main" border= {2}borderColor="primary.main" borderRadius="borderRadius">
-                <Box color="primary.contrastText" bgcolor="primary.main" fontSize={30} textAlign="center" fontWeight="fontWeightBold" p={1}>
+                <Box className={classes.palette} height={288} color="primary.main" border= {2}borderColor="#00bcd4" borderRadius="borderRadius">
+                <Box color="primary.contrastText" bgcolor="#00bcd4" fontSize={30} textAlign="center" fontWeight="fontWeightBold" p={1}>
                   {this.todayStr}{this.todayname_week} 
                 </Box>
                 <Box color="text.primary" fontSize={35} textAlign="center" fontWeight="fontWeightMedium">
@@ -214,11 +235,11 @@ class Dashboard extends Component {
 
               <Grid item xs={12}>
               <Paper className={classes.paper_2_1}>
-              <Box height={288} color="primary.main" border= {2}borderColor="primary.main" borderRadius="borderRadius">
-              <Box color="primary.contrastText" bgcolor="primary.main" fontSize={30} textAlign="center" fontWeight="fontWeightBold" p={1}>
+              <Box height={288} color="primary.main" border= {2}borderColor="#ed4b82" borderRadius="borderRadius">
+              <Box color="primary.contrastText" bgcolor="#ed4b82" fontSize={30} textAlign="center" fontWeight="fontWeightBold" p={1}>
               약 목록
               </Box> 
-              <Box color="text.primary" height={236}  borderRadius="borderRadius" >
+              <Box color="text.primary" height={236}  borderRadius="borderRadius" p={1} >
                 <FixedSizeList height={240} width="100%"  itemSize={55} itemCount={this.state.druglength}>
                 {this.renderMedRow.bind(this, this.state, this.handleMedSubmit)}
               </FixedSizeList>
@@ -232,8 +253,8 @@ class Dashboard extends Component {
 
           <Grid item xs={5}>
           <Paper className={classes.paper_1}>
-          <Box height={580} color="primary.main" border= {2}borderColor="primary.main" borderRadius="borderRadius">
-            <Box color="primary.contrastText" bgcolor="primary.main" fontSize={30} textAlign="center" fontWeight="fontWeightBold" p={1}>
+          <Box height={580} color="primary.main" border= {2}borderColor="warning.light" borderRadius="borderRadius">
+            <Box color="primary.contrastText" bgcolor="warning.light" fontSize={30} textAlign="center" fontWeight="fontWeightBold" p={1}>
               행사 참석 목록
               </Box> 
               <Box color="text.primary" height={520}  borderRadius="borderRadius" >
