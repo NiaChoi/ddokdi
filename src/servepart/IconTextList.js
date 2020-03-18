@@ -113,20 +113,13 @@ class IconTextList extends Component{
 
     return (
       ///List 변수 값 넣어보기
-      <ListItem button style={style} key={index} >
+      <form noValidate onSubmit={this.handleEventSubmit}>
+        <ListItem button style={style} key={index} >
         <Grid container  alignContent="center"  xs={12}>
-          <Grid item xs={2}>
-            <Checkbox
-          checked={checked}
-          onChange={handleChange}
-          value="primary"
-          inputProps={{ 'aria-label': 'primary checkbox' }}/>
-          </Grid>
           <Grid item xs={5}>
             <ListItemText primary={<Typography variant="h5" Align="center">{med_name[drugName[index]]}</Typography>}/>
           </Grid>
-          <Grid alignItems="center"item xs={2}/>
-          <Grid alignItems="center"item xs={3}>
+          <Grid alignItems="center"item xs={2}>
             <ListItemIcon >
             {med_time(index)}
           </ListItemIcon>
@@ -134,6 +127,8 @@ class IconTextList extends Component{
         </Grid>
         
       </ListItem>
+      </form>
+      
     );
   }
 

@@ -26,24 +26,24 @@ const useStyles = theme => ({
     flexGrow: 1,
     width: '100%',
     height:'584px',
-    marginTop: theme.spacing(0),
+    marginTop: theme.spacing(1),
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(0),
+    marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
   paper_1: {  //전체 크기 변환 height 변경
-    padding: theme.spacing(0),
+    padding: theme.spacing(1),
     textAlign: 'center',
     height:'584px',       
     color: theme.palette.text.secondary,
     
   },
   paper_2_1: {  //전체 크기 변환 height 변경
-    padding: theme.spacing(0),
+    padding: theme.spacing(1),
     textAlign: 'center',
     height:'292px',       
     color: theme.palette.text.secondary,
