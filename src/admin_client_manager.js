@@ -49,7 +49,7 @@ const useStyles = theme => ({
   },
 });
 
-class Client_Managment extends Component {
+class admin_client_manager extends Component {
   constructor(props){
     super(props);
     this.max_content_id = 3;//UI에 영향을 주지 않으므로 state X
@@ -248,4 +248,4 @@ class Client_Managment extends Component {
   }
   
 
-export default  withStyles( useStyles )(Client_Managment);
+export default  withStyles( useStyles )(admin_client_manager);

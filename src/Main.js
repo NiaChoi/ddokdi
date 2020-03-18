@@ -8,6 +8,7 @@ import Dashboard from './Dashboard';
 import EventAdder from './EventAdder';
 // import UserGreeting from './tempfiles/UserGreeting';
 import Greeting from './Greeting';
+import admin_client_manager from './admin_client_manager';
 
 
 
