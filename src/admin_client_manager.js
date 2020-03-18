@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import ListSubheader from '@material-ui/core/ListSubheader';
+
 import MsgProcessor from "./servepart/MsgProcessor"
 
 
@@ -247,4 +248,4 @@ class admin_client_manager extends Component {
       );
     }
   }
-export default  withStyles( useStyles )(Client_Managment);
+export default  withStyles( useStyles )(admin_client_manager);
