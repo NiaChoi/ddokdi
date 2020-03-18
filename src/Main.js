@@ -10,7 +10,6 @@ import EventAdder from './EventAdder';
 import Greeting from './Greeting';
 import admin_client_manager from './admin_client_manager';
 
-
 const useStyles = theme => ({
       root: {
         flexGrow: 1,
