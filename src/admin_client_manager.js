@@ -93,8 +93,28 @@ class admin_client_manager extends Component {
       if (this.state.Emergency_service == false){
         msgProc.attempt_Client_Emergency_Service_Update(Client_userId_for_detail, userId, (result)=> { 
           if (result[0] == 0) {
-            alert("위급 알림 서비스가 활성화되었습니다.");
+            // alert("위급 알림 서비스가 활성화되었습니다.");
             console.log(result[0]);
+            msgProc.attemptDetailClient(Client_userId_for_detail, userId, (result)=> { 
+              if (result[0] == 0) {
+                console.log(result[1][0]);
+                console.log(result[1][0].emergency_service);
+                this.setState({
+                  Detail_client_list:result[1][0],
+                  
+                })
+                if (result[1][0].emergency_service == 0)  {
+                  this. setState({
+                    Emergency_service:false
+                  })
+                }
+                else {
+                  this. setState({
+                    Emergency_service:true
+                })
+                }
+            } 
+          });
           }
           else {
             alert(result[1]);
@@ -105,8 +125,28 @@ class admin_client_manager extends Component {
       else {
         msgProc.attempt_Client_Emergency_Service_Update(Client_userId_for_detail, userId, (result)=> { 
           if (result[0] == 0) {
-            alert("위급 알림 서비스가 해제되었습니다.");
+            // alert("위급 알림 서비스가 해제되었습니다.");
             console.log(result[0]);
+            msgProc.attemptDetailClient(Client_userId_for_detail, userId, (result)=> { 
+              if (result[0] == 0) {
+                console.log(result[1][0]);
+                console.log(result[1][0].emergency_service);
+                this.setState({
+                  Detail_client_list:result[1][0],
+                  
+                })
+                if (result[1][0].emergency_service == 0)  {
+                  this. setState({
+                    Emergency_service:false
+                  })
+                }
+                else {
+                  this. setState({
+                    Emergency_service:true
+                })
+                }
+            } 
+          });
           }
           else {
             alert(result[1]);
