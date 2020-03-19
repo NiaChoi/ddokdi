@@ -309,7 +309,7 @@ attempMedicine(userId, cb) {
   }
 
   attempt_Client_Emergency_Service_Update(Client_userId_for_detail, userId, cb) {
-    let payload = {"Client_USERID":Client_userId_for_detail, "USERID":userId};
+    let payload = {"Client_USERID":Client_userId_for_detail+'', "USERID":userId};
     let msg_sgi = {"payload":payload};
     this.reqMsgProcess(msg_sgi, "/update_emergency_service", (result)=> {
       cb(this.Emergency_Service_Update_result(result));

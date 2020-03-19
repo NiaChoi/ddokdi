@@ -81,24 +81,15 @@ class admin_client_manager extends Component {
       
       }
 
-    handleChange = event => {
+    handleChange = (event, a) => {
       event.preventDefault();
       console.log(event);
       let userId = localStorage.getItem("USN");
       let msgProc = new MsgProcessor();
-        // let selectedClient = event.target.innerText;
-        let client_list = this.state.Client_List_without_admin;
-        client_list = client_list.concat(this.state.Client_List_without_admin);
-        let Client_userId_for_detail = 0;
-        client_list.forEach(element => {
-          
-            Client_userId_for_detail = element.Client_USERID;
-          
-        });
-    
-        this.setState({
-          Emergency_service : event.target.checked });
-
+      // let selectedClient = event.target.innerText;
+      let client_list = this.state.Client_List_without_admin;
+      client_list = client_list.concat(this.state.Client_List_without_admin);
+      let Client_userId_for_detail = this.state.ClientUSERID        
       if (this.state.Emergency_service == false){
         msgProc.attempt_Client_Emergency_Service_Update(Client_userId_for_detail, userId, (result)=> { 
           if (result[0] == 0) {
@@ -140,7 +131,7 @@ class admin_client_manager extends Component {
         let selectedClient = event.target.innerText;
         let client_list = this.state.Client_List_without_admin;
         client_list = client_list.concat(this.state.Client_List_without_admin);
-        let Client_userId_for_detail = 0;
+        let Client_userId_for_detail = this.state.ClientUSERID+'';
         client_list.forEach(element => {
           if(element.name === selectedClient){
             Client_userId_for_detail = element.Client_USERID;
