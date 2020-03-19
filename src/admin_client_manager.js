@@ -3,7 +3,6 @@ import './App.css';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import Paper  from '@material-ui/core/Paper';
-import SwitchLabels from './switch';
 import App_bar_for_admin_page from './Appbar';
 import { FixedSizeList } from 'react-window';
 import ListItem from '@material-ui/core/ListItem';
@@ -16,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import Switch from '@material-ui/core/Switch';
 
 import MsgProcessor from "./servepart/MsgProcessor"
 
@@ -60,11 +60,13 @@ class admin_client_manager extends Component {
       ClientUSERID:0,
       Detail_client_list: [],
       Activate_Emergency_Service_list:[],
-      Activate_Emergency_Service_length:0
-
-      
+      Activate_Emergency_Service_length:0,
+      Emergency_service: true
       }
     }
+
+  
+   
   
     componentDidMount(){
       let userId = localStorage.getItem("USN");
@@ -80,6 +82,24 @@ class admin_client_manager extends Component {
       });
       
       }
+
+    handleChange = event => {
+      console.log(this.state.Emergency_service);
+      if (this.state.Emergency_service == false){
+        // <Alert severity="success" color="info">
+        // 위급 알림 서비스가 활성화되었습니다.
+        // </Alert>
+        alert("위급 알림 서비스가 활성화되었습니다.");
+      }
+      else {
+        // <Alert severity="success" color="info">
+        // 위급 알림 서비스가 해제되었습니다.
+        // </Alert>  
+        alert("위급 알림 서비스가 해제되었습니다.");
+      }
+      this.setState({
+        Emergency_service : event.target.checked });
+    };
     
   
     handleListItemClick = event => {
@@ -104,31 +124,42 @@ class admin_client_manager extends Component {
       msgProc.attemptDetailClient(Client_userId_for_detail, userId, (result)=> { 
         if (result[0] == 0) {
           console.log(result[1][0]);
+          console.log(result[1][0].emergency_service);
           this.setState({
-            Detail_client_list:result[1][0]
-          })  
-        }
-      });
-      
-    }
+            Detail_client_list:result[1][0],
+            
+          })
+          if (result[1][0].emergency_service == 0)  {
+            this. setState({
+              Emergency_service:false
+            })
+          }
+          else {
+            this. setState({
+              Emergency_service:true
+          })
+          }
+      } 
+    });
+  }
 
-    ///////////////////////////////////////////Join Submit동작X////////////////////////
-      handleEmergencyServiceSubmit_for_activate = event => {
-        // event.preventDefault();
-        console.log(event);
-        let userId = localStorage.getItem("USN");
-        let msgProc = new MsgProcessor();
-        let Client_userId_for_detail = this.state.ClientUSERID; 
-          msgProc.attemptClientEmergencyServiceUpdate_1(userId, Client_userId_for_detail, (result)=> { 
-            if (result[0] == 0) {
-              // alert("응급상황서비스 활성화.");
-              console.log(result[1]);
-            }
-            else {
-              alert(result[1]);
-            }
-          });
-        } 
+    // ///////////////////////////////////////////Join Submit동작X////////////////////////
+    //   handleEmergencyServiceSubmit_for_activate = event => {
+    //     // event.preventDefault();
+    //     console.log(event);
+    //     let userId = localStorage.getItem("USN");
+    //     let msgProc = new MsgProcessor();
+    //     let Client_userId_for_detail = this.state.ClientUSERID; 
+    //       msgProc.attemptClientEmergencyServiceUpdate_1(userId, Client_userId_for_detail, (result)=> { 
+    //         if (result[0] == 0) {
+    //           // alert("응급상황서비스 활성화.");
+    //           console.log(result[1]);
+    //         }
+    //         else {
+    //           alert(result[1]);
+    //         }
+    //       });
+    //     } 
       
 
       renderNewRow(mState, handleListItemClick ,props) {
@@ -184,8 +215,9 @@ class admin_client_manager extends Component {
   // if()
 
   render(){
-    
-    const { classes } = this.props;
+   
+    const { classes } = this.props; 
+    console.log(this.state.Detail_client_list);
     return (
       <div >
         <App_bar_for_admin_page history = {this.props.history}/>
@@ -236,7 +268,12 @@ class admin_client_manager extends Component {
                       [비상연락망] <br/>{this.state.Detail_client_list.emergency_contact}<br/>
                       [비상연락인 관계] <br/>{this.state.Detail_client_list.relationship_emergency_res}<br/>
                       [위급알림서비스활성화] <br/>
-                      <SwitchLabels history = {this.props.history}/><br/>
+                      <Switch
+                        checked={this.state.Emergency_service}
+                        onChange={this.handleChange}
+                        name="emergency_service_state"
+                        inputProps={{ "aria-label": "secondary checkbox" }}/>
+                      <br/>
                     </Box>
                     </Typography>
                      : <Typography variant="body2" color="textSecondary" component="p"/>}
