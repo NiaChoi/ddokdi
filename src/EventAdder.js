@@ -246,7 +246,8 @@ class EventAdder extends Component {
                            <Grid xs={4}/>
                            <Grid xs={4}>
                               <form noValidate onSubmit={this.handleJoinSubmit}>
-                             <br/><Button 
+                             <br/>
+                             <Button 
                              type = "submit" size="small" color="primary">
                                 <AddCircleIcon/><Typography variant="h4" Align="center">참가하기</Typography>
                               </Button>

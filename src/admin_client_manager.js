@@ -82,22 +82,54 @@ class admin_client_manager extends Component {
       }
 
     handleChange = event => {
-      console.log(this.state.Emergency_service);
+      event.preventDefault();
+      console.log(event);
+      let userId = localStorage.getItem("USN");
+      let msgProc = new MsgProcessor();
+        // let selectedClient = event.target.innerText;
+        let client_list = this.state.Client_List_without_admin;
+        client_list = client_list.concat(this.state.Client_List_without_admin);
+        let Client_userId_for_detail = 0;
+        client_list.forEach(element => {
+          
+            Client_userId_for_detail = element.Client_USERID;
+          
+        });
+    
+        this.setState({
+          Emergency_service : event.target.checked });
+
       if (this.state.Emergency_service == false){
-        // <Alert severity="success" color="info">
-        // 위급 알림 서비스가 활성화되었습니다.
-        // </Alert>
-        alert("위급 알림 서비스가 활성화되었습니다.");
+        msgProc.attempt_Client_Emergency_Service_Update(Client_userId_for_detail, userId, (result)=> { 
+          if (result[0] == 0) {
+            alert("위급 알림 서비스가 활성화되었습니다.");
+            console.log(result[1]);
+          }
+          else {
+            alert(result[1]);
+          }
+        });           
+        // alert("위급 알림 서비스가 활성화되었습니다.");
       }
       else {
-        // <Alert severity="success" color="info">
-        // 위급 알림 서비스가 해제되었습니다.
-        // </Alert>  
-        alert("위급 알림 서비스가 해제되었습니다.");
+        msgProc.attempt_Client_Emergency_Service_Update(Client_userId_for_detail, userId, (result)=> { 
+          if (result[0] == 0) {
+            alert("위급 알림 서비스가 해제되었습니다.");
+            console.log(result[1]);
+          }
+          else {
+            alert(result[1]);
+          }
+        });
+        // alert("위급 알림 서비스가 해제되었습니다.");        
       }
-      this.setState({
-        Emergency_service : event.target.checked });
-    };
+
+    }
+    //   this.setState({
+    //     ClientUSERID:Client_userId_for_detail });
+    // };
+
+   
     
   
     handleListItemClick = event => {
@@ -141,23 +173,7 @@ class admin_client_manager extends Component {
     });
   }
 
-    // ///////////////////////////////////////////Join Submit동작X////////////////////////
-    //   handleEmergencyServiceSubmit_for_activate = event => {
-    //     // event.preventDefault();
-    //     console.log(event);
-    //     let userId = localStorage.getItem("USN");
-    //     let msgProc = new MsgProcessor();
-    //     let Client_userId_for_detail = this.state.ClientUSERID; 
-    //       msgProc.attemptClientEmergencyServiceUpdate_1(userId, Client_userId_for_detail, (result)=> { 
-    //         if (result[0] == 0) {
-    //           // alert("응급상황서비스 활성화.");
-    //           console.log(result[1]);
-    //         }
-    //         else {
-    //           alert(result[1]);
-    //         }
-    //       });
-    //     } 
+    
       
 
       renderNewRow(mState, handleListItemClick ,props) {
@@ -171,8 +187,7 @@ class admin_client_manager extends Component {
         console.log(handleListItemClick);
         // const mnRow = med_name.length;
         // // const med_time = [,];
-        return (
-          ///List 항목 누르면 handledetailSubmit이 동작하게
+        return (          
           <form onSubmit={this.handleListItemClick}>
             <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
               <ListItemText primary= {<Typography variant="h5" Align="left">{client_list[index]} </Typography>}/>
@@ -199,8 +214,7 @@ class admin_client_manager extends Component {
         const handleOnClick = event =>{
           console.log(event.target.innerText);
         }
-        return (
-          ///List 항목 누르면 handledetailSubmit이 동작하게
+        return (          
           <form onSubmit={this.handleListItemClick}>
             <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
               <ListItemText primary={<Typography variant="h5" Align="left">{client_list[index]} </Typography>}/>
@@ -266,11 +280,14 @@ class admin_client_manager extends Component {
                       [비상연락망] <br/>{this.state.Detail_client_list.emergency_contact}<br/>
                       [비상연락인 관계] <br/>{this.state.Detail_client_list.relationship_emergency_res}<br/>
                       [위급알림서비스활성화] <br/>
+                      {/* <form noValidate onSubmit ={this.handle_Emergency_Service_Update_Submit}> */}
                       <Switch
                         checked={this.state.Emergency_service}
                         onChange={this.handleChange}
                         name="emergency_service_state"
+                        
                         inputProps={{ "aria-label": "secondary checkbox" }}/>
+                        {/* </form> */}
                       <br/>
                     </Box>
                     </Typography>

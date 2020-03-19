@@ -308,23 +308,15 @@ attempMedicine(userId, cb) {
     return  unpackResult;
   }
 
-  attemptClientEmergencyServiceUpdate_1(Client_userId_for_detail, userId, cb) {
+  attempt_Client_Emergency_Service_Update(Client_userId_for_detail, userId, cb) {
     let payload = {"Client_USERID":Client_userId_for_detail, "USERID":userId};
     let msg_sgi = {"payload":payload};
-    this.reqMsgProcess(msg_sgi, "/update_emergency_service_1", (result)=> {
-      cb(this.EmergencyServiceUpdateresult(result));
-    });
-  }//.Update Client emergency(1) service function
-
-  attemptClientEmergencyServiceUpdate_0(Client_userId_for_detail, userId, cb) {
-    let payload = {"USERID":Client_userId_for_detail, "USERID":userId};
-    let msg_sgi = {"payload":payload};
-    this.reqMsgProcess(msg_sgi, "/update_emergency_service_0", (result)=> {
-      cb(this.EmergencyServiceUpdateresult(result));
+    this.reqMsgProcess(msg_sgi, "/update_emergency_service", (result)=> {
+      cb(this.Emergency_Service_Update_result(result));
     });
   }//.Update Client emergency service function
 
-  EmergencyServiceUpdateresult(resMsg){
+  Emergency_Service_Update_result(resMsg){
     let msgPayload = resMsg.data;
     let unpackResult = null;
 
@@ -337,7 +329,7 @@ attempMedicine(userId, cb) {
         break;
     }
     return  unpackResult;
-  }//.Greeting Result process function 
+  }//.Emergency service update Result process function 
 
   attemptDetailClient(Client_userId_for_detail, userId, cb) {
     let payload = {"Client_USERID":Client_userId_for_detail,"USERID":userId};
