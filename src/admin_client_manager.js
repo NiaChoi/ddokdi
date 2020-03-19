@@ -59,8 +59,6 @@ class admin_client_manager extends Component {
       nlistLength: 0,
       ClientUSERID:0,
       Detail_client_list: [],
-      Activate_Emergency_Service_list:[],
-      Activate_Emergency_Service_length:0,
       Emergency_service: true
       }
     }
