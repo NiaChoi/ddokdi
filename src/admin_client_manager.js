@@ -103,7 +103,7 @@ class admin_client_manager extends Component {
         msgProc.attempt_Client_Emergency_Service_Update(Client_userId_for_detail, userId, (result)=> { 
           if (result[0] == 0) {
             alert("위급 알림 서비스가 활성화되었습니다.");
-            console.log(result[1]);
+            console.log(result[0]);
           }
           else {
             alert(result[1]);
@@ -115,7 +115,7 @@ class admin_client_manager extends Component {
         msgProc.attempt_Client_Emergency_Service_Update(Client_userId_for_detail, userId, (result)=> { 
           if (result[0] == 0) {
             alert("위급 알림 서비스가 해제되었습니다.");
-            console.log(result[1]);
+            console.log(result[0]);
           }
           else {
             alert(result[1]);
