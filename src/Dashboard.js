@@ -26,28 +26,35 @@ const useStyles = theme => ({
     flexGrow: 1,
     width: '100%',
     height:'584px',
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(0),
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(0),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
   paper_1: {  //전체 크기 변환 height 변경
-    padding: theme.spacing(1),
+    padding: theme.spacing(0),
     textAlign: 'center',
     height:'584px',       
     color: theme.palette.text.secondary,
     
   },
   paper_2_1: {  //전체 크기 변환 height 변경
-    padding: theme.spacing(1),
+    padding: theme.spacing(0),
     textAlign: 'center',
-    height:'292px',       
+    height:'274px',       
     color: theme.palette.text.secondary,
     
+  },
+ paper_2_2: {  //전체 크기 변환 height 변경
+  padding: theme.spacing(0),
+    textAlign: 'center',
+  height:'294px',       
+  color: theme.palette.text.secondary,
+  
   },
   palette: {
     primary: {
@@ -141,17 +148,35 @@ class Dashboard extends Component {
     const med_time = index => {
       switch(mState.l_drug[index].time){
         case "0":
-          return (<Brightness6Icon style={{ fontSize: 40 }}/>);//아침
+          return (
+          <dvi>
+            <Brightness6Icon  style={{ fontSize: 40 }}/><Brightness5Icon color="disabled" style={{ fontSize: 40 }}/><Brightness4Icon color="disabled" style={{ fontSize: 40 }}/>
+            </dvi>);//아침
         case "1":
-          return (<Brightness5Icon style={{ fontSize: 40 }}/>); //점심
+          return (
+            <dvi>
+              <Brightness6Icon   color="disabled" style={{ fontSize: 40 }}/><Brightness5Icon style={{ fontSize: 40 }}/><Brightness4Icon color="disabled" style={{ fontSize: 40 }}/>
+              </dvi>); //점심
         case "2":
-          return (<Brightness4Icon style={{ fontSize: 40 }}/>);//저녁
+          return (
+            <dvi>
+              <Brightness6Icon color="disabled" style={{ fontSize: 40 }}/><Brightness5Icon color="disabled" style={{ fontSize: 40 }}/><Brightness4Icon style={{ fontSize: 40 }}/>
+              </dvi>);//저녁
         case "3":
-          return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 저녁
+          return (
+            <dvi>
+              <Brightness6Icon  style={{ fontSize: 40 }}/><Brightness5Icon color="disabled" style={{ fontSize: 40 }}/><Brightness4Icon style={{ fontSize: 40 }}/>
+              </dvi>);//아침, 저녁
         case "4":
-          return (<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//점심, 저녁
+          return (
+            <dvi>
+              <Brightness6Icon  color="disabled" style={{ fontSize: 40 }}/><Brightness5Icon style={{ fontSize: 40 }}/><Brightness4Icon style={{ fontSize: 40 }}/>
+              </dvi>);//점심, 저녁
         default:
-          return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 점심, 저녁
+          return (
+            <dvi>
+            <Brightness6Icon  style={{ fontSize: 40 }}/>,<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>
+            </dvi>);//아침, 점심, 저녁
       }
     }
 
@@ -212,17 +237,17 @@ palette.primary.light">
    
     return (
       <div className={classes.root}>
-        <Grid container alignContent="center" spacing = {0} >
+        <Grid container alignContent="center" spacing = {2} >
 {/* 첫번쨰 구역 */}
           <Grid item xs={2}>
            <ControlBoard history = {this.props.history}/>
           </Grid>
 {/* 두번쨰 구역 */}
           <Grid item xs={5}>
-              <Grid alignItems="center" container spacing = {0}>
+              <Grid alignItems="center" container spacing = {2}>
               <Grid item xs={12}>
                 <Paper className={classes.paper_2_1}>
-                <Box className={classes.palette} height={288} color="primary.main" border= {2}borderColor="#00bcd4" borderRadius="borderRadius">
+                <Box className={classes.palette} height={270} color="primary.main" border= {2}borderColor="#00bcd4" borderRadius="borderRadius">
                 <Box color="primary.contrastText" bgcolor="#00bcd4" fontSize={30} textAlign="center" fontWeight="fontWeightBold" p={1}>
                   {this.todayStr}{this.todayname_week} 
                 </Box>
@@ -234,8 +259,8 @@ palette.primary.light">
               </Grid>
 
               <Grid item xs={12}>
-              <Paper className={classes.paper_2_1}>
-              <Box height={288} color="primary.main" border= {2}borderColor="#ed4b82" borderRadius="borderRadius">
+              <Paper className={classes.paper_2_2}>
+              <Box height={290} color="primary.main" border= {2}borderColor="#ed4b82" borderRadius="borderRadius">
               <Box color="primary.contrastText" bgcolor="#ed4b82" fontSize={30} textAlign="center" fontWeight="fontWeightBold" p={1}>
               약 목록
               </Box> 

@@ -169,8 +169,7 @@ class EventAdder extends Component {
       renderJoinRow(mState, handleListItemClick ,props) {
         const { index, style } = props;
         console.log(mState.jEventList);
-        const [checked, setChecked] = React.useState(false); 
-
+        
         let event_list =[];
         mState.jEventList.forEach(element => {
           event_list.push(element.event_name);
@@ -179,12 +178,6 @@ class EventAdder extends Component {
         console.log(handleListItemClick);
         // const mnRow = med_name.length;
         // // const med_time = [,];
-        const handleChange = event => {
-          setChecked(event.target.checked);
-        };
-        const handleOnClick = event =>{
-          console.log(event.target.innerText);
-        }
         return (
           ///List 항목 누르면 handledetailSubmit이 동작하게
           <form onSubmit={this.handleListItemClick}>

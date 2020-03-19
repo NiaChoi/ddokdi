@@ -54,7 +54,7 @@ class ControlBoard extends Component {
     return (
       <div className={classes.root}>
             <Paper  className={classes.paper} 
-            ><Box color="primary.contrastText" bgcolor="#712355" height={584} fontSize={30} textAlign="center"      fontWeight="fontWeightBold" >
+            ><Box color="primary.contrastText" bgcolor="#712355" height={584} fontSize={30} textAlign="center" borderRadius="borderRadius"   fontWeight="fontWeightBold" >
               <br/>
               <Grid container spacing={4} >
              
@@ -62,27 +62,27 @@ class ControlBoard extends Component {
 
                 <Grid item xs={12}>
                 <form noValidate onSubmit={this.handleHomeSubmit} >
-                    <Fab type = "submit"  size='large' style={{color:"#9e9e9e"}}><HomeRoundedIcon style={{fontSize: 60, color:"#f3e5f5"}} /></Fab>
+                    <Fab type = "submit"  size='large' ><HomeRoundedIcon style={{fontSize: 50}} /></Fab>
                   <Typography>
-                    <Box color="primary.contrastText" fontSize={20} textAlign="center" fontWeight="fontWeightBold"  p={2}>처음으로 </Box>
+                    <Box color="primary.contrastText" fontSize={25} textAlign="center" fontWeight="fontWeightBold"  p={2}>처음으로 </Box>
                   </Typography>
                   </form>
                   </Grid>
                   
                   <Grid item xs={12}> 
                   <form noValidate onSubmit={this.handleMediSubmit} >
-                    <Fab type = "submit"  size='large' style={{color:"#9e9e9e"}}><LocalHospitalIcon style={{fontSize: 50, color:"#f3e5f5"}} /></Fab>
+                    <Fab type = "submit"  size='large'><LocalHospitalIcon style={{fontSize: 45}} /></Fab>
                     <Typography>
-                    <Box color="primary.contrastText" fontSize={30} textAlign="center" fontWeight="fontWeightBold" p={2}>약 설정 </Box>
+                    <Box color="primary.contrastText" fontSize={25} textAlign="center" fontWeight="fontWeightBold" p={2}>약 설정 </Box>
                     </Typography>
                   </form>
                   </Grid>
 
                   <Grid item xs={12}> 
                   <form noValidate onSubmit={this.handleEventSubmit} >
-                    <Fab type = "submit" size='large'><EventAvailableIcon style={{fontSize: 50, color:"#f3e5f5"}} /></Fab>
+                    <Fab type = "submit" size='large'><EventAvailableIcon style={{fontSize: 45}} /></Fab>
                     <Typography>
-                    <Box color="primary.contrastText" fontSize={30} textAlign="center" fontWeight="fontWeightBold" p={2}>행사 보기 </Box>
+                    <Box color="primary.contrastText" fontSize={25} textAlign="center" fontWeight="fontWeightBold" p={2}>행사 보기 </Box>
                     </Typography>
                   </form>
                   </Grid> 

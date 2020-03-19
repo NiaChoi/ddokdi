@@ -97,17 +97,35 @@ class IconTextList extends Component{
     const med_time = index => {
       switch(mState.drugList[index].time){
         case "0":
-          return (<Brightness6Icon style={{ fontSize: 40 }}/>);//아침
+          return (
+          <dvi>
+            <Brightness6Icon  style={{ fontSize: 40 }}/><Brightness5Icon color="disabled" style={{ fontSize: 40 }}/><Brightness4Icon color="disabled" style={{ fontSize: 40 }}/>
+            </dvi>);//아침
         case "1":
-          return (<Brightness5Icon style={{ fontSize: 40 }}/>); //점심
+          return (
+            <dvi>
+              <Brightness6Icon   color="disabled" style={{ fontSize: 40 }}/><Brightness5Icon style={{ fontSize: 40 }}/><Brightness4Icon color="disabled" style={{ fontSize: 40 }}/>
+              </dvi>); //점심
         case "2":
-          return (<Brightness4Icon style={{ fontSize: 40 }}/>);//저녁
+          return (
+            <dvi>
+              <Brightness6Icon color="disabled" style={{ fontSize: 40 }}/><Brightness5Icon color="disabled" style={{ fontSize: 40 }}/><Brightness4Icon style={{ fontSize: 40 }}/>
+              </dvi>);//저녁
         case "3":
-          return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 저녁
+          return (
+            <dvi>
+              <Brightness6Icon  style={{ fontSize: 40 }}/><Brightness5Icon color="disabled" style={{ fontSize: 40 }}/><Brightness4Icon style={{ fontSize: 40 }}/>
+              </dvi>);//아침, 저녁
         case "4":
-          return (<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//점심, 저녁
+          return (
+            <dvi>
+              <Brightness6Icon  color="disabled" style={{ fontSize: 40 }}/><Brightness5Icon style={{ fontSize: 40 }}/><Brightness4Icon style={{ fontSize: 40 }}/>
+              </dvi>);//점심, 저녁
         default:
-          return (<Brightness6Icon style={{ fontSize: 40 }}/>,<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>);//아침, 점심, 저녁
+          return (
+            <dvi>
+            <Brightness6Icon  style={{ fontSize: 40 }}/>,<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>
+            </dvi>);//아침, 점심, 저녁
       }
     }
 
@@ -116,14 +134,16 @@ class IconTextList extends Component{
       <form noValidate onSubmit={this.handleEventSubmit}>
         <ListItem button style={style} key={index} >
         <Grid container  alignContent="center"  xs={12}>
-          <Grid item xs={5}>
+          <Grid item xs={4}>
             <ListItemText primary={<Typography variant="h5" Align="center">{med_name[drugName[index]]}</Typography>}/>
           </Grid>
+          <Grid item xs={1}/>
           <Grid alignItems="center"item xs={2}>
             <ListItemIcon >
             {med_time(index)}
           </ListItemIcon>
           </Grid>
+          <Grid item xs={1}/>
         </Grid>
         
       </ListItem>

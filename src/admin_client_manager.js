@@ -225,7 +225,7 @@ class admin_client_manager extends Component {
                     subheader={this.state.Detail_client_list.Client_USERID}
                     />
                   <CardContent>
-                    {/* {this.state.ClientUSERID !== 0 ? */}
+                    {this.state.ClientUSERID !== 0 ?
                     <Typography align="left" variant="h5" color="textSecondary" component="p" >
                     <Box color="text.secondary" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
                       [생년월일] <br/>{this.state.Detail_client_list.age}<br/>
@@ -235,10 +235,11 @@ class admin_client_manager extends Component {
                       [연락처] <br/>{this.state.Detail_client_list.phone_no}<br/>
                       [비상연락망] <br/>{this.state.Detail_client_list.emergency_contact}<br/>
                       [비상연락인 관계] <br/>{this.state.Detail_client_list.relationship_emergency_res}<br/>
-                      [위급알림서비스활성화] <br/><SwitchLabels history = {this.props.history}/><br/>
+                      [위급알림서비스활성화] <br/>
+                      <SwitchLabels history = {this.props.history}/><br/>
                     </Box>
                     </Typography>
-                     {/* : <Typography variant="body2" color="textSecondary" component="p"/>} */}
+                     : <Typography variant="body2" color="textSecondary" component="p"/>}
                  </CardContent>
                 </Card>               
               </Paper>
