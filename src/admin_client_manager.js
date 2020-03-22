@@ -86,10 +86,9 @@ class admin_client_manager extends Component {
       console.log(event);
       let userId = localStorage.getItem("USN");
       let msgProc = new MsgProcessor();
-      // let selectedClient = event.target.innerText;
       let client_list = this.state.Client_List_without_admin;
       client_list = client_list.concat(this.state.Client_List_without_admin);
-      let Client_userId_for_detail = this.state.ClientUSERID        
+      let Client_userId_for_detail = this.state.ClientUSERID;    
       if (this.state.Emergency_service == false){
         msgProc.attempt_Client_Emergency_Service_Update(Client_userId_for_detail, userId, (result)=> { 
           if (result[0] == 0) {
@@ -179,9 +178,8 @@ class admin_client_manager extends Component {
         });
     
       this.setState({
-        ClientUSERID:Client_userId_for_detail
-        
-      }) 
+        ClientUSERID:Client_userId_for_detail        
+      });
       msgProc.attemptDetailClient(Client_userId_for_detail, userId, (result)=> { 
         if (result[0] == 0) {
           console.log(result[1][0]);
@@ -226,27 +224,27 @@ class admin_client_manager extends Component {
             </form>
         );
       }
-      renderActivateRow(mState, handleListItemClick ,props) {
-        const { index, style } = props;
-        console.log(mState.Activate_Emergency_Service_list);
-        const [checked, setChecked] = React.useState(false); 
+      // renderActivateRow(mState, handleListItemClick ,props) {
+      //   const { index, style } = props;
+      //   console.log(mState.Activate_Emergency_Service_list);
+      //   const [checked, setChecked] = React.useState(false); 
 
-        let client_list =[];
-        mState.Activate_Emergency_Service_list.forEach(element => {
-          client_list.push(element.name);
-        });
+      //   let client_list =[];
+      //   mState.Activate_Emergency_Service_list.forEach(element => {
+      //     client_list.push(element.name);
+      //   });
 
-        console.log(handleListItemClick);
-        // const mnRow = med_name.length;
-        // // const med_time = [,];
-        return (          
-          <form onSubmit={this.handleListItemClick}>
-            <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
-              <ListItemText primary={<Typography variant="h5" Align="left">{client_list[index]} </Typography>}/>
-            </ListItem>
-            </form>
-        );
-      }
+      //   console.log(handleListItemClick);
+      //   // const mnRow = med_name.length;
+      //   // // const med_time = [,];
+      //   return (          
+      //     <form onSubmit={this.handleListItemClick}>
+      //       <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
+      //         <ListItemText primary={<Typography variant="h5" Align="left">{client_list[index]} </Typography>}/>
+      //       </ListItem>
+      //       </form>
+      //   );
+      // }
 
   // titleselect();
   // if()

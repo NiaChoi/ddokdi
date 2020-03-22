@@ -91,7 +91,7 @@ attemptNmedEvent(userId, drugName, drugTime, cb) {
   attemptJoinEvent(userId, eventNo, cb) {
     let payload = {"USERID":userId, "event_no":eventNo};
     let msg_sgi = {"payload":payload};
-    this.reqMsgProcess(msg_sgi, "/j_event", (result)=> {
+    this.reqMsgProcess(msg_sgi, "/update_user_event_participation", (result)=> {
       cb(this.joinEventMsgResultProcess(result));
     });
   }//.allEvent function
@@ -100,10 +100,26 @@ attemptNmedEvent(userId, drugName, drugTime, cb) {
   attemptDetailEvent(eventNo, cb) {
     let payload = {"event_no":eventNo};
     let msg_sgi = {"payload":payload};
-    this.reqMsgProcess(msg_sgi, "/d_event", (result)=> {
-      cb(this.detailEventMsgResultProcess(result));
+    this.reqMsgProcess(msg_sgi, "/d_event", (detail_event)=> {
+      cb(this.detailEventMsgResultProcess(detail_event));
     });
   }//.allEvent function
+
+  attemptDetailuserEvent(userId, eventNo, cb) {
+    let payload = {"USERID":userId,"event_no":eventNo};
+    let msg_sgi = {"payload":payload};
+    this.reqMsgProcess(msg_sgi, "/user_event_d", (result)=> {
+      cb(this.detail_user_Event_MsgResultProcess(result));
+    });
+  }//.allEvent function
+  detail_user_Event_MsgResultProcess(resMsg){
+    let msgPayload = resMsg.data;
+    let unpackResult = null;
+
+    unpackResult = [0, msgPayload.user_event];
+
+    return  unpackResult;
+  }//.detailEvent Result process function
 
 
   //Common process for communication
@@ -278,7 +294,7 @@ attemptNmedEvent(userId, drugName, drugTime, cb) {
 
     switch(msgPayload.code){
       case 200:
-        unpackResult = [0,msgPayload.sucess];
+        unpackResult = [0,msgPayload.success];
         break;
       default:
         unpackResult = [1,"Unknown error"];
@@ -333,7 +349,7 @@ attemptNmedEvent(userId, drugName, drugTime, cb) {
   }
 
   attempt_Client_Emergency_Service_Update(Client_userId_for_detail, userId, cb) {
-    let payload = {"Client_USERID":Client_userId_for_detail+'', "USERID":userId};
+    let payload = {"Client_USERID":Client_userId_for_detail, "USERID":userId};
     let msg_sgi = {"payload":payload};
     this.reqMsgProcess(msg_sgi, "/update_emergency_service", (result)=> {
       cb(this.Emergency_Service_Update_result(result));
