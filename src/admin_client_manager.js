@@ -300,14 +300,14 @@ class admin_client_manager extends Component {
                       [비상연락망] <br/>{this.state.Detail_client_list.emergency_contact}<br/>
                       [비상연락인 관계] <br/>{this.state.Detail_client_list.relationship_emergency_res}<br/>
                       [위급알림서비스활성화] <br/>
-                      {/* <form noValidate onSubmit ={this.handle_Emergency_Service_Update_Submit}> */}
+                      <form noValidate onSubmit ={this.handle_Emergency_Service_Update_Submit}>
                       <Switch
                         checked={this.state.Emergency_service}
                         onChange={this.handleChange}
                         name="emergency_service_state"
                         
                         inputProps={{ "aria-label": "secondary checkbox" }}/>
-                        {/* </form> */}
+                        </form>
                       <br/>
                     </Box>
                     </Typography>

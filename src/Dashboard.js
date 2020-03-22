@@ -184,13 +184,13 @@ class Dashboard extends Component {
       
     <form onSubmit={this.handleMedSubmit}> 
     
-      <ListItem button onClick={handleMedSubmit} style={style} key={index} >
+      <ListItem button onClick={handleMedSubmit} style={{justifyContent:'center' , alignItems: 'center',display: 'flex'}} key={index} >
         <Box width="100%" borderBottom={0.5} borderColor="palette.primary.light">
         <Grid container  alignContent="center"  xs={12}>
           <Grid item xs={7}>
             <ListItemText primary={<Typography variant="h4" Align="center">{med_name[_drugName[index]]}</Typography>}/>
           </Grid>
-          <Grid alignItems="center"item xs={5}>
+          <Grid item xs={5}>
             <ListItemIcon >
             {med_time(index)}
           </ListItemIcon>
@@ -203,7 +203,7 @@ class Dashboard extends Component {
   }
 
   rendereventRow(mState, props) {
-    const { index, style } = props;
+    const { index } = props;
 
     let join_event=[];
     mState.l_j_event.forEach(element => {
@@ -211,17 +211,14 @@ class Dashboard extends Component {
     });
     return (
       ///List 변수 값 넣어보기
-      
-      <ListItem button style={style} key={index} >
+          <Grid container  alignContent="center"  xs={12}> 
+          <ListItem button style={{justifyContent:'center' , alignItems: 'center',display: 'flex'}}  key={index} >
         
-          <Grid container  alignContent="center"  xs={12}>
           <Grid item xs={12}>
             <ListItemText primary={<Typography variant="h4" Align="center">{join_event[index]}</Typography>}/>
           </Grid>
-        </Grid>
-        
       </ListItem>
-      
+      </Grid>
     );
   }
   render(){
