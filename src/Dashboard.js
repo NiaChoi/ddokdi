@@ -4,7 +4,6 @@ import { Grid } from '@material-ui/core';
 import Paper  from '@material-ui/core/Paper';
 import ControlBoard from './servepart/ControlBoard';
 import IconButton from '@material-ui/core/IconButton';
-import EditRoundedIcon from '@material-ui/icons/EditRounded';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 import Badge from '@material-ui/core/Badge';
 import Typography from '@material-ui/core/Typography';
@@ -14,7 +13,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Brightness6Icon from '@material-ui/icons/Brightness6';
 import Brightness5Icon from '@material-ui/icons/Brightness5';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
-import Divider from '@material-ui/core/Divider';
 import { FixedSizeList } from 'react-window';
 import Box from '@material-ui/core/Box';
 
@@ -179,22 +177,20 @@ class Dashboard extends Component {
             </dvi>);//아침, 점심, 저녁
       }
     }
-
-
-
+   
+    
     return (
       ///List 변수 값 넣어보기
       
     <form onSubmit={this.handleMedSubmit}> 
     
       <ListItem button onClick={handleMedSubmit} style={style} key={index} >
-        <Box width="100%" borderBottom={0.5} borderColor="
-palette.primary.light">
+        <Box width="100%" borderBottom={0.5} borderColor="palette.primary.light">
         <Grid container  alignContent="center"  xs={12}>
-          <Grid item xs={8}>
+          <Grid item xs={7}>
             <ListItemText primary={<Typography variant="h4" Align="center">{med_name[_drugName[index]]}</Typography>}/>
           </Grid>
-          <Grid alignItems="center"item xs={4}>
+          <Grid alignItems="center"item xs={5}>
             <ListItemIcon >
             {med_time(index)}
           </ListItemIcon>

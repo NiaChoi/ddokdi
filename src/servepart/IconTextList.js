@@ -8,6 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Brightness6Icon from '@material-ui/icons/Brightness6';
 import Brightness5Icon from '@material-ui/icons/Brightness5';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
+import DeleteForeverSharpIcon from '@material-ui/icons/DeleteForeverSharp';
 import { FixedSizeList } from 'react-window';
 import Checkbox from '@material-ui/core/Checkbox';
 import Box from '@material-ui/core/Box';
@@ -19,14 +20,14 @@ const useStyles = theme => ({
   root: {
     flexGrow: 1,
     width: '100%',
-    height:'540px',
+    height:'450px',
     margin: theme.spacing(0),
     },
   extendedIcon: {
     marginRight: theme.spacing(1),
   },
   paper: {
-    padding: theme.spacing(0),
+    padding: theme.spacing(2),
     textAlign: 'center',
     height:'350px',    
     overflow: 'auto',
@@ -69,62 +70,51 @@ class IconTextList extends Component{
     
   renderRow(mState, props) {
     const { index, style } = props;
-    const [checked, setChecked] = React.useState(false); 
-    // let med_index = [this.drugList[index]];
     const med_name = ['혈압약', '감기약', '소화제', '비타민','관절약'];
-    // const med_time = ["hidden", "visible", "hidden", "hidden","visible"];
-    // const mnRow = med_name.length;
-    // // const med_time = [,];
 
     let drugName =[];
     mState.drugList.forEach(element => {
       drugName.push(element.drug_name);
       
     });  
-    console.log(drugName);
-
     let drugTime =[];
     mState.drugList.forEach(element => {
     drugTime.push(element.time);
     
     });  
-    console.log(drugTime);
 
-    const handleChange = event => {
-      setChecked(event.target.checked);
-    };
-    
+   
     const med_time = index => {
       switch(mState.drugList[index].time){
         case "0":
           return (
           <dvi>
-            <Brightness6Icon  style={{ fontSize: 40 }}/><Brightness5Icon color="disabled" style={{ fontSize: 40 }}/><Brightness4Icon color="disabled" style={{ fontSize: 40 }}/>
+            <Brightness6Icon  style={{ fontSize: 50 }}/><Brightness5Icon color="disabled" style={{ fontSize: 50 }}/><Brightness4Icon color="disabled" style={{ fontSize: 50 }}/>
             </dvi>);//아침
         case "1":
           return (
             <dvi>
-              <Brightness6Icon   color="disabled" style={{ fontSize: 40 }}/><Brightness5Icon style={{ fontSize: 40 }}/><Brightness4Icon color="disabled" style={{ fontSize: 40 }}/>
+              <Brightness6Icon   color="disabled" style={{ fontSize: 50 }}/><Brightness5Icon style={{ fontSize: 50 }}/><Brightness4Icon color="disabled" style={{ fontSize: 50 }}/>
               </dvi>); //점심
         case "2":
           return (
             <dvi>
-              <Brightness6Icon color="disabled" style={{ fontSize: 40 }}/><Brightness5Icon color="disabled" style={{ fontSize: 40 }}/><Brightness4Icon style={{ fontSize: 40 }}/>
+              <Brightness6Icon color="disabled" style={{ fontSize: 50 }}/><Brightness5Icon color="disabled" style={{ fontSize: 50 }}/><Brightness4Icon style={{ fontSize: 50 }}/>
               </dvi>);//저녁
         case "3":
           return (
             <dvi>
-              <Brightness6Icon  style={{ fontSize: 40 }}/><Brightness5Icon color="disabled" style={{ fontSize: 40 }}/><Brightness4Icon style={{ fontSize: 40 }}/>
+              <Brightness6Icon  style={{ fontSize: 50 }}/><Brightness5Icon color="disabled" style={{ fontSize: 50 }}/><Brightness4Icon style={{ fontSize: 50 }}/>
               </dvi>);//아침, 저녁
         case "4":
           return (
             <dvi>
-              <Brightness6Icon  color="disabled" style={{ fontSize: 40 }}/><Brightness5Icon style={{ fontSize: 40 }}/><Brightness4Icon style={{ fontSize: 40 }}/>
+              <Brightness6Icon  color="disabled" style={{ fontSize: 50 }}/><Brightness5Icon style={{ fontSize: 50 }}/><Brightness4Icon style={{ fontSize: 50 }}/>
               </dvi>);//점심, 저녁
         default:
           return (
             <dvi>
-            <Brightness6Icon  style={{ fontSize: 40 }}/>,<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>
+            <Brightness6Icon  style={{ fontSize: 50 }}/><Brightness5Icon style={{ fontSize: 50 }}/><Brightness4Icon style={{ fontSize: 50 }}/>
             </dvi>);//아침, 점심, 저녁
       }
     }
@@ -132,18 +122,21 @@ class IconTextList extends Component{
     return (
       ///List 변수 값 넣어보기
       <form noValidate onSubmit={this.handleEventSubmit}>
-        <ListItem button style={style} key={index} >
+        <ListItem style={style} key={index} >
         <Grid container  alignContent="center"  xs={12}>
           <Grid item xs={4}>
-            <ListItemText primary={<Typography variant="h5" Align="center">{med_name[drugName[index]]}</Typography>}/>
+            <ListItemText primary={<Typography variant="h4" Align="center">{med_name[drugName[index]]}</Typography>}/>
           </Grid>
           <Grid item xs={1}/>
-          <Grid alignItems="center"item xs={2}>
+          <Grid alignItems="center"item xs={3}>
             <ListItemIcon >
             {med_time(index)}
           </ListItemIcon>
           </Grid>
           <Grid item xs={1}/>
+          <Grid item xs={3}>
+          <Button><DeleteForeverSharpIcon  style={{ fontSize: 40 }}/><Typography variant="h4" Align="center">삭제하기</Typography></Button>
+          </Grid>
         </Grid>
         
       </ListItem>
@@ -158,32 +151,33 @@ class IconTextList extends Component{
       return (
 
         <div >
-          <Grid container className={classes.root} item xs={12}>
             <br/>
-          <Grid item xs={12}>
-            <Typography variant="h4">
-              <Box textAlign="center" fontWeight="fontWeightBold" m={1}>
-              약 복용설정
-              </Box>
-            </Typography>
-            <Divider/> 
+          <Grid item xs={12} spacing={2}> 
           <Grid item xs={12}>
           <Grid container>
             <Grid item xs={4}>
-            <Typography variant="h5" Align="center">약 이름</Typography>
+            <Box color="text.primary" height={35}  borderRadius="borderRadius" p={1} >
+            <Typography variant="h4" Align="center">약 이름</Typography>
+            </Box>
             </Grid>
             <Grid item xs={4}>
-            <Typography variant="h5" Align="center">복용시간</Typography>
+            <Box color="text.primary" height={35}  borderRadius="borderRadius" p={1} >
+            <Typography variant="h4" Align="center">복용시간</Typography>
+            </Box>
             </Grid>
-            <Grid item xs={4}/>
+            <Grid item xs={4}>
+            <Box color="text.primary" height={35}  borderRadius="borderRadius" p={1} >
+            <Typography variant="h4" Align="center">항목 삭제</Typography>
+            </Box>
+            </Grid>
           </Grid>
-            </Grid>
-            <Divider/> 
-            <FixedSizeList height={400} width='100%' itemSize={60} itemCount={this.state.list_length}>
+            </Grid> 
+            <Divider/>
+             <FixedSizeList height={250} width='100%' itemSize={80} itemCount={this.state.list_length}>
             {this.renderRow.bind(this, this.state)}
             </FixedSizeList>
+           
             <Divider/>
-            </Grid>
             </Grid>
         </div>
       );

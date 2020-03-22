@@ -51,6 +51,14 @@ attempMedicine(userId, cb) {
   });
 }//.Medicine function
 
+//New medicine function
+attemptNmedEvent(userId, drugName, drugTime, cb) {
+  let payload = {"USERID":userId, "drug_name":drugName, "time":drugTime};
+  let msg_sgi = {"payload":payload};
+  this.reqMsgProcess(msg_sgi, "/drug_management", (result)=> {
+    cb(this.newMedMsgResultProcess(result));
+  });
+}//.New medicine function
 
 
   //newEvent function
@@ -210,6 +218,22 @@ attempMedicine(userId, cb) {
 
     return  unpackResult;
   }//.allEvent Result process function
+
+//Greeting Result process function 
+  newMedMsgResultProcess(resMsg){
+    let msgPayload = resMsg.data;
+    let unpackResult = null;
+
+    switch(msgPayload.code){
+      case 200:
+        unpackResult = [0,msgPayload.success];
+        break;
+      default:
+        unpackResult = [1,"Unknown error"];
+        break;
+    }
+    return  unpackResult;
+  }//.Greeting Result process function 
 
   //newEvent Result process function 
   newEventMsgResultProcess(resMsg){

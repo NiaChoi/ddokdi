@@ -239,12 +239,6 @@ class admin_client_manager extends Component {
         console.log(handleListItemClick);
         // const mnRow = med_name.length;
         // // const med_time = [,];
-        const handleChange = event => {
-          setChecked(event.target.checked);
-        };
-        const handleOnClick = event =>{
-          console.log(event.target.innerText);
-        }
         return (          
           <form onSubmit={this.handleListItemClick}>
             <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
