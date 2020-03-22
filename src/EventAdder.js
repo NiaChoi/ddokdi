@@ -63,7 +63,7 @@ class EventAdder extends Component {
       jEventList: [],
       jlistLength:0,
       participation : true,
-      user_event_table_data:[{"user_event_USERID":"", "user_event_event_no":"","participation":""}],
+      user_event_table_data: [{"user_event_USERID":"", "user_event_event_no":"","participation":""}],
       event_no : 0
       }
     }
@@ -159,38 +159,51 @@ class EventAdder extends Component {
 
     ///////////////////////////////////////////Join Submit동작X////////////////////////
 handle_participation_Change = (event,b) => {
-  event.preventDefault();
+  // event.preventDefault();
   console.log(event);
-  let userId = localStorage.getItem("USN");
+  
   let msgProc = new MsgProcessor();
   let user_event_list = this.state.user_event_table_data;
-  user_event_list = user_event_list.concat(this.state.user_event_table_data);
-  let eventNo = this.state.event_no;
+  // user_event_list = user_event_list.concat(this.state.user_event_table_data);
+  let eventNo = this.state.dEventNo;
   if(this.state.participation == false){
+    let userId = localStorage.getItem("USN");
       msgProc.attemptJoinEvent(eventNo, userId, (result)=> { 
             if (result[0] == 0) {
             // alert("행사 참석이 활성화되었습니다.");
             console.log(result[0]);
-            msgProc.attemptDetailuserEvent(eventNo, userId, (result)=> { 
-              if (result[0] == 0) {
-                console.log(result[1][0]);
-                console.log(result[1][0].participation);
+            msgProc.attemptDetailEvent(eventNo, (detail_event)=> { 
+              if (detail_event[0] == 0) {
+                msgProc.attemptDetailuserEvent(userId, eventNo, (result)=> {
+                  if (result[0] == 0) {
+                    console.log(result[1][0]);
+                    console.log(result[1][0].participation);
+                    console.log(detail_event[1][0]);
                 this.setState({
-                  user_event_table_data:result[1][0],
-                  
+                  dEventList:detail_event[1][0],
+                  user_event_table_data:result[1][0]
                 })
-                if (result[1][0].participation == 0)  {
-                  this. setState({
-                    participation:false
-                  })
+                    
+                    if (result[1][0].participation == 0)  {
+                      this. setState({
+                        participation:false
+                      })
+                    }
+                    else {
+                      this. setState({
+                        participation:true
+                    })
+                    }
                 }
-                else {
-                  this. setState({
-                    participation:true
-                })
+                else{
+                  alert(result[1]);
                 }
-            } 
-          });
+                });
+              }
+              else{
+                alert(detail_event[1]);
+              }
+            });
           }
           else {
             alert(result[1]);
@@ -199,30 +212,43 @@ handle_participation_Change = (event,b) => {
         // alert("행사 참석이 활성화되었습니다.");
       }
   else{
+    let userId = localStorage.getItem("USN");
     msgProc.attemptJoinEvent(eventNo, userId, (result)=> { 
       if (result[0] == 0) {
       // alert("행사 참석이 비활성화되었습니다.");
       console.log(result[0]);
-      msgProc.attemptDetailuserEvent(eventNo, userId, (result)=> { 
-        if (result[0] == 0) {
-          console.log(result[1][0]);
-          console.log(result[1][0].participation);
+      msgProc.attemptDetailEvent(eventNo, (detail_event)=> { 
+        if (detail_event[0] == 0) {
+          msgProc.attemptDetailuserEvent(userId, eventNo, (result)=> {
+            if (result[0] == 0) {
+              console.log(result[1][0]);
+              console.log(result[1][0].participation);
+              console.log(detail_event[1][0]);
           this.setState({
-            user_event_table_data:result[1][0],
-            
+            dEventList:detail_event[1][0],
+            user_event_table_data:result[1][0]
           })
-          if (result[1][0].participation == 0)  {
-            this. setState({
-              participation:false
-            })
+              
+              if (result[1][0].participation == 0)  {
+                this. setState({
+                  participation:false
+                })
+              }
+              else {
+                this. setState({
+                  participation:true
+              })
+              }
           }
-          else {
-            this. setState({
-              participation:true
-          })
+          else{
+            alert(result[1]);
           }
-      } 
-    });
+          });
+        }
+        else{
+          alert(detail_event[1]);
+        }
+      });
     }
     else {
       alert(result[1]);

@@ -82,7 +82,7 @@ class admin_client_manager extends Component {
       }
 
     handleChange = (event, a) => {
-      event.preventDefault();
+      // event.preventDefault();
       console.log(event);
       let userId = localStorage.getItem("USN");
       let msgProc = new MsgProcessor();

@@ -88,7 +88,8 @@ attemptNmedEvent(userId, drugName, drugTime, cb) {
     });
   }//.allEvent function
 
-  attemptJoinEvent(userId, eventNo, cb) {
+  attemptJoinEvent(eventNo, userId, cb) {
+    // let userId = localStorage.getItem("USN");
     let payload = {"USERID":userId, "event_no":eventNo};
     let msg_sgi = {"payload":payload};
     this.reqMsgProcess(msg_sgi, "/update_user_event_participation", (result)=> {
