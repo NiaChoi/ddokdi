@@ -93,7 +93,7 @@ class LoginLayout extends Component {
                     gutterBottom 
                     variant="h3"
                     ><br/>똑디 로그인</Typography>
-                  <Grid xs={12}>
+                  <Grid item xs={12}>
                   <Grid container spacing={3} >
                     <Grid item xs={12}>
                       <AccountCircle style={{ fontSize: 50 }} />

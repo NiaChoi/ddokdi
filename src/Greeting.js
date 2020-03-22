@@ -86,10 +86,10 @@ class Greeting extends Component {
                       <br/>오늘은 {this.todayStr} 입니다.
                       <br/>지금의 기분을 표현해 주세요!
                       </Typography>
-                  <Grid xs={12}>
+                  <Grid item xs={12}>
                     <Divider/>
                     <br/>
-                    <Grid xs={12}>
+                    <Grid item xs={12}>
                       <IconButton onClick = {this.handleOnClick.bind(this, 1)}>
                         <SentimentVerySatisfiedOutlinedIcon style={{fontSize: 100 }}/>
                       </IconButton>
@@ -103,7 +103,7 @@ class Greeting extends Component {
                         <SentimentSatisfiedIcon  style={{fontSize: 100 }}/>
                       </IconButton>
                     </Grid>
-                    <Grid xs={12}>
+                    <Grid item xs={12}>
                       <IconButton onClick = {this.handleOnClick.bind(this, 5)}>
                         <SentimentDissatisfiedIcon style={{fontSize: 100 }}/>
                       </IconButton>

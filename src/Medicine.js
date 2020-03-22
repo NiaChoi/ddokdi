@@ -127,8 +127,8 @@ class Medicine extends Component {
               <Grid item container xs={12}>
                 <Grid item xs={12}/>
                 <Grid item xs={12}>
-                  <SimpleListMenu/>
-                  {/* <Medicine_Adder/> */}
+                  {/* <SimpleListMenu/> */}
+                  <Medicine_Adder/>
                 </Grid>
 
                 

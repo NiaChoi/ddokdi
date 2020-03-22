@@ -20,7 +20,7 @@ const useStyles = theme => ({
   root: {
     flexGrow: 1,
     width: '100%',
-    height:'450px',
+    height:'200px',
     margin: theme.spacing(0),
     },
   extendedIcon: {
@@ -29,7 +29,7 @@ const useStyles = theme => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
-    height:'350px',    
+    height:'190px',    
     overflow: 'auto',
     maxHeight: '350px',
     color: theme.palette.text.secondary,
@@ -52,19 +52,19 @@ class Medicine_Adder extends Component{
     }
     
   };
-  componentDidMount(){
-    let userId = localStorage.getItem("USN");
-    let msgProc = new MsgProcessor();
-    msgProc.attempMedicine(userId, (result)=> { 
-      if (result[0] == 0) {
-        console.log(result[1]);
-        this.setState({
-          drugList:result[1],
-          list_length:result[1].length
-        })  
-      }
-    });
-  };
+  // componentDidMount(){
+  //   let userId = localStorage.getItem("USN");
+  //   let msgProc = new MsgProcessor();
+  //   msgProc.attempMedicine(userId, (result)=> { 
+  //     if (result[0] == 0) {
+  //       console.log(result[1]);
+  //       this.setState({
+  //         drugList:result[1],
+  //         list_length:result[1].length
+  //       })  
+  //     }
+  //   });
+  // };
 
   MhandleClickListItem = event => {
     event.preventDefault();
@@ -107,30 +107,9 @@ class Medicine_Adder extends Component{
     //  console.log(index);
   };
     
-  renderRow(props) {
+  renderDrugRow(props) {
     const { index, style } = props;
     const med_name = ['혈압약', '감기약', '소화제', '비타민','관절약'];
-    const med_time = [
-        <dvi>
-            <Brightness6Icon  style={{ fontSize: 50 }}/><Brightness5Icon color="disabled" style={{ fontSize: 50 }}/><Brightness4Icon color="disabled" style={{ fontSize: 50 }}/>
-            </dvi>,
-        <dvi>
-            <Brightness6Icon   color="disabled" style={{ fontSize: 50 }}/><Brightness5Icon style={{ fontSize: 50 }}/><Brightness4Icon color="disabled" style={{ fontSize: 50 }}/>
-            </dvi>,
-        <dvi>
-            <Brightness6Icon color="disabled" style={{ fontSize: 50 }}/><Brightness5Icon color="disabled" style={{ fontSize: 50 }}/><Brightness4Icon style={{ fontSize: 50 }}/>
-            </dvi>,
-        <dvi>
-            <Brightness6Icon  style={{ fontSize: 50 }}/><Brightness5Icon color="disabled" style={{ fontSize: 50 }}/><Brightness4Icon style={{ fontSize: 50 }}/>
-            </dvi>,
-        <dvi>
-            <Brightness6Icon  color="disabled" style={{ fontSize: 50 }}/><Brightness5Icon style={{ fontSize: 50 }}/><Brightness4Icon style={{ fontSize: 50 }}/>
-            </dvi>,
-        <dvi>
-            <Brightness6Icon  style={{ fontSize: 50 }}/><Brightness5Icon style={{ fontSize: 50 }}/><Brightness4Icon style={{ fontSize: 50 }}/>
-            </dvi>
-        ];
-
     return (
         <div >
             <Grid item xs={1}>
@@ -172,7 +151,34 @@ class Medicine_Adder extends Component{
             </form>
         </Menu>
         </Grid>
+    </div>
+    );
+  }
+  renderTimeRow(props) {
+    const { index, style } = props;
+    const med_time = [
+        <dvi>
+            <Brightness6Icon  style={{ fontSize: 50 }}/><Brightness5Icon color="disabled" style={{ fontSize: 50 }}/><Brightness4Icon color="disabled" style={{ fontSize: 50 }}/>
+            </dvi>,
+        <dvi>
+            <Brightness6Icon   color="disabled" style={{ fontSize: 50 }}/><Brightness5Icon style={{ fontSize: 50 }}/><Brightness4Icon color="disabled" style={{ fontSize: 50 }}/>
+            </dvi>,
+        <dvi>
+            <Brightness6Icon color="disabled" style={{ fontSize: 50 }}/><Brightness5Icon color="disabled" style={{ fontSize: 50 }}/><Brightness4Icon style={{ fontSize: 50 }}/>
+            </dvi>,
+        <dvi>
+            <Brightness6Icon  style={{ fontSize: 50 }}/><Brightness5Icon color="disabled" style={{ fontSize: 50 }}/><Brightness4Icon style={{ fontSize: 50 }}/>
+            </dvi>,
+        <dvi>
+            <Brightness6Icon  color="disabled" style={{ fontSize: 50 }}/><Brightness5Icon style={{ fontSize: 50 }}/><Brightness4Icon style={{ fontSize: 50 }}/>
+            </dvi>,
+        <dvi>
+            <Brightness6Icon  style={{ fontSize: 50 }}/><Brightness5Icon style={{ fontSize: 50 }}/><Brightness4Icon style={{ fontSize: 50 }}/>
+            </dvi>
+        ];
 
+    return (
+        <div >
         <Grid item xs={1}>
         <Box width="100%" height ='60px' p={2} >
             <AccessAlarmIcon style={{ fontSize: 60 }}/>
@@ -217,6 +223,7 @@ class Medicine_Adder extends Component{
     );
   }
 
+
    render(){
     const { classes } = this.props;
 
@@ -225,13 +232,12 @@ class Medicine_Adder extends Component{
         <div className={classes.root} >
         <Box  bgcolor="#f8bbd0" width="833.33px" height ='110px'>
         <Grid container xs={12} alignContent="center" spacing={2}>
-        
-           {this.renderRow.bind(this, this.state, this.MhandleClickListItem, this.MhandleMenuItemClick, this.ThandleClickListItem, this.handleClose, this.ThandleMenuItemClick)}
+           {this.renderDrugRow.bind(this, this.state)}
         <Grid  item xs={12}>
             <Grid container xs={12}>
                 <Grid item xs={3}/>
                 <Grid item xs={6}>
-                <form> 
+                <form style={{justifyContent:'center' , alignItems: 'center',display: 'flex'}}> 
                     <Button >
                     <EditRoundedIcon style={{ fontSize: 40 }}/><Typography variant="h4" Align="center">새로운 약 추가하기</Typography>
                 </Button>
