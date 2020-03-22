@@ -48,7 +48,9 @@ class IconTextList extends Component{
     super(props);
     this.state = {
       drugList:[],
-      list_length:0
+      list_length:0,
+      Dname:0,
+      Dtime:0
     }
     
   }
@@ -66,6 +68,27 @@ class IconTextList extends Component{
     });
   }
 
+  handleDdrugSubmit = event => {
+    console.log(event);
+    let userId = localStorage.getItem("USN");
+    let msgProc = new MsgProcessor();
+    let index = event.target.title;
+    let drugName = this.state.drugList[index].drug_name;
+    let drugTime = this.state.drugList[index].time;
+    console.log(this.state.drugList[index].drug_name);
+    console.log(event.target.title);
+    console.log(this.state.drugList);
+      msgProc.attemptDeleteDrug( userId,  drugName, drugTime, (result) => { 
+          if (result[0] == 0) {
+            console.log(result[1]);
+          alert("삭제되었습니다.");
+          }
+          else {
+            alert(result[1]);
+          }
+        });
+    }
+  
   
     
   renderRow(mState, props) {
@@ -80,9 +103,8 @@ class IconTextList extends Component{
     let drugTime =[];
     mState.drugList.forEach(element => {
     drugTime.push(element.time);
-    
-    });  
 
+    });  
    
     const med_time = index => {
       switch(mState.drugList[index].time){
@@ -121,33 +143,33 @@ class IconTextList extends Component{
 
     return (
       ///List 변수 값 넣어보기
-      <form noValidate onSubmit={this.handleEventSubmit}>
         <ListItem style={style} key={index} >
         <Grid container  alignContent="center"  xs={12}>
           <Grid item xs={4}>
-            <ListItemText primary={<Typography variant="h4" Align="center">{med_name[drugName[index]]}</Typography>}/>
+            <ListItemText style={{justifyContent:'center' , alignItems: 'center',display: 'flex'}} primary={<Typography variant="h4" Align="center">{[index+1]+". " + med_name[drugName[index]]}</Typography>}/>
           </Grid>
-          <Grid item xs={1}/>
-          <Grid alignItems="center"item xs={3}>
-            <ListItemIcon >
+          <Grid item xs={4}>
+            <ListItemIcon  style={{justifyContent:'center' , alignItems: 'center',display: 'flex'}}>
             {med_time(index)}
           </ListItemIcon>
           </Grid>
-          <Grid item xs={1}/>
-          <Grid item xs={3}>
-          <Button><DeleteForeverSharpIcon  style={{ fontSize: 40 }}/><Typography variant="h4" Align="center">삭제하기</Typography></Button>
+          <Grid item xs={4}>
+          <form noValidate  onSubmit={this.handleDdrugSubmit} style={{justifyContent:'center' , alignItems: 'center',display: 'flex'}}>
+          <Button onClick={this.handleDdrugSubmit}  variant="contained"    startIcon={<DeleteForeverSharpIcon style={{ fontSize: 40 }}/>}>
+        <Typography variant="h4" align="center" title={index} >{[index+1]+"번 삭제"}</Typography>
+        </Button>
+          
+          {/* <Button alignItems= 'center' onClick={this.handleDdrugSubmit} ><Typography variant="h4" align="center" title={index} >{[index+1]+"번 삭제"}</Typography></Button> */}
+          </form>
           </Grid>
         </Grid>
-        
       </ListItem>
-      </form>
       
     );
   }
-
+  
    render(){
     const { classes } = this.props;
-
       return (
 
         <div >
@@ -166,7 +188,7 @@ class IconTextList extends Component{
             </Box>
             </Grid>
             <Grid item xs={4}>
-            <Box color="text.primary" height={35}  borderRadius="borderRadius" p={1} >
+            <Box button onClick={this.delte} color="text.primary" height="h4"  borderRadius="borderRadius" p={1} >
             <Typography variant="h4" Align="center">항목 삭제</Typography>
             </Box>
             </Grid>

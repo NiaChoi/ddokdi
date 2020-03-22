@@ -12,6 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
 import SimpleListMenu from './servepart/med_select';
+import Medicine_Adder from './servepart/medicine_Add';
 // import MsgProcessor from "./servepart/MsgProcessor"
 
 const useStyles = theme => ({
@@ -117,7 +118,7 @@ class Medicine extends Component {
 
         {/* paper_2 두번째 칸 */}
           <Grid item xs={10} > 
-            <Box height={580}  border= {2}borderColor="#ed4b82" borderRadius="borderRadius">
+            <Box height={580}  border= {2} borderColor="#ed4b82" borderRadius="borderRadius">
               <Box color="primary.contrastText" bgcolor="#ed4b82" fontSize={30} textAlign="center" fontWeight="fontWeightBold" p={1}>
               약 복용설정
               </Box> 
@@ -127,7 +128,9 @@ class Medicine extends Component {
                 <Grid item xs={12}/>
                 <Grid item xs={12}>
                   <SimpleListMenu/>
+                  {/* <Medicine_Adder/> */}
                 </Grid>
+
                 
               {/* <Grid  xs={4}/>
                 <Grid  xs={4}>

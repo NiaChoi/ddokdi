@@ -1,5 +1,5 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -14,7 +14,7 @@ import EditRoundedIcon from '@material-ui/icons/EditRounded';
 import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
 
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
-// import MsgProcessor from "./servepart/MsgProcessor"
+import MsgProcessor from "./MsgProcessor"
 
 const useStyles = theme => ({
   root: {
@@ -42,8 +42,6 @@ const useStyles = theme => ({
 
 
 class Medicine_Adder extends Component{
-  
-  
   constructor(props){
     super(props);
     this.state = {
@@ -53,7 +51,7 @@ class Medicine_Adder extends Component{
         selectedTimeIndex:0
     }
     
-  }
+  };
   componentDidMount(){
     let userId = localStorage.getItem("USN");
     let msgProc = new MsgProcessor();
@@ -66,7 +64,7 @@ class Medicine_Adder extends Component{
         })  
       }
     });
-  }
+  };
 
   MhandleClickListItem = event => {
     event.preventDefault();
@@ -97,19 +95,17 @@ class Medicine_Adder extends Component{
         selectedTimeIndex:index,
         TimeanchorEl:null
         })
-     console.log(index);
+    //  console.log(index);
   };
  
-  handleClose = () => {
+  handleClose = event => {
     event.preventDefault();
     this.setState({
         MedanchorEl:null,
         TimeanchorEl:null
         })
-     console.log(index);
+    //  console.log(index);
   };
-  };
-
     
   renderRow(props) {
     const { index, style } = props;
@@ -136,7 +132,7 @@ class Medicine_Adder extends Component{
         ];
 
     return (
-        <div className={classes.list} >
+        <div >
             <Grid item xs={1}>
             <Box width="100%" height ='60px' p={2} >
             <LocalHospitalIcon style={{ fontSize: 60 }}/>
@@ -150,26 +146,26 @@ class Medicine_Adder extends Component{
             aria-haspopup="true"
             aria-controls="Medi-menu"
             aria-label="choose the medicine selection"
-            onClick={MhandleClickListItem}
+            onClick={this.MhandleClickListItem}
             >
             <Box width="100%" border={3} bgcolor="#FFFFFF" height ='60px' borderColor="error.light" borderRadius="borderRadius">
-            <ListItemText primary={<Typography variant="h4" Align="center">{med_name[selectedMedIndex]}</Typography>} />
+            <ListItemText primary={<Typography variant="h4" Align="center">{med_name[this.state.selectedMedIndex]}</Typography>} />
             </Box>
             </ListItem>
             </form>
         </List>
         <Menu
             id="Med-menu"
-            anchorEl={MedanchorEl}
+            anchorEl={this.state.MedanchorEl}
             keepMounted
-            open={Boolean(MedanchorEl)}
-            onClose={handleClose}
+            open={Boolean(this.state.MedanchorEl)}
+            onClose={this.handleClose}
         >
             <form noValidate onSubmit={this.MhandleMenuItemClick}>
             <MenuItem
                 key={index}
-                selected={index === selectedMedIndex}
-                onClick={MhandleMenuItemClick}
+                selected={index === this.state.selectedMedIndex}
+                onClick={this.MhandleMenuItemClick}
             >
             <Typography variant="h4" Align="center">{med_name[index]}</Typography>
             </MenuItem>
@@ -184,47 +180,41 @@ class Medicine_Adder extends Component{
             </Grid>
         <Grid item xs={5}>
           <List component="nav" aria-label="Medicine_Time settings">
+          <form noValidate onSubmit={this.ThandleClickListItem}>
             <ListItem
             button
             aria-haspopup="true"
             aria-controls="Time-menu"
             aria-label="choose the medicine selection"
-            onClick={ThandleClickListItem}
+            onClick={this.ThandleClickListItem}
             >
             <Box width="100%" border={3} bgcolor="#FFFFFF" height ='60px' borderColor="error.light"  borderRadius="borderRadius">
-            <ListItemText primary={<Typography variant="h4" Align="center">{med_time[selectedTimeIndex]}</Typography>} />
+            <ListItemText primary={<Typography variant="h4" Align="center">{med_time[this.state.selectedTimeIndex]}</Typography>} />
             </Box>
             </ListItem>
+            </form>
         </List>
+        <form noValidate onSubmit={this.handleClose}>
         <Menu
             id="Time-menu"
-            anchorEl={TimeanchorEl}
-            open={Boolean(TimeanchorEl)}
-            onClose={handleClose}
+            anchorEl={this.state.TimeanchorEl}
+            open={Boolean(this.state.TimeanchorEl)}
+            onClose={this.handleClose}
         >
+          <form noValidate onSubmit={this.ThandleMenuItemClick}>
             <MenuItem
                 key={index}
-                selected={index === selectedTimeIndex}
-                onClick={ThandleMenuItemClick}
+                selected={index === this.state.selectedTimeIndex}
+                onClick={this.ThandleMenuItemClick}
             >
             <Typography variant="h4" Align="center">{med_time[index]}</Typography>
             </MenuItem>
-        </Menu>  
+          </form>
+        </Menu> 
+         </form>
         </Grid>
-        <Grid  item xs={12}>
-            <Grid container xs={12}>
-                <Grid item xs={3}/>
-                <Grid item xs={6}>
-                <form > 
-                    <Button >
-                    <EditRoundedIcon style={{ fontSize: 40 }}/><Typography variant="h4" Align="center">새로운 약 추가하기</Typography>
-                </Button>
-                </form>
-                </Grid>
-                <Grid item xs={3}/>
-            </Grid>
-            </Grid>
     </div>
+    );
   }
 
    render(){
@@ -236,12 +226,12 @@ class Medicine_Adder extends Component{
         <Box  bgcolor="#f8bbd0" width="833.33px" height ='110px'>
         <Grid container xs={12} alignContent="center" spacing={2}>
         
-           
+           {this.renderRow.bind(this, this.state, this.MhandleClickListItem, this.MhandleMenuItemClick, this.ThandleClickListItem, this.handleClose, this.ThandleMenuItemClick)}
         <Grid  item xs={12}>
             <Grid container xs={12}>
                 <Grid item xs={3}/>
                 <Grid item xs={6}>
-                <form > 
+                <form> 
                     <Button >
                     <EditRoundedIcon style={{ fontSize: 40 }}/><Typography variant="h4" Align="center">새로운 약 추가하기</Typography>
                 </Button>

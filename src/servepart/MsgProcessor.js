@@ -60,6 +60,15 @@ attemptNmedEvent(userId, drugName, drugTime, cb) {
   });
 }//.New medicine function
 
+ //delete drugList
+ attemptDeleteDrug(userId, drugName,drugTime, cb) {
+  let payload = {"USERID":userId, "drug_name":drugName, "time":drugTime};
+  let msg_sgi = {"payload":payload};
+  this.reqMsgProcess(msg_sgi, "/delete_drug_list", (result)=> {
+    cb(this.deleteDrugMsgResultProcess(result));
+  });
+}//.delete drugList function
+
 
   //newEvent function
   attemptNewEvent(userId, cb) {
@@ -88,8 +97,7 @@ attemptNmedEvent(userId, drugName, drugTime, cb) {
     });
   }//.allEvent function
 
-  attemptJoinEvent(eventNo, userId, cb) {
-    // let userId = localStorage.getItem("USN");
+  attemptJoinEvent(userId, eventNo, cb) {
     let payload = {"USERID":userId, "event_no":eventNo};
     let msg_sgi = {"payload":payload};
     this.reqMsgProcess(msg_sgi, "/update_user_event_participation", (result)=> {
@@ -122,6 +130,7 @@ attemptNmedEvent(userId, drugName, drugTime, cb) {
     return  unpackResult;
   }//.detailEvent Result process function
 
+ 
 
   //Common process for communication
   reqMsgProcess(swp_msg, url, cb) {
@@ -251,6 +260,22 @@ attemptNmedEvent(userId, drugName, drugTime, cb) {
     }
     return  unpackResult;
   }//.Greeting Result process function 
+
+//Delete drug Result process function 
+  deleteDrugMsgResultProcess(resMsg){
+    let msgPayload = resMsg.data;
+    let unpackResult = null;
+
+    switch(msgPayload.code){
+      case 200:
+        unpackResult = [0,msgPayload.delete_drug_list];
+        break;
+      default:
+        unpackResult = [1,"Unknown error"];
+        break;
+    }
+    return  unpackResult;
+  }//.Delete drug  Result process function 
 
   //newEvent Result process function 
   newEventMsgResultProcess(resMsg){

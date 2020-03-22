@@ -90,7 +90,7 @@ export default function SimpleListMenu() {
         
             <Grid item xs={1}>
             <Box width="100%" height ='60px' p={2} >
-            <LocalHospitalIcon style={{ fontSize: 60 }}/>
+            <LocalHospitalIcon style={{ color:'#ed4b82',fontSize: 60 }}/>
             </Box>
             </Grid>
             <Grid item xs={5}>
@@ -102,7 +102,7 @@ export default function SimpleListMenu() {
             aria-label="choose the medicine selection"
             onClick={MhandleClickListItem}
             >
-            <Box width="100%" border={3} bgcolor="#FFFFFF" height ='60px' borderColor="error.light" borderRadius="borderRadius">
+            <Box width="100%" border={3} bgcolor="#FFFFFF" height ='60px' borderColor='#ed4b82' borderRadius="borderRadius">
             <ListItemText primary={<Typography variant="h4" Align="center">{med_name[selectedMedIndex]}</Typography>} />
             </Box>
             </ListItem>
@@ -127,7 +127,7 @@ export default function SimpleListMenu() {
         </Grid>
         <Grid item xs={1}>
         <Box width="100%" height ='60px' p={2} >
-            <AccessAlarmIcon style={{ fontSize: 60 }}/>
+            <AccessAlarmIcon style={{ color:'#ed4b82', fontSize: 60 }}/>
             </Box>
             </Grid>
         <Grid item xs={5}>
@@ -139,7 +139,7 @@ export default function SimpleListMenu() {
             aria-label="choose the medicine selection"
             onClick={ThandleClickListItem}
             >
-            <Box width="100%" border={3} bgcolor="#FFFFFF" height ='60px' borderColor="error.light"  borderRadius="borderRadius">
+            <Box width="100%" border={3} bgcolor="#FFFFFF" height ='60px' borderColor='#ed4b82'  borderRadius="borderRadius">
             <ListItemText primary={<Typography variant="h4" Align="center">{med_time[selectedTimeIndex]}</Typography>} />
             </Box>
             </ListItem>
@@ -165,8 +165,8 @@ export default function SimpleListMenu() {
             <Grid container xs={12}>
                 <Grid item xs={3}/>
                 <Grid item xs={6}>
-                <form > 
-                    <Button >
+                <form style={{justifyContent:'center' , alignItems: 'center',display: 'flex'}}> 
+                    <Button  >
                     <EditRoundedIcon style={{ fontSize: 40 }}/><Typography variant="h4" Align="center">새로운 약 추가하기</Typography>
                 </Button>
                 </form>
