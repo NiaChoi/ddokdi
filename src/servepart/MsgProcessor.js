@@ -11,8 +11,8 @@ const axiosConfig = {
 axios.defaults.baseURL =  'http://124.53.151.29:5000';
 
 class MsgProcessor{
-  constructor(){
-  }
+  // constructor(){
+  // }
 
  //Sign in function
   attemptSignIn(userId, userPw, cb) {
