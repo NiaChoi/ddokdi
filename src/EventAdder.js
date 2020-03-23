@@ -448,8 +448,8 @@ handle_participation_Change = (event,b) => {
   render(){
     const { classes } = this.props;
     return (
-      <div >
-        <Grid container className={classes.root} spacing = {2}>
+      <div  className={classes.root}>
+        <Grid container  alignContent="center"spacing = {2}>
         {/* paper_1 첫번째 칸 */}
           <Grid item xs={2}>
           <ControlBoard history = {this.props.history}/>
@@ -480,9 +480,9 @@ handle_participation_Change = (event,b) => {
             <Grid item xs={5} >
             <Paper className={classes.paper_1}>
             {this.state.dEventNo == 0 ?
-            <Box width="100%" height={568} color="primary.contrastText" bgcolor="warning.light" fontSize={25} textAlign="center" fontWeight="fontWeightBold"p={1}>
+            <Box  height={568} color="primary.contrastText" bgcolor="warning.light" fontSize={25} textAlign="center" fontWeight="fontWeightBold"p={1}>
             <Box 
-            width="100%" color="primary.contrastText" fontSize={35} textAlign="center" fontWeight="fontWeightBold" style={{
+            width="80%" color="primary.contrastText" fontSize={35} textAlign="center" fontWeight="fontWeightBold" style={{
               position: 'absolute', left: '77.5%', top: '45%',
               transform: 'translate(-50%, -50%)'}}>
             <EventIcon style={{fontSize: 100 }}/>

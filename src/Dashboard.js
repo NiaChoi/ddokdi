@@ -153,7 +153,7 @@ class Dashboard extends Component {
         default:
           return (
             <dvi>
-            <Brightness6Icon  style={{ fontSize: 40 }}/>,<Brightness5Icon style={{ fontSize: 40 }}/>,<Brightness4Icon style={{ fontSize: 40 }}/>
+            <Brightness6Icon  style={{ fontSize: 40 }}/><Brightness5Icon style={{ fontSize: 40 }}/><Brightness4Icon style={{ fontSize: 40 }}/>
             </dvi>);//아침, 점심, 저녁
       }
     }

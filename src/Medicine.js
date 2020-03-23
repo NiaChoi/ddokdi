@@ -5,7 +5,6 @@ import { Grid } from '@material-ui/core';
 import IconTextList from './servepart/IconTextList';
 import ControlBoard from './servepart/ControlBoard';
 import Box from '@material-ui/core/Box';
-import Medicine_Adder from './servepart/medicine_Add';
 import SimpleListMenu from './servepart/med_select';
 // import MsgProcessor from "./servepart/MsgProcessor"
 
@@ -13,6 +12,7 @@ const useStyles = theme => ({
   root: {
     flexGrow: 1,
     width: '100%',
+    height:'584px',
     marginTop: theme.spacing(0),
   },form: {
     width: '100%', // Fix IE 11 issue.

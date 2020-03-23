@@ -74,13 +74,14 @@ class IconTextList extends Component{
     let index = event.target.title;
     let drugName = this.state.drugList[index].drug_name;
     let drugTime = this.state.drugList[index].time;
-    console.log(this.state.drugList[index].drug_name);
+    console.log(this.state.drugList[index]);
     console.log(event.target.title);
     console.log(this.state.drugList);
       msgProc.attemptDeleteDrug( userId,  drugName, drugTime, (result) => { 
           if (result[0] == 0) {
             console.log(result[1]);
           alert("삭제되었습니다.");
+          window.location.reload(false);
           }
           else {
             alert(result[1]);
