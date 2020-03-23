@@ -100,7 +100,7 @@ export default function SimpleListMenu() {
   
   return (
     <div className={classes.list} >
-        <Box  bgcolor="#f8bbd0" width="833.33px" height ='110px'>
+        <Box  bgcolor="#f8bbd0" width="100%" height ='110px'>
         <Grid container xs={12} alignContent="center" spacing={2}>
         
             <Grid item xs={1}>

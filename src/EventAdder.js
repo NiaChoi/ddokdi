@@ -289,6 +289,7 @@ handle_participation_Change = (event,b) => {
                 alert(detail_event[1]);
               }
             });
+            
           }
           else {
             alert(result[1]);
@@ -338,6 +339,7 @@ handle_participation_Change = (event,b) => {
     else {
       alert(result[1]);
     }
+    window.location.reload(false);
   });           
   // alert("행사 참석이 비활성화되었습니다.");
 }
@@ -458,14 +460,14 @@ handle_participation_Change = (event,b) => {
            <Box color="primary.contrastText" bgcolor="warning.light" fontSize={25} textAlign="center" fontWeight="fontWeightBold" p={1}>
               참가 행사
               </Box>
-              <FixedSizeList height={180} width='90%' itemSize={60} itemCount={this.state.jlistLength}>
+              <FixedSizeList height={180} width='100%' itemSize={60} itemCount={this.state.jlistLength}>
               {this.renderJoinRow.bind(this, this.state, this.handlejoinListItemClick)}
               </FixedSizeList>
 
               <Box color="primary.contrastText" bgcolor="warning.light" fontSize={25} textAlign="center" fontWeight="fontWeightBold" p={1}>
               참여 가능 행사 목록
               </Box>
-              <FixedSizeList height={300} width='90%' itemSize={70} itemCount={this.state.nplistLength}>
+              <FixedSizeList height={300} width='100%' itemSize={70} itemCount={this.state.nplistLength}>
               {this.rendernotJoinRow.bind(this, this.state, this.handleListItemClick)}
               </FixedSizeList>
               
