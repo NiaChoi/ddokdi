@@ -69,6 +69,14 @@ attemptNmedEvent(userId, drugName, drugTime, cb) {
   });
 }//.delete drugList function
 
+ //Total Event function
+ attemptTotalEvent(userId, cb) {
+  let payload = {"USERID":userId};
+  let msg_sgi = {"payload":payload};
+  this.reqMsgProcess(msg_sgi, "/event_list", (result)=> {
+    cb(this.totalEventMsgResultProcess(result));
+  });
+}//.newEvent function
 
   //newEvent function
   attemptNewEvent(userId, cb) {
@@ -79,23 +87,23 @@ attemptNmedEvent(userId, drugName, drugTime, cb) {
     });
   }//.newEvent function
 
-  //allEvent function
+  //Joined Event function
   attemptJoinedEvent(userId, cb) {
     let payload = {"USERID":userId};
     let msg_sgi = {"payload":payload};
     this.reqMsgProcess(msg_sgi, "/j_event_list", (result)=> {
       cb(this.joinedEventMsgResultProcess(result));
     });
-  }//.allEvent function
+  }//.Joined Event function
 
-  //allEvent function
+  //Checked Event function
   attemptCheckEvent(userId, eventNo, cb) {
     let payload = {"USERID":userId, "event_no":eventNo};
     let msg_sgi = {"payload":payload};
     this.reqMsgProcess(msg_sgi, "/c_event", (result)=> {
       cb(this.checkEventMsgResultProcess(result));
     });
-  }//.allEvent function
+  }//.CheckedEvent function
 
   attemptJoinEvent(eventNo, userId, cb) {
     let payload = {"USERID":userId, "event_no":eventNo};
@@ -276,6 +284,17 @@ attemptNmedEvent(userId, drugName, drugTime, cb) {
     }
     return  unpackResult;
   }//.Delete drug  Result process function 
+
+//total Event Result process function 
+  totalEventMsgResultProcess(resMsg){
+    let msgPayload = resMsg.data;
+    let unpackResult = null;
+
+    unpackResult = [0, msgPayload.checking_0, msgPayload.checking_1, msgPayload.participation_1];
+     
+    return  unpackResult;
+  }//.total Event Result process function
+
 
   //newEvent Result process function 
   newEventMsgResultProcess(resMsg){

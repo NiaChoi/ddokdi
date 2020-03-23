@@ -54,26 +54,6 @@ const useStyles = theme => ({
   color: theme.palette.text.secondary,
   
   },
-  palette: {
-    primary: {
-      main: '#ff4400',
-      // dark: will be calculated from palette.primary.main,
-      // contrastText: will be calculated to contrast with palette.primary.main
-  },
-  secondary: {
-    light: '#0066ff',
-    main: '#0044ff',
-    // dark: will be calculated from palette.secondary.main,
-    contrastText: '#ffcc00',
-  },
-  // Used by `getContrastText()` to maximize the contrast between
-  // the background and the text.
-  contrastThreshold: 3,
-  // Used by the functions below to shift a color's luminance by approximately
-  // two indexes within its tonal palette.
-  // E.g., shift from Red 500 to Red 300 or Red 700.
-  tonalOffset: 0.2,
-},
 });
 
 class Dashboard extends Component {
@@ -211,7 +191,8 @@ class Dashboard extends Component {
     });
     return (
       ///List 변수 값 넣어보기
-          <Grid container  alignContent="center"  xs={12}> 
+      <Box width="100%" borderBottom={0.5} borderColor="palette.primary.light">
+        <Grid container  alignContent="center"  xs={12}> 
           <ListItem button style={{justifyContent:'center' , alignItems: 'center',display: 'flex'}}  key={index} >
         
           <Grid item xs={12}>
@@ -219,6 +200,8 @@ class Dashboard extends Component {
           </Grid>
       </ListItem>
       </Grid>
+      </Box>
+          
     );
   }
   render(){
@@ -275,8 +258,8 @@ class Dashboard extends Component {
             <Box color="primary.contrastText" bgcolor="warning.light" fontSize={30} textAlign="center" fontWeight="fontWeightBold" p={1}>
               행사 참석 목록
               </Box> 
-              <Box color="text.primary" height={520}  borderRadius="borderRadius" >
-                <FixedSizeList height={450} width="100%"  itemSize={70} itemCount={this.state.druglength}>
+              <Box color="text.primary" height={500}  borderRadius="borderRadius"  p={1}>
+                <FixedSizeList height={440} width="100%"  itemSize={70} itemCount={this.state.l_j_count}>
                 {this.rendereventRow.bind(this, this.state)}
               </FixedSizeList>
               <form noValidate onSubmit={this.handleEventSubmit}>
