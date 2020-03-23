@@ -14,7 +14,9 @@ import EditRoundedIcon from '@material-ui/icons/EditRounded';
 import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
 
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
-// import MsgProcessor from "./servepart/MsgProcessor"
+
+
+import MsgProcessor from "./MsgProcessor"
 
 const useStyles = makeStyles(theme => ({
   list: {
@@ -81,8 +83,21 @@ export default function SimpleListMenu() {
     setMedAnchorEl(null);
     setTimeAnchorEl(null);
   };
-
-
+  const handleAddButtonClick = (event) => {
+    let userId = localStorage.getItem("USN");
+    let msgProc = new MsgProcessor();
+    msgProc.attemptNmedEvent(userId, selectedMedIndex, selectedTimeIndex, (result)=> { 
+        if (result[0] == 0) {
+            alert(result[1]);
+            window.location.reload(false);
+        }
+        else {
+            alert(result[1]);
+        }
+    });
+    
+  }
+  
   return (
     <div className={classes.list} >
         <Box  bgcolor="#f8bbd0" width="833.33px" height ='110px'>
@@ -166,7 +181,7 @@ export default function SimpleListMenu() {
                 <Grid item xs={3}/>
                 <Grid item xs={6}>
                 <form style={{justifyContent:'center' , alignItems: 'center',display: 'flex'}}> 
-                    <Button  >
+                    <Button  onClick = {handleAddButtonClick}>
                     <EditRoundedIcon style={{ fontSize: 40 }}/><Typography variant="h4" Align="center">새로운 약 추가하기</Typography>
                 </Button>
                 </form>

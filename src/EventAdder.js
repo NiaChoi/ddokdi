@@ -176,14 +176,15 @@ class EventAdder extends Component {
       console.log(event);
       let userId = localStorage.getItem("USN");
       let msgProc = new MsgProcessor();
-        let _index = event.target.title;
-        let neventList = this.state.nEventList;
-        let eventList = this.state.npEventList;
-        let event_index = eventList[_index];
-        let eventNo = 0;
-        console.log(event.target.title);
-        console.log(eventList[_index]);
-        // console.log(eventName);
+      let _index = event.target.title;
+      let neventList = this.state.nEventList;
+      let eventList = this.state.npEventList;
+      let event_index = eventList[_index];
+      let eventNo = 0;
+      console.log(event.target.title);
+      console.log(eventList[_index]);
+      // console.log(eventName);
+      try {
         eventList.forEach(element => {
           if(element.event_name === event_index.event_name){
             eventNo = element.event_no;
@@ -192,58 +193,64 @@ class EventAdder extends Component {
         });
         this.setState({
           dEventNo:eventNo,
-        })      
-        eventList.forEach(element => {
-        if (element.event_name === neventList[_index]){
-          msgProc.attemptCheckEvent(userId, eventNo, (result)=> { 
-        if (result[0] == 0) {
-          console.log(result[1]);
-        }
-        else {
-          alert(result[1]);
-        }
-      });
-        }
-      });
-        
+        })
       
-      msgProc.attemptDetailEvent(eventNo, (detail_event)=> { 
-        if (detail_event[0] == 0) {
-          msgProc.attemptDetailuserEvent(userId, eventNo, (result)=> {
-            if (result[0] == 0) {
-              console.log(result[1][0]);
-              console.log(result[1][0].participation);
-              console.log(detail_event[1][0]);
-          this.setState({
-            dEventList:detail_event[1][0],
-            user_event_table_data:result[1][0]
-          })
-              
-              if (result[1][0].participation == 0)  {
-                this. setState({
-                  participation:false
-                })
-              }
-              else {
-                this. setState({
-                  participation:true
+      eventList.forEach(element => {
+      if (element.event_name === neventList[_index]){
+        msgProc.attemptCheckEvent(userId, eventNo, (result)=> { 
+      if (result[0] == 0) {
+        console.log(result[1]);
+      }
+      else {
+        alert(result[1]);
+      }
+    });
+      }
+    });
+      
+    
+    msgProc.attemptDetailEvent(eventNo, (detail_event)=> { 
+      event.preventDefault();
+      if (detail_event[0] == 0) {
+        msgProc.attemptDetailuserEvent(userId, eventNo, (result)=> {
+          if (result[0] == 0) {
+            console.log(result[1][0]);
+            console.log(result[1][0].participation);
+            console.log(detail_event[1][0]);
+        this.setState({
+          dEventList:detail_event[1][0],
+          user_event_table_data:result[1][0]
+        })
+            
+            if (result[1][0].participation == 0)  {
+              this. setState({
+                participation:false
               })
-              }
-          }
-          else{
-            alert(result[1]);
-          }
-          });
+            }
+            else {
+              this. setState({
+                participation:true
+            })
+            }
         }
         else{
-          alert(detail_event[1]);
+          alert(result[1]);
         }
-      });
-      
-      
+        });
+      }
+      else{
+        alert(detail_event[1]);
+      }
+      });    
+    } catch (error) {
+      console.log(error);
     }
+    
+    
+  }
 
 handle_participation_Change = (event,b) => {
+  event.preventDefault();
   let msgProc = new MsgProcessor();
   // let user_event_list = this.state.user_event_table_data;
   // user_event_list = user_event_list.concat(this.state.user_event_table_data);

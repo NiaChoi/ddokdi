@@ -6,6 +6,7 @@ import IconTextList from './servepart/IconTextList';
 import ControlBoard from './servepart/ControlBoard';
 import Box from '@material-ui/core/Box';
 import Medicine_Adder from './servepart/medicine_Add';
+import SimpleListMenu from './servepart/med_select';
 // import MsgProcessor from "./servepart/MsgProcessor"
 
 const useStyles = theme => ({
@@ -59,8 +60,11 @@ class Medicine extends Component {
               <Grid item container xs={12}>
                 <Grid item xs={12}/>
                 <Grid item xs={12}>
-                  {/* <SimpleListMenu/> */}
-                  <Medicine_Adder/>
+                 
+                  <SimpleListMenu/>
+                  
+                  
+                  {/* <Medicine_Adder/> */}
                 </Grid>
 
                 
