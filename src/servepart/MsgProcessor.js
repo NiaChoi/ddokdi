@@ -362,7 +362,6 @@ attemptNmedEvent(userId, drugName, drugTime, cb) {
         unpackResult = [1,"Unknown error"];
         break;
     }
-
     return  unpackResult;
   }//.checkEvent Result process function
 

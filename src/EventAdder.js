@@ -139,6 +139,7 @@ class EventAdder extends Component {
             }) 
         
       msgProc.attemptDetailEvent(eventNo, (detail_event)=> { 
+        event.preventDefault();
         if (detail_event[0] == 0) {
           msgProc.attemptDetailuserEvent(userId, eventNo, (result)=> {
             if (result[0] == 0) {
@@ -194,19 +195,14 @@ class EventAdder extends Component {
         this.setState({
           dEventNo:eventNo,
         })
-      
-      eventList.forEach(element => {
-      if (element.event_name === neventList[_index]){
-        msgProc.attemptCheckEvent(userId, eventNo, (result)=> { 
-      if (result[0] == 0) {
-        console.log(result[1]);
-      }
-      else {
-        alert(result[1]);
-      }
-    });
-      }
-    });
+          msgProc.attemptCheckEvent(userId, eventNo, (result)=> { 
+            if (result[0] == 0) {
+              console.log(result[1]);
+            }
+            else {
+              alert(result[1]);
+            }
+          });
       
     
     msgProc.attemptDetailEvent(eventNo, (detail_event)=> { 
@@ -469,7 +465,7 @@ handle_participation_Change = (event,b) => {
               <Box color="primary.contrastText" bgcolor="warning.light" fontSize={25} textAlign="center" fontWeight="fontWeightBold" p={1}>
               참여 가능 행사 목록
               </Box>
-              <FixedSizeList height={300} width='90%' itemSize={60} itemCount={this.state.nplistLength}>
+              <FixedSizeList height={300} width='90%' itemSize={70} itemCount={this.state.nplistLength}>
               {this.rendernotJoinRow.bind(this, this.state, this.handleListItemClick)}
               </FixedSizeList>
               
@@ -482,8 +478,8 @@ handle_participation_Change = (event,b) => {
             {this.state.dEventNo == 0 ?
             <Box  height={568} color="primary.contrastText" bgcolor="warning.light" fontSize={25} textAlign="center" fontWeight="fontWeightBold"p={1}>
             <Box 
-            width="80%" color="primary.contrastText" fontSize={35} textAlign="center" fontWeight="fontWeightBold" style={{
-              position: 'absolute', left: '77.5%', top: '45%',
+            width="40%" color="primary.contrastText" fontSize={35} textAlign="center" fontWeight="fontWeightBold" style={{
+              position: 'absolute', left: '80%', top: '45%',
               transform: 'translate(-50%, -50%)'}}>
             <EventIcon style={{fontSize: 100 }}/>
             <br/>왼쪽에서<br/>일정을 선택해주세요
