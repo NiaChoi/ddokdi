@@ -537,7 +537,7 @@ handle_participation_Change = (event,b) => {
                           </Box>
                         </Grid>
                         <Grid item xs={8}>
-                        {this.state.dEventList.ect}
+                        {this.state.dEventList.etc}
                         </Grid>
 
                         <Grid item xs={4}>
