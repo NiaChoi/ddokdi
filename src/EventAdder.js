@@ -8,6 +8,7 @@ import { FixedSizeList } from 'react-window';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Box from '@material-ui/core/Box';
+import Divider from '@material-ui/core/Divider';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -108,7 +109,7 @@ class EventAdder extends Component {
             jlistLength:result[3].length,
             npEventList:result[1].concat(result[2]),
             nplistLength:result[1].length+result[2].length,
-            AEventList:result[1].concat(result[2],result[3]),
+            AEventList:result[1].concat(result[2]).concat(result[3]),
           })
         }
         else{
@@ -169,16 +170,6 @@ class EventAdder extends Component {
           alert(detail_event[1]);
         }
       });
-      msgProc.attemptCheckEvent(userId, eventNo, (result)=> { 
-        if (result[0] == 0) {
-          console.log(result[1]);
-        }
-        else {
-          alert(result[1]);
-        }
-      });
-
-      
     }
     handleListItemClick = event => {
       event.preventDefault();
@@ -186,30 +177,36 @@ class EventAdder extends Component {
       let userId = localStorage.getItem("USN");
       let msgProc = new MsgProcessor();
         let _index = event.target.title;
+        let neventList = this.state.nEventList;
         let eventList = this.state.npEventList;
-        let eventName = eventList[_index].event_name;
+        let event_index = eventList[_index];
         let eventNo = 0;
         console.log(event.target.title);
-        console.log(eventList);
-        console.log(eventName);
+        console.log(eventList[_index]);
+        // console.log(eventName);
         eventList.forEach(element => {
-          if(element.event_name === eventName){
+          if(element.event_name === event_index.event_name){
             eventNo = element.event_no;
             console.log(element.event_no);
           } 
         });
         this.setState({
           dEventNo:eventNo,
-        })             
+        })      
+        eventList.forEach(element => {
+        if (element.event_name === neventList[_index]){
+          msgProc.attemptCheckEvent(userId, eventNo, (result)=> { 
+        if (result[0] == 0) {
+          console.log(result[1]);
+        }
+        else {
+          alert(result[1]);
+        }
+      });
+        }
+      });
         
-        
-        
-        
-
-    
       
-      
-
       msgProc.attemptDetailEvent(eventNo, (detail_event)=> { 
         if (detail_event[0] == 0) {
           msgProc.attemptDetailuserEvent(userId, eventNo, (result)=> {
@@ -242,15 +239,7 @@ class EventAdder extends Component {
           alert(detail_event[1]);
         }
       });
-      msgProc.attemptCheckEvent(userId, eventNo, (result)=> { 
-        if (result[0] == 0) {
-          console.log(result[1]);
-        }
-        else {
-          alert(result[1]);
-        }
-      });
-
+      
       
     }
 
@@ -484,9 +473,9 @@ handle_participation_Change = (event,b) => {
             <Grid item xs={5} >
             <Paper className={classes.paper_1}>
             {this.state.dEventNo == 0 ?
-            <Box height={580} color="primary.contrastText" bgcolor="warning.light" fontSize={25} textAlign="center" fontWeight="fontWeightBold">
+            <Box width="100%" height={568} color="primary.contrastText" bgcolor="warning.light" fontSize={25} textAlign="center" fontWeight="fontWeightBold"p={1}>
             <Box 
-            width="80%" color="primary.contrastText" fontSize={35} textAlign="center" fontWeight="fontWeightBold" style={{
+            width="100%" color="primary.contrastText" fontSize={35} textAlign="center" fontWeight="fontWeightBold" style={{
               position: 'absolute', left: '77.5%', top: '45%',
               transform: 'translate(-50%, -50%)'}}>
             <EventIcon style={{fontSize: 100 }}/>
@@ -494,29 +483,74 @@ handle_participation_Change = (event,b) => {
             </Box>
             </Box>
             :<Box 
-              height={580} color="primary.main" bgcolor="#ffffff" border= {2} borderColor="warning.light" borderRadius="borderRadius" fontSize={25} textAlign="center" fontWeight="fontWeightBold">
+              height={580} color="primary.main" bgcolor="#ffffff" border= {2} borderColor="warning.light" borderRadius="borderRadius" fontSize={25} textAlign="center" fontWeight="fontWeightMedium">
               <CardHeader
-                    title={this.state.dEventList.event_name}
-                    subheader={this.state.dEventList.date}/>
+                    title={<Typography variant="h4" Align="center" fontWeight="fontWeightBold">{this.state.dEventList.event_name}</Typography>}
+            subheader={<Typography variant="h5" Align="center" fontWeight="fontWeightBold">{this.state.dEventList.date}</Typography>}/>
                   <CardContent>
-                    <Typography align="left" variant="h3" color="textSecondary" component="p" >
-                    <Box fontSize={20} textAlign="left" fontWeight="fontWeightBold">
-                      [대상] <br/>{this.state.dEventList.qualificaion}<br/>
-                      [내용] <br/>{this.state.dEventList.body}<br/>
-                      [장소] <br/>{this.state.dEventList.location}<br/>
-                      [특이사항] <br/>{this.state.dEventList.beneficial}<br/>
-                      [기타사항] <br/>{this.state.dEventList.ect}
-                      [참가여부] <br/>
+                    <Box fontSize={20} textAlign="left" >
+                      <Grid container xs={12} spacing={2}>
+                        <Grid item xs={4}>
+                          <Box fontSize={20} textAlign="right" fontWeight="fontWeightBold">
+                            [대상]
+                          </Box>
+                        </Grid>
+                        <Grid item xs={8}>
+                          {this.state.dEventList.qualificaion}
+                        </Grid>
+
+                        <Grid item xs={4}>
+                        <Box fontSize={20} textAlign="right" fontWeight="fontWeightBold">
+                            [내용]
+                          </Box>
+                        </Grid>
+                        <Grid item xs={8}>
+                          {this.state.dEventList.body}
+                        </Grid>
+
+                        <Grid item xs={4}>
+                        <Box fontSize={20} textAlign="right" fontWeight="fontWeightBold">
+                            [장소]
+                          </Box>
+                        </Grid>
+                        <Grid item xs={8}>
+                          {this.state.dEventList.location}
+                        </Grid>
+
+                        <Grid item xs={4}>
+                        <Box fontSize={20} textAlign="right" fontWeight="fontWeightBold">
+                            [특이사항]
+                          </Box>
+                        </Grid>
+                        <Grid item xs={8}>
+                        {this.state.dEventList.beneficial}
+                        </Grid>
+
+                        <Grid item xs={4}>
+                        <Box fontSize={20} textAlign="right" fontWeight="fontWeightBold">
+                            [기타사항]
+                          </Box>
+                        </Grid>
+                        <Grid item xs={8}>
+                        {this.state.dEventList.ect}
+                        </Grid>
+
+                        <Grid item xs={4}>
+                        <Box fontSize={20} textAlign="right" fontWeight="fontWeightBold">
+                            [참가여부]
+                          </Box>
+                        </Grid>
+                        <Grid item xs={8}>
                         <Switch
                         checked={this.state.participation}
                         onChange={this.handle_participation_Change}
                         name="participation_service_state"
                         
                         inputProps={{ "aria-label": "secondary checkbox" }}/>
-                        {/* </form> */}
-                      <br/>
+                        </Grid>
+                        
+                      </Grid>
                     </Box>
-                    </Typography>
                   </CardContent>  
                 </Box>}
                   
