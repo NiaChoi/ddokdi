@@ -89,25 +89,26 @@ class admin_client_manager extends Component {
 
       let d_t = new Date();
       let userId = localStorage.getItem("USN");
-      let Client_userId_for_emergency_alert = this.state.emergency_service_table_timestamp;
       let msgProc = new MsgProcessor();
-      let timestamp_checking_list = this.state.checking_latest_timestamp;
-      timestamp_checking_list.forEach(element =>{
-        if(element.timestamp < d_t){      //테스트용
-        // if(element.timestamp < d_t.setHours(d_t.getHours()-4)){
-          Client_userId_for_emergency_alert = element.emergency_service_USERID;
-        }
-      });
-      this.setState({
-        client_userId:Client_userId_for_emergency_alert
-                
-      });          
+        
           msgProc.attempt_emergency_situation_checking(userId, (result)=> { 
             if (result[0] == 0) {
               this.setState({
                 timestamp_checking_list:result[1][0]
                         
               });  
+              let Client_userId_for_emergency_alert = this.state.emergency_service_table_timestamp;             
+              let timestamp_checking_list = this.state.checking_latest_timestamp;
+              timestamp_checking_list.forEach(element =>{
+                if(element.timestamp <= d_t){      //테스트용
+                // if(element.timestamp <= d_t.setHours(d_t.getHours()-4)){
+                  Client_userId_for_emergency_alert = element.emergency_service_USERID;
+                }
+              });
+              this.setState({
+                client_userId:Client_userId_for_emergency_alert
+                        
+              });       
               msgProc.attempt_Detail_Client_For_Emergency_Service(Client_userId_for_emergency_alert, userId, (result)=> { 
                 if (result[0] == 0) {                
                   this.setState({
