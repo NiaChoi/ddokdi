@@ -53,8 +53,6 @@ class EventAdder extends Component {
     super(props);
     this.max_content_id = 3;//UI에 영향을 주지 않으므로 state X
     this.state = {
-      not_jEventList:[],
-      not_jlistLength:[],
       nEventList:[],
       nlistLength: 0,
       jEventList: [],
@@ -102,8 +100,6 @@ class EventAdder extends Component {
           console.log(result[2]);//check
           console.log(result[3]);//participate
           this.setState({
-            not_jEventList:result[2],
-            not_jlistLength:result[2].length,
             nEventList:result[1],
             nlistLength:result[1].length,
             jEventList:result[3],
@@ -359,7 +355,7 @@ handle_participation_Change = (event,b) => {
               <form onSubmit={this.handleListItemClick}>
              <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
                <ListItemIcon><FiberManualRecordIcon/></ListItemIcon> 
-               <ListItemText primary={<Typography variant="h5"  Align="left">{njevent_list[index]}</Typography>}/>
+               <ListItemText primary={<Typography variant="h5"  Align="left" noWrap>{njevent_list[index]}</Typography>}/>
                
              </ListItem>
              </form>
@@ -371,7 +367,7 @@ handle_participation_Change = (event,b) => {
               <div>
                 <form onSubmit={this.handleListItemClick}>
                <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
-                 <ListItemText primary={<Typography variant="h5"  Align="left">{njevent_list[index]} </Typography>}/>
+                 <ListItemText primary={<Typography variant="h5"  Align="left" noWrap>{njevent_list[index]} </Typography>}/>
                </ListItem>
                </form>
               </div>   
@@ -380,9 +376,27 @@ handle_participation_Change = (event,b) => {
        
       }
       
+
   
-  // titleselect();
-  // if()
+  timeselect(mState, props){
+    let time=[];
+        mState.dEventList.forEach(element => {
+          time.push(element.date);
+        });
+    let date = time.substr(0,10);
+    let date_time_hour = time.substr(12,2);
+    let date_time_minute = time.substr(15,2);
+    let Etime = date+" "+(date_time_hour[0]+9)+":"+date_time_minute;
+    console.log(date);
+    console.log(date_time_hour);
+    console.log(date_time_minute);
+    console.log(Etime);
+    return (
+      // todayStr = this.today.getFullYear() + "년 " +(this.today.getMonth()+1) +"월 "+ this.today.getDate() + "일 ";
+    <Typography variant="h5" Align="center" fontWeight="fontWeightBold">{this.Etime}</Typography>
+      
+    );
+  }
 
   render(){
     const { classes } = this.props;
@@ -429,64 +443,52 @@ handle_participation_Change = (event,b) => {
             </Box>
             </Box>
             :<Box 
-              height={580} color="primary.main" bgcolor="#ffffff" border= {2} borderColor="warning.light" borderRadius="borderRadius" fontSize={25} textAlign="center" fontWeight="fontWeightMedium">
+              height={580} color="primary.main" bgcolor="#ffffff" border= {2} borderColor="warning.light" borderRadius="borderRadius" fontSize={25} textAlign="center" fontWeight="fontWeightMedium"overflow="auto">
               <CardHeader
                     title={<Typography variant="h4" Align="center" fontWeight="fontWeightBold">{this.state.dEventList.event_name}</Typography>}
-            subheader={<Typography variant="h5" Align="center" fontWeight="fontWeightBold">{this.state.dEventList.date}</Typography>}/>
-                  <CardContent scroll="paper">
+                    subheader={this.timeselect}></CardHeader>
+                  <CardContent >
                     <Box fontSize={20} textAlign="left" >
                       <Grid container xs={12} spacing={2}>
-                        <Grid item xs={4}>
-                          <Box fontSize={20} textAlign="right" fontWeight="fontWeightBold">
-                            [대상]
+                        <Grid item xs={12}>
+                          <Box bgcolor="#c5cae9" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
+                            대상
                           </Box>
-                        </Grid>
-                        <Grid item xs={8}>
-                          {this.state.dEventList.qualification}
+                          <br/>{this.state.dEventList.qualification}
                         </Grid>
 
-                        <Grid item xs={4}>
-                        <Box fontSize={20} textAlign="right" fontWeight="fontWeightBold">
-                            [내용]
+                        <Grid item xs={12}>
+                          <Box bgcolor="#c5cae9" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
+                            내용
                           </Box>
-                        </Grid>
-                        <Grid item xs={8}>
-                          {this.state.dEventList.body}
+                          <br/>{this.state.dEventList.body}
                         </Grid>
 
-                        <Grid item xs={4}>
-                        <Box fontSize={20} textAlign="right" fontWeight="fontWeightBold">
-                            [장소]
+                        <Grid item xs={12}>
+                          <Box bgcolor="#c5cae9" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
+                            장소
                           </Box>
-                        </Grid>
-                        <Grid item xs={8}>
-                          {this.state.dEventList.location}
+                        <br/>{this.state.dEventList.location}
                         </Grid>
 
-                        <Grid item xs={4}>
-                        <Box fontSize={20} textAlign="right" fontWeight="fontWeightBold">
-                            [특이사항]
+                        <Grid item xs={12}>
+                          <Box bgcolor="#c5cae9" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
+                            특이사항
                           </Box>
-                        </Grid>
-                        <Grid item xs={8}>
-                        {this.state.dEventList.beneficial}
+                        <br/>{this.state.dEventList.beneficial}
                         </Grid>
 
-                        <Grid item xs={4}>
-                        <Box fontSize={20} textAlign="right" fontWeight="fontWeightBold">
-                            [기타사항]
+                        <Grid item xs={12}>
+                          <Box bgcolor="#c5cae9" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
+                            기타사항
                           </Box>
-                        </Grid>
-                        <Grid item xs={8}>
-                        {this.state.dEventList.etc}
+                        <br/>{this.state.dEventList.etc}
                         </Grid>
 
-                        <Grid item xs={4}>
-                        <Box fontSize={20} textAlign="right" fontWeight="fontWeightBold">
-                            [참가여부]
+                        <Grid item xs={12}>
+                          <Box bgcolor="#c5cae9" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
+                            참석 여부
                           </Box>
-                        </Grid>
-                        <Grid item xs={8}>
                         <Switch
                         checked={this.state.participation}
                         onChange={this.handle_participation_Change}
