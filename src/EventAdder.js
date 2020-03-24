@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
+import { Grid, ListItemIcon } from '@material-ui/core';
 import Paper  from '@material-ui/core/Paper';
 import ControlBoard from './servepart/ControlBoard';
 import { FixedSizeList } from 'react-window';
@@ -63,6 +63,7 @@ class EventAdder extends Component {
       nplistLength:0, 
       dEventNo:0,
       dEventList: [],
+      AEventList:[],
       participation : true,
       user_event_table_data: [{"user_event_USERID":"", "user_event_event_no":"","participation":""}],
       event_no : 0
@@ -118,17 +119,17 @@ class EventAdder extends Component {
       });
     }
   
-    handlejoinListItemClick = event => {
+    handleListItemClick = event => {
       event.preventDefault();
       console.log(event);
       let userId = localStorage.getItem("USN");
       let msgProc = new MsgProcessor();
         let selectedEvent = event.target.innerText;
-        let jeventList = this.state.jEventList;
+        let alleventList = this.state.AEventList;
         let eventNo = 0;
         console.log(event.target.innerText);
         console.log(jeventList);
-        jeventList.forEach(element => {
+        alleventList.forEach(element => {
           if(element.event_name === selectedEvent){
             eventNo = element.event_no;
             console.log(element.event_no);
@@ -137,7 +138,20 @@ class EventAdder extends Component {
           this.setState({
             dEventNo:eventNo,
             }) 
-        
+          let new_event = this.state.nEventList;
+          new_event.forEach(element => {
+              if(element.event_name === selectedEvent){
+               msgProc.attemptCheckEvent(userId, eventNo, (result)=> { 
+              if (result[0] == 0) {
+                console.log(result[1]);
+              }
+              else {
+                alert(result[1]);
+              }
+            });
+          }
+        });
+           
       msgProc.attemptDetailEvent(eventNo, (detail_event)=> { 
         event.preventDefault();
         if (detail_event[0] == 0) {
@@ -172,79 +186,7 @@ class EventAdder extends Component {
         }
       });
     }
-    handleListItemClick = event => {
-      event.preventDefault();
-      console.log(event);
-      let userId = localStorage.getItem("USN");
-      let msgProc = new MsgProcessor();
-      let _index = event.target.title;
-      let neventList = this.state.nEventList;
-      let eventList = this.state.npEventList;
-      let event_index = eventList[_index];
-      let eventNo = 0;
-      console.log(event.target.title);
-      console.log(eventList[_index]);
-      // console.log(eventName);
-      try {
-        eventList.forEach(element => {
-          if(element.event_name === event_index.event_name){
-            eventNo = element.event_no;
-            console.log(element.event_no);
-          } 
-        });
-        this.setState({
-          dEventNo:eventNo,
-        })
-          msgProc.attemptCheckEvent(userId, eventNo, (result)=> { 
-            if (result[0] == 0) {
-              console.log(result[1]);
-            }
-            else {
-              alert(result[1]);
-            }
-          });
-      
-    
-    msgProc.attemptDetailEvent(eventNo, (detail_event)=> { 
-      event.preventDefault();
-      if (detail_event[0] == 0) {
-        msgProc.attemptDetailuserEvent(userId, eventNo, (result)=> {
-          if (result[0] == 0) {
-            console.log(result[1][0]);
-            console.log(result[1][0].participation);
-            console.log(detail_event[1][0]);
-        this.setState({
-          dEventList:detail_event[1][0],
-          user_event_table_data:result[1][0]
-        })
-            
-            if (result[1][0].participation == 0)  {
-              this. setState({
-                participation:false
-              })
-            }
-            else {
-              this. setState({
-                participation:true
-            })
-            }
-        }
-        else{
-          alert(result[1]);
-        }
-        });
-      }
-      else{
-        alert(detail_event[1]);
-      }
-      });    
-    } catch (error) {
-      console.log(error);
-    }
-    
-    
-  }
-
+   
 handle_participation_Change = (event,b) => {
   event.preventDefault();
   let msgProc = new MsgProcessor();
@@ -372,7 +314,7 @@ handle_participation_Change = (event,b) => {
          
       //   );
       // }
-      renderJoinRow(mState, handlejoinListItemClick ,props) {
+      renderJoinRow(mState, handleListItemClick ,props) {
         const { index, style } = props;
         console.log(mState.jEventList);
         
@@ -381,13 +323,13 @@ handle_participation_Change = (event,b) => {
           event_list.push(element.event_name);
         });
 
-        console.log(handlejoinListItemClick);
+        console.log(handleListItemClick);
         // const mnRow = med_name.length;
         // // const med_time = [,];
         return (
           ///List 항목 누르면 handledetailSubmit이 동작하게
-          <form onSubmit={this.handlejoinListItemClick}>
-            <ListItem button onClick={handlejoinListItemClick} style={style} key={index} id={1}>
+          <form onSubmit={this.handleListItemClick}>
+            <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
               <ListItemText primary={<Typography variant="h5" Align="left">{event_list[index]} </Typography>}/>
             </ListItem>
             </form>
@@ -414,12 +356,12 @@ handle_participation_Change = (event,b) => {
 
         if (njevent_list[index] === nevent_list[index]){
           console.log(new_event_list);
-          new_event_list = nevent_list[index].concat(" new ");
           return (
             <div>
               <form onSubmit={this.handleListItemClick}>
              <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
-               <ListItemText primary={<Typography variant="h5" title={index} Align="left">{new_event_list} </Typography>}/>
+               <ListItemText primary={<Typography variant="h5"  Align="left">{new_event_list} </Typography>}/>
+               <ListItemIcon><FiberManualRecordIcon/></ListItemIcon> 
              </ListItem>
              </form>
             </div>            
@@ -430,7 +372,7 @@ handle_participation_Change = (event,b) => {
               <div>
                 <form onSubmit={this.handleListItemClick}>
                <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
-                 <ListItemText primary={<Typography variant="h5" title={index} Align="left">{njevent_list[index]} </Typography>}/>
+                 <ListItemText primary={<Typography variant="h5"  Align="left">{njevent_list[index]} </Typography>}/>
                </ListItem>
                </form>
               </div>   
