@@ -93,8 +93,8 @@ class admin_client_manager extends Component {
       let msgProc = new MsgProcessor();
       let timestamp_checking_list = this.state.checking_latest_timestamp;
       timestamp_checking_list.forEach(element =>{
-        if(element.timestamp < d_t){      //테스트용
-        // if(element.timestamp < d_t.setHours(d_t.getHours()-4)){
+        if(element.timestamp <= d_t){      //테스트용
+        // if(element.timestamp <= d_t.setHours(d_t.getHours()-4)){
           Client_userId_for_emergency_alert = element.emergency_service_USERID;
         }
       });
