@@ -48,6 +48,7 @@ const useStyles = theme => ({
 });
 
 class admin_client_manager extends Component {
+  
   constructor(props){
     super(props);
     this.max_content_id = 3;//UI에 영향을 주지 않으므로 state X
@@ -55,7 +56,10 @@ class admin_client_manager extends Component {
       Client_List_without_admin: [{"Client_USERID":"", "name":"","age":""}],
       nlistLength: 0,
       ClientUSERID:0,
+      list_for_checking_emergency:[],
+      checking_latest_timestamp:[{"emergency_service_USERID":"", "timestamp":""}],
       Detail_client_list: [],
+      emergency_service_table_timestamp:0,
       Emergency_service: true
       }
     }
@@ -63,7 +67,7 @@ class admin_client_manager extends Component {
   
    
   
-    componentDidMount(){
+    componentDidMount(){      
       let userId = localStorage.getItem("USN");
       let msgProc = new MsgProcessor();
       msgProc.attemptadminclientManager(userId, (result)=> { 
@@ -76,7 +80,59 @@ class admin_client_manager extends Component {
         }
       });
       
+      // function emergency_alert(string) {
+      //   emergency_watcher = {this.handle_emergency_alert}
+      // }
+    }
+    handle_emergency_alert = (event, a) => {
+      // alert('왜안되지?');
+
+      let d_t = new Date();
+      let userId = localStorage.getItem("USN");
+      let Client_userId_for_emergency_alert = this.state.emergency_service_table_timestamp;
+      let msgProc = new MsgProcessor();
+      let timestamp_checking_list = this.state.checking_latest_timestamp;
+      timestamp_checking_list.forEach(element =>{
+        if(element.timestamp < d_t){      //테스트용
+        // if(element.timestamp < d_t.setHours(d_t.getHours()-4)){
+          Client_userId_for_emergency_alert = element.emergency_service_USERID;
+        }
+      });
+      this.setState({
+        client_userId:Client_userId_for_emergency_alert
+                
+      });          
+          msgProc.attempt_emergency_situation_checking(userId, (result)=> { 
+            if (result[0] == 0) {
+              this.setState({
+                timestamp_checking_list:result[1][0]
+                        
+              });  
+              msgProc.attempt_Detail_Client_For_Emergency_Service(Client_userId_for_emergency_alert, userId, (result)=> { 
+                if (result[0] == 0) {                
+                  this.setState({
+                    Detail_client_list_for_emergency_service:result[1][0]
+                    });
+                    alert('주의! '+this.state.Detail_client_list_for_emergency_service.name + '님 확인요망/n'+ 
+                    '[전화번호] '+this.state.Detail_client_list_for_emergency_service.phone_no +'\n'+
+                    '[비상연락인] '+this.state.Detail_client_list_for_emergency_service.relationship_emergency_res +'\n'+
+                    '[비상연락망] '+this.state.Detail_client_list_for_emergency_service.emergency_contact +'\n'                  
+                    );
+                  }
+                else{
+                  alert(result[1]);
+              }
+            });
+          }
+            else{
+              alert(result[1]);
+        }
+        });
       }
+    
+      
+
+
 
     handleChange = (event, a) => {
       // event.preventDefault();
@@ -247,7 +303,7 @@ class admin_client_manager extends Component {
   // if()
 
   render(){
-   
+    let state_of_emergency_detector = setInterval(this.handle_emergency_alert, 5000);
     const { classes } = this.props; 
     console.log(this.state.Detail_client_list);
     return (

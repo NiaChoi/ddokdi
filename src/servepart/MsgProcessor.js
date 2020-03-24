@@ -431,7 +431,33 @@ attemptNmedEvent(userId, drugName, drugTime, cb) {
 
     return  unpackResult;
   }
+  attempt_Detail_Client_For_Emergency_Service(Client_userId_for_emergency_alert, userId, cb) {
+    let payload = {"Client_USERID":Client_userId_for_emergency_alert,"USERID":userId};
+    let msg_sgi = {"payload":payload};
+    this.reqMsgProcess(msg_sgi, "/admin_client_details", (result)=> {
+      cb(this.detailClientDetailResultProcess(result));
+    });
+  }//.allEvent function
+  
+
+  attempt_emergency_situation_checking(userId, cb) {
+    let payload = {"USERID":userId};
+    let msg_sgi = {"payload":payload};
+    this.reqMsgProcess(msg_sgi, "/checking_emergency_situation", (result)=> {
+      cb(this.situation_checking_Result_Process(result));
+    });
+  }
+
+ situation_checking_Result_Process(resMsg){
+    let msgPayload = resMsg.data;
+    let unpackResult = null;
+
+    unpackResult = [0, msgPayload.success];
+
+    return  unpackResult;
+  }
 }
+
 
 
 
