@@ -60,6 +60,7 @@ class EventAdder extends Component {
       npEventList:0,
       nplistLength:0, 
       dEventNo:0,
+      dEventdate:[],
       dEventList: [],
       AEventList:[],
       participation : true,
@@ -123,6 +124,9 @@ class EventAdder extends Component {
         let selectedEvent = event.target.innerText;
         let alleventList = this.state.AEventList;
         let eventNo = 0;
+        let Ddate=[];
+        let Ddate_date,Ddate_YMD,Ddate_time,Dhour,Dmin=[];
+        let hour=0;
         console.log(event.target.innerText);
         console.log(selectedEvent);
         alleventList.forEach(element => {
@@ -162,7 +166,29 @@ class EventAdder extends Component {
             dEventList:detail_event[1][0],
             user_event_table_data:result[1][0]
           })
-              
+          Ddate = this.state.dEventList.date;
+          Ddate_date = Ddate.split("T")[0];
+          Ddate_YMD =Ddate_date.split("-");
+          Ddate_time = Ddate.split("T")[1];
+          hour = Number(Ddate_time.split(":")[0])+9;
+            if (hour >= 13){
+              hour = hour-12;
+              Dhour = "오후 ".concat(String(hour)).concat(":");
+            }
+            else if (hour <=11){
+              Dhour = "오전 ".concat((hour)).concat(":");
+            }else{Dhour = "오후 ".concat((hour)).concat(":"); }
+          Dmin = Ddate_time.split(":")[1];
+          Ddate = Ddate_YMD[0].concat("년",Ddate_YMD[1],"월",Ddate_YMD[2],"일 ",Dhour,Dmin);
+          this.setState({
+            dEventdate:Ddate
+          })
+          console.log(Ddate_date);
+          console.log(Ddate_time);
+          console.log(hour);
+          console.log(Dhour);
+          console.log(Dmin); 
+          console.log(Ddate);     
               if (result[1][0].participation == 0)  {
                 this. setState({
                   participation:false
@@ -185,7 +211,7 @@ class EventAdder extends Component {
       });
     }
    
-handle_participation_Change = (event,b) => {
+handle_participation_Change = (event) => {
   event.preventDefault();
   let msgProc = new MsgProcessor();
   // let user_event_list = this.state.user_event_table_data;
@@ -197,6 +223,25 @@ handle_participation_Change = (event,b) => {
             if (result[0] == 0) {
             // alert("행사 참석이 활성화되었습니다.");
             console.log(result[0]);
+            msgProc.attemptTotalEvent(userId, (result)=> { 
+              if (result[0] == 0) {
+                console.log(result[1]);//new
+                console.log(result[2]);//check
+                console.log(result[3]);//participate
+                this.setState({
+                  nEventList:result[1],
+                  nlistLength:result[1].length,
+                  jEventList:result[3],
+                  jlistLength:result[3].length,
+                  npEventList:result[1].concat(result[2]),
+                  nplistLength:result[1].length+result[2].length,
+                  AEventList:result[1].concat(result[2]).concat(result[3]),
+                })
+              }
+              else{
+                alert(result[1]);
+              }
+            });
             msgProc.attemptDetailEvent(eventNo, (detail_event)=> { 
               if (detail_event[0] == 0) {
                 msgProc.attemptDetailuserEvent(userId, eventNo, (result)=> {
@@ -208,11 +253,11 @@ handle_participation_Change = (event,b) => {
                   dEventList:detail_event[1][0],
                   user_event_table_data:result[1][0]
                 })
-                    
                     if (result[1][0].participation == 0)  {
                       this. setState({
                         participation:false
                       })
+                      
                     }
                     else {
                       this. setState({
@@ -243,6 +288,25 @@ handle_participation_Change = (event,b) => {
       if (result[0] == 0) {
       // alert("행사 참석이 비활성화되었습니다.");
       console.log(result[0]);
+      msgProc.attemptTotalEvent(userId, (result)=> { 
+        if (result[0] == 0) {
+          console.log(result[1]);//new
+          console.log(result[2]);//check
+          console.log(result[3]);//participate
+          this.setState({
+            nEventList:result[1],
+            nlistLength:result[1].length,
+            jEventList:result[3],
+            jlistLength:result[3].length,
+            npEventList:result[1].concat(result[2]),
+            nplistLength:result[1].length+result[2].length,
+            AEventList:result[1].concat(result[2]).concat(result[3]),
+          })
+        }
+        else{
+          alert(result[1]);
+        }
+      });
       msgProc.attemptDetailEvent(eventNo, (detail_event)=> { 
         if (detail_event[0] == 0) {
           msgProc.attemptDetailuserEvent(userId, eventNo, (result)=> {
@@ -254,7 +318,6 @@ handle_participation_Change = (event,b) => {
             dEventList:detail_event[1][0],
             user_event_table_data:result[1][0]
           })
-              
               if (result[1][0].participation == 0)  {
                 this. setState({
                   participation:false
@@ -279,7 +342,6 @@ handle_participation_Change = (event,b) => {
     else {
       alert(result[1]);
     }
-    window.location.reload(false);
   });           
   // alert("행사 참석이 비활성화되었습니다.");
 }
@@ -354,7 +416,7 @@ handle_participation_Change = (event,b) => {
             <div>
               <form onSubmit={this.handleListItemClick}>
              <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
-               <ListItemIcon><FiberManualRecordIcon/></ListItemIcon> 
+               <ListItemIcon><FiberManualRecordIcon color="secondary"/></ListItemIcon> 
                <ListItemText primary={<Typography variant="h5"  Align="left" noWrap>{njevent_list[index]}</Typography>}/>
                
              </ListItem>
@@ -378,25 +440,25 @@ handle_participation_Change = (event,b) => {
       
 
   
-  timeselect(mState, props){
-    let time=[];
-        mState.dEventList.forEach(element => {
-          time.push(element.date);
-        });
-    let date = time.substr(0,10);
-    let date_time_hour = time.substr(12,2);
-    let date_time_minute = time.substr(15,2);
-    let Etime = date+" "+(date_time_hour[0]+9)+":"+date_time_minute;
-    console.log(date);
-    console.log(date_time_hour);
-    console.log(date_time_minute);
-    console.log(Etime);
-    return (
-      // todayStr = this.today.getFullYear() + "년 " +(this.today.getMonth()+1) +"월 "+ this.today.getDate() + "일 ";
-    <Typography variant="h5" Align="center" fontWeight="fontWeightBold">{this.Etime}</Typography>
+  // timeselect(mState, props){
+  //   var time=[];
+  //       mState.dEventList.forEach(element => {
+  //         time.push(element.date);
+  //       });
+  //   var date = time.substr(0,10);
+  //   var date_time_hour = time.substr(12,2)+9;
+  //   var date_time_minute = time.substr(15,2);
+  //   var Etime = date+" "+date_time_hour+":"+date_time_minute;
+  //   console.log(date);
+  //   console.log(date_time_hour);
+  //   console.log(date_time_minute);
+  //   console.log(Etime);
+  //   return (
+  //     // todayStr = this.today.getFullYear() + "년 " +(this.today.getMonth()+1) +"월 "+ this.today.getDate() + "일 ";
+  //   <Typography variant="h5" Align="center" fontWeight="fontWeightBold">{this.Etime}</Typography>
       
-    );
-  }
+  //   );
+  // }
 
   render(){
     const { classes } = this.props;
@@ -422,7 +484,7 @@ handle_participation_Change = (event,b) => {
               <Box color="primary.contrastText" bgcolor="warning.light" fontSize={25} textAlign="center" fontWeight="fontWeightBold" p={1}>
               참여 가능 행사 목록
               </Box>
-              <FixedSizeList height={300} width='100%' itemSize={70} itemCount={this.state.nplistLength}>
+              <FixedSizeList height={300} width='100%' itemSize={60} itemCount={this.state.nplistLength}>
               {this.rendernotJoinRow.bind(this, this.state, this.handleListItemClick)}
               </FixedSizeList>
               
@@ -442,51 +504,56 @@ handle_participation_Change = (event,b) => {
             <br/>왼쪽에서<br/>일정을 선택해주세요
             </Box>
             </Box>
-            :<Box 
-              height={580} color="primary.main" bgcolor="#ffffff" border= {2} borderColor="warning.light" borderRadius="borderRadius" fontSize={25} textAlign="center" fontWeight="fontWeightMedium"overflow="auto">
-              <CardHeader
-                    title={<Typography variant="h4" Align="center" fontWeight="fontWeightBold">{this.state.dEventList.event_name}</Typography>}
-                    subheader={this.timeselect}></CardHeader>
+            :
+            <Box 
+              height={580} color="text.primary" bgcolor="#ffffff" border= {2} borderColor="warning.light" borderRadius="borderRadius" fontSize={25} textAlign="center" fontWeight="fontWeightMedium"overflow="auto">
+                <Box color="primary.main" fontSize={30} textAlign="center" fontWeight="fontWeightBold" p ={2}>
+                {this.state.dEventList.event_name}
+                  </Box>
+                  <Box fontSize={20} textAlign="center" fontWeight="fontWeightMedium">
+                  {this.state.dEventdate}
+                  </Box>
+              
                   <CardContent >
                     <Box fontSize={20} textAlign="left" >
                       <Grid container xs={12} spacing={2}>
                         <Grid item xs={12}>
-                          <Box bgcolor="#c5cae9" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
+                          <Box color="primary.main" bgcolor="#c5cae9" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
                             대상
                           </Box>
                           <br/>{this.state.dEventList.qualification}
                         </Grid>
 
                         <Grid item xs={12}>
-                          <Box bgcolor="#c5cae9" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
+                          <Box color="primary.main" bgcolor="#c5cae9" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
                             내용
                           </Box>
                           <br/>{this.state.dEventList.body}
                         </Grid>
 
                         <Grid item xs={12}>
-                          <Box bgcolor="#c5cae9" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
+                          <Box color="primary.main" bgcolor="#c5cae9" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
                             장소
                           </Box>
                         <br/>{this.state.dEventList.location}
                         </Grid>
 
                         <Grid item xs={12}>
-                          <Box bgcolor="#c5cae9" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
+                          <Box color="primary.main" bgcolor="#c5cae9" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
                             특이사항
                           </Box>
                         <br/>{this.state.dEventList.beneficial}
                         </Grid>
 
                         <Grid item xs={12}>
-                          <Box bgcolor="#c5cae9" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
+                          <Box color="primary.main" bgcolor="#c5cae9" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
                             기타사항
                           </Box>
                         <br/>{this.state.dEventList.etc}
                         </Grid>
 
                         <Grid item xs={12}>
-                          <Box bgcolor="#c5cae9" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
+                          <Box color="primary.main" bgcolor="#c5cae9" fontSize={20} textAlign="left" fontWeight="fontWeightBold">
                             참석 여부
                           </Box>
                         <Switch
