@@ -128,29 +128,31 @@ class EventAdder extends Component {
         let alleventList = this.state.AEventList;
         let eventNo = 0;
         console.log(event.target.innerText);
-        console.log(jeventList);
+        console.log(selectedEvent);
         alleventList.forEach(element => {
-          if(element.event_name === selectedEvent){
+          if(element.event_name == selectedEvent){
             eventNo = element.event_no;
+            console.log(eventNo);
             console.log(element.event_no);
+            console.log(element.event_name);
             }
           });
           this.setState({
             dEventNo:eventNo,
             }) 
-          let new_event = this.state.nEventList;
-          new_event.forEach(element => {
-              if(element.event_name === selectedEvent){
-               msgProc.attemptCheckEvent(userId, eventNo, (result)=> { 
-              if (result[0] == 0) {
-                console.log(result[1]);
-              }
-              else {
-                alert(result[1]);
-              }
-            });
-          }
-        });
+        let new_event = this.state.nEventList;
+        new_event.forEach(element => {
+            if(element.event_name == selectedEvent){
+              msgProc.attemptCheckEvent(userId, eventNo, (result)=> { 
+            if (result[0] == 0) {
+              console.log(result[1]);
+            }
+            else {
+              alert(result[1]);
+            }
+          });
+        }
+      });
            
       msgProc.attemptDetailEvent(eventNo, (detail_event)=> { 
         event.preventDefault();
@@ -323,7 +325,6 @@ handle_participation_Change = (event,b) => {
           event_list.push(element.event_name);
         });
 
-        console.log(handleListItemClick);
         // const mnRow = med_name.length;
         // // const med_time = [,];
         return (
@@ -351,17 +352,15 @@ handle_participation_Change = (event,b) => {
           nevent_list.push(element.event_name);
         });
 
-        let new_event_list=[];
-        console.log(nevent_list[index]);
 
         if (njevent_list[index] === nevent_list[index]){
-          console.log(new_event_list);
           return (
             <div>
               <form onSubmit={this.handleListItemClick}>
              <ListItem button onClick={handleListItemClick} style={style} key={index} id={1}>
-               <ListItemText primary={<Typography variant="h5"  Align="left">{new_event_list} </Typography>}/>
                <ListItemIcon><FiberManualRecordIcon/></ListItemIcon> 
+               <ListItemText primary={<Typography variant="h5"  Align="left">{njevent_list[index]}</Typography>}/>
+               
              </ListItem>
              </form>
             </div>            
@@ -403,7 +402,7 @@ handle_participation_Change = (event,b) => {
               참가 행사
               </Box>
               <FixedSizeList height={180} width='100%' itemSize={60} itemCount={this.state.jlistLength}>
-              {this.renderJoinRow.bind(this, this.state, this.handlejoinListItemClick)}
+              {this.renderJoinRow.bind(this, this.state, this.handleListItemClick)}
               </FixedSizeList>
 
               <Box color="primary.contrastText" bgcolor="warning.light" fontSize={25} textAlign="center" fontWeight="fontWeightBold" p={1}>
@@ -434,7 +433,7 @@ handle_participation_Change = (event,b) => {
               <CardHeader
                     title={<Typography variant="h4" Align="center" fontWeight="fontWeightBold">{this.state.dEventList.event_name}</Typography>}
             subheader={<Typography variant="h5" Align="center" fontWeight="fontWeightBold">{this.state.dEventList.date}</Typography>}/>
-                  <CardContent>
+                  <CardContent scroll="paper">
                     <Box fontSize={20} textAlign="left" >
                       <Grid container xs={12} spacing={2}>
                         <Grid item xs={4}>
