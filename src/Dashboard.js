@@ -98,7 +98,9 @@ class Dashboard extends Component {
       }
     });
   } 
-
+///하루 2번 12시간 간격으로 페이지 reload
+  refreshDashboard = setInterval(this.componentDidMount, 43200000);
+    
   handleMedSubmit = event => {
     event.preventDefault();
     this.props.history.push("/Medicine");
