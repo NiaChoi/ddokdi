@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-// import Paper  from '@material-ui/core/Paper';
 import IconTextList from './servepart/IconTextList';
 import ControlBoard from './servepart/ControlBoard';
 import Box from '@material-ui/core/Box';
 import SimpleListMenu from './servepart/med_select';
-// import MsgProcessor from "./servepart/MsgProcessor"
 
 const useStyles = theme => ({
   root: {
@@ -21,13 +19,6 @@ const useStyles = theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-//   paper_1: {  //전체 크기 변환 height 변경
-//     padding: theme.spacing(0),  
-//     textAlign: 'center',
-//     height:'584x',
-//     color: theme.palette.text.secondary,
-
-//   },
   list: {
     width: '80%',
     maxWidth: 500,
@@ -60,19 +51,8 @@ class Medicine extends Component {
               <Grid item container xs={12}>
                 <Grid item xs={12}/>
                 <Grid item xs={12}>
-                 
                   <SimpleListMenu/>
-                  
-                  
-                  {/* <Medicine_Adder/> */}
                 </Grid>
-
-                
-              {/* <Grid  xs={4}/>
-                <Grid  xs={4}>
-              <Button><EditRoundedIcon/><Typography variant="h5" Align="center">추가하기</Typography></Button>
-              </Grid>
-              <Grid  xs={4}/> */}
               </Grid>
             </Grid>
             </Box>

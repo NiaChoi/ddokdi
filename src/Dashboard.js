@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import Paper  from '@material-ui/core/Paper';
 import ControlBoard from './servepart/ControlBoard';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,6 +15,7 @@ import Brightness5Icon from '@material-ui/icons/Brightness5';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import { FixedSizeList } from 'react-window';
 import Box from '@material-ui/core/Box';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import MsgProcessor from "./servepart/MsgProcessor"
 
@@ -241,9 +242,15 @@ class Dashboard extends Component {
               약 목록
               </Box> 
               <Box color="text.primary" height={236}  borderRadius="borderRadius" p={1} >
-                <FixedSizeList height={240} width="100%"  itemSize={55} itemCount={this.state.druglength}>
-                {this.renderMedRow.bind(this, this.state, this.handleMedSubmit)}
-              </FixedSizeList>
+                {this.state.druglength == 0?
+                <form  onSubmit={this.handleMedSubmit} style={{justifyContent:'center' , alignItems: 'center',display: 'flex'}}> 
+                    <Button  onClick = {this.handleMedSubmit}>
+                    <AddCircleIcon color="secondary" style={{ fontSize: 40 }}/><Typography variant="h4" Align="center">새로운 약 추가하기</Typography>
+                </Button>
+                </form>:
+                  <FixedSizeList height={240} width="100%"  itemSize={55} itemCount={this.state.druglength}>
+                  {this.renderMedRow.bind(this, this.state, this.handleMedSubmit)}
+                </FixedSizeList>}
               </Box>
               </Box>
               </Paper>
