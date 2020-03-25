@@ -17,9 +17,6 @@ import Switch from '@material-ui/core/Switch';
 import MsgProcessor from "./servepart/MsgProcessor"
 var moment = require('moment');
 
-
-
-
 const useStyles = theme => ({
   root: {
     flexGrow: 1,
@@ -109,11 +106,16 @@ class admin_client_manager extends Component {
                 if(this.state.timestamp_checking_list.timestamp[0] < d_t){   //테스트용
                 // if(element.timestamp <= d_t.setHours(d_t.getHours()-4)){ 
                   console.log("emergency!");
+                  var song = new Audio();
+                  song.src = 'siren.mp3';
+                  song.play(); 
+                 
                   alert('주의! '+this.state.timestamp_checking_list.name + '님 확인요망'+ '\n'+
                   '[전화번호] '+this.state.timestamp_checking_list.phone_no +'\n'+
                   '[비상연락인] '+this.state.timestamp_checking_list.relationship_emergency_res +'\n'+
                   '[비상연락망] '+this.state.timestamp_checking_list.emergency_contact +'\n'                  
                   );
+                  
                   // clearInterval();
                 }
               }
